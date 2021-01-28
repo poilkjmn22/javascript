@@ -3,3 +3,7 @@ export function swap(arr, i, j){
   arr[j] = arr[i];
   arr[i] = tmp;
 }
+
+export function isArray(arr){
+  return Object.prototype.toString.call(arr) === '[object Array]';
+}
