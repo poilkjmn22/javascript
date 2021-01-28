@@ -7,7 +7,7 @@ module.exports = {
 	devtool: 'inline-source-map',
 	entry: {
 		algorithms: './algorithms/test.js',
-		base: './base.js'
+		base: ['./base/test.js', './base/iterator.js', './base/generator.js']
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -25,7 +25,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			title: 'javascript 高级程序设计（第4版）',
 			filename: 'index.html',
-			template: './base.html',
+			template: './base/index.html',
 			chunks: ['base'],
 		})
 	],
