@@ -13,12 +13,12 @@ class Counter {
 					return {
 						done: false,
 						value: count++
-					}
+					};
 				} else {
 					return {
 						done: true,
 						value: undefined
-					}
+					};
 				}
 			},
 			return () {

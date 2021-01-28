@@ -27,8 +27,8 @@ const insert = function(arr) {
 	}
 
 	return clone;
-}
+};
 
 export {
 	insert
-}
+};
