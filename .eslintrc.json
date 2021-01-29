@@ -6,7 +6,15 @@
             "jsx": true
         }
     },
+    "extends": "eslint:recommended",
     "rules": {
-        "semi": "error"
+      "no-undef": "error",
+      "no-unused-vars": "warn"
+    },
+    "globals": {
+      "console": "readable",
+      "Symbol": "readable",
+      "Map": "readable",
+      "Set": "readable"
     }
 }

@@ -21,7 +21,7 @@ const sort = function(arr) {
 		}
 		if(flag === true) {
 			let tmp = clone[i];
-		  memmove(clone, j, i);
+			memmove(clone, j, i);
 			clone[j + 1] = tmp;
 		}
 	}
