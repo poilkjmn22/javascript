@@ -6,7 +6,7 @@ function memmove(arr, i, j) {
 	}
 }
 
-const insert = function(arr) {
+const sort = function(arr) {
   if (!isArray(arr)) {
     console.warn(`${arr} is not an array`);
     return arr;
@@ -30,5 +30,5 @@ const insert = function(arr) {
 };
 
 export {
-	insert
+	sort
 };
