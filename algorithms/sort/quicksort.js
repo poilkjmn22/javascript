@@ -1,4 +1,4 @@
-import { swap, isArray } from './util.js';
+import { swap, isArray } from '../../utils/util.js';
 
 function getPivot(left, right){
   return (left + right) >> 1;

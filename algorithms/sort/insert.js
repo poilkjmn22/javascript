@@ -1,4 +1,4 @@
-import { isArray } from './util.js';
+import { isArray } from '../../utils/util.js';
 
 const sort = function(arr) {
 	if(!isArray(arr)) {

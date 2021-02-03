@@ -1,4 +1,4 @@
-import { swap,isArray } from './util.js';
+import { swap,isArray } from '../../utils/util.js';
 
 function findMaxIndex(arr, a, b, c, max) {
 	let maxIdx = a;
