@@ -8,7 +8,8 @@ module.exports = {
 	mode: 'development',
 	devtool: 'inline-source-map',
 	entry: {
-		algorithms: './algorithms/test.js',
+		algorithms: ['./algorithms/sort/test.js'],
+		benchmark: ['./algorithms/sort/benchmark.js'],
 		base: ['./base/test.js', './base/iterator.js', './base/generator.js']
 	},
 	output: {
@@ -29,6 +30,12 @@ module.exports = {
 			filename: 'index.html',
 			template: './base/index.html',
 			chunks: ['base'],
+		}),
+		new HtmlWebpackPlugin({
+			title: '各种排序算法性能测试',
+			filename: 'benchmark-sort.html',
+			template: './algorithms/sort/benchmark.html',
+			chunks: ['benchmark'],
 		}),
 		new EslintPlugin({
 			outputReport: false,
