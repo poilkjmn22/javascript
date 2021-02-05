@@ -25,7 +25,7 @@ export function* nTimes(n) {
 	}
 }
 
-export function decimal(d, n = 2){
+export function round(d, n = 2){
   const k = Math.pow(10, n);
   return Math.round(d * k) / k;
 }

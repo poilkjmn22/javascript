@@ -1,15 +1,16 @@
-import { nTimes, decimal } from '../../utils/util.js';
+import { nTimes, round } from '../../utils/util.js';
 
 import { sort as sortInsert } from './insert.js';
 import { sort as sortHeapify } from './heapify.js';
 import { sort as sortQuick } from './quicksort.js';
 import { sort as sortBucket } from './bucketsort.js';
+import { sort as sortMerge } from './mergesort.js';
 
 let sortSample = [];
 for (const n of nTimes(2 << 16)) {
-  sortSample.push(decimal(Math.random(), 3));
+  sortSample.push(round(Math.random(), 3));
 }
-console.log(`size: ${sortSample.length}`);
+console.log(`data sample size: ${sortSample.length}`);
 
 let sortBucketSample = Array.from(sortSample);
 console.time('sortBucket');
@@ -30,3 +31,8 @@ console.timeEnd('sortHeapify');
 // console.time('sortQuick');
 // sortQuick(sortQuickSample);
 // console.timeEnd('sortQuick');
+
+let sortMergeSample = Array.from(sortSample);
+console.time('sortMerge');
+sortMerge(sortMergeSample);
+console.timeEnd('sortMerge');
