@@ -6,19 +6,7 @@ function mergeLeftRight(arr, result, left, mid, right) {
 	let j = mid + 1;
 	let k = left;
 	while(k <= right) {
-		if(j > right) {
-			result[k] = arr[i];
-			i += 1;
-			k += 1;
-			continue;
-		}
-		if(i > mid) {
-			result[k] = arr[j];
-			j += 1;
-			k += 1;
-			continue;
-		}
-		if(arr[i] > arr[j]) {
+		if(i > mid || (arr[i] > arr[j] && j <= right)) {
 			result[k] = arr[j];
 			j += 1;
 		} else {

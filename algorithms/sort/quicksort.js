@@ -1,7 +1,7 @@
-import { swap, isArray } from '../../utils/util.js';
+import { swap, isArray,random } from '../../utils/util.js';
 
-function getPivot(left, right){
-  return (left + right) >> 1;
+function getPivot(left, right) {
+	return random(left, right + 1);
 }
 
 function partition(arr, left, right) {
@@ -21,7 +21,7 @@ function partition(arr, left, right) {
 function quicksort(arr, left, right) {
 	if(left < right) {
 		let pivot = partition(arr, left, right);
-		quicksort(arr, 0, pivot - 1);
+		quicksort(arr, left, pivot - 1);
 		quicksort(arr, pivot + 1, right);
 	}
 }

@@ -27,10 +27,10 @@ console.time('sortHeapify');
 sortHeapify(sortHeapifySample);
 console.timeEnd('sortHeapify');
 
-// let sortQuickSample = Array.from(sortSample);
-// console.time('sortQuick');
-// sortQuick(sortQuickSample);
-// console.timeEnd('sortQuick');
+let sortQuickSample = Array.from(sortSample);
+console.time('sortQuick');
+sortQuick(sortQuickSample);
+console.timeEnd('sortQuick');
 
 let sortMergeSample = Array.from(sortSample);
 console.time('sortMerge');
