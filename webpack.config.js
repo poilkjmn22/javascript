@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
 
+const babelConfig = require('./babel.config.json');
 module.exports = {
 	mode: 'development',
 	devtool: 'inline-source-map',
@@ -12,8 +13,18 @@ module.exports = {
 		benchmark: ['./algorithms/sort/benchmark.js'],
 		['benchmark-search']: ['./algorithms/search/benchmark.js'],
 		search: ['./algorithms/search/test.js'],
-		base: ['./base/test.js', './base/iterator.js', './base/generator.js']
+		base: ['./base/test.js', './base/iterator.js', './base/generator.js', './base/async.js']
 	},
+  module:{
+    rules: [{
+      test: /\.m?js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: babelConfig
+      },
+    }],
+  },
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: '[name].bundle.js'

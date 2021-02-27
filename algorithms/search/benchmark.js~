@@ -10,11 +10,11 @@ for (let n =0; n < SAMPLE_SIZE; n++) {
   searchSample.push(n);
 }
 console.log(`data sample size: ${SAMPLE_SIZE}`);
-console.log(searchSample);
+// console.log(searchSample);
 console.log(`target sample: ${sampleTarget}`);
 
 console.time('linearSearch');
-// console.log(linearSearch(searchSample, sampleTarget));
+console.log(linearSearch(searchSample, sampleTarget));
 console.timeEnd('linearSearch');
 
 console.time('binarySearch');

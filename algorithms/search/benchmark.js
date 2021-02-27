@@ -1,4 +1,4 @@
-import { nTimesRec,random } from '../../utils/util.js';
+import { random } from '../../utils/util.js';
 
 import { search as linearSearch} from './linear-search.js';
 import { search as binarySearch } from './binary-search.js';

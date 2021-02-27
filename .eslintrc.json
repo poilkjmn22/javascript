@@ -15,6 +15,9 @@
       "console": "readable",
       "Symbol": "readable",
       "Map": "readable",
-      "Set": "readable"
+      "Set": "readable",
+      "setTimeout": "readable",
+      "Proxy": "readable",
+      "Promise": "readable"
     }
 }
