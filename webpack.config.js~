@@ -8,21 +8,23 @@ const babelConfig = require('./babel.config.json');
 module.exports = {
 	mode: 'development',
 	devtool: 'inline-source-map',
-  rules: [{
-    test: /\.m?js$/,
-    exclude: /node_modules/,
-    use: {
-      loader: 'babel-loader',
-      options: babelConfig
-    },
-  }],
 	entry: {
 		algorithms: ['./algorithms/sort/test.js'],
 		benchmark: ['./algorithms/sort/benchmark.js'],
 		['benchmark-search']: ['./algorithms/search/benchmark.js'],
 		search: ['./algorithms/search/test.js'],
-		base: ['./base/test.js', './base/iterator.js', './base/generator.js', './base/async.js']
+		base: ['./base/test.js', './base/iterator.js', './base/generator.js', './base/async.js', './base/object.js']
 	},
+  module:{
+    rules: [{
+      test: /\.m?js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: babelConfig
+      },
+    }],
+  },
 	output: {
 		path: path.resolve(__dirname, 'dist'),
 		filename: '[name].bundle.js'

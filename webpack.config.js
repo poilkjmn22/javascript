@@ -13,7 +13,7 @@ module.exports = {
 		benchmark: ['./algorithms/sort/benchmark.js'],
 		['benchmark-search']: ['./algorithms/search/benchmark.js'],
 		search: ['./algorithms/search/test.js'],
-		base: ['./base/test.js', './base/iterator.js', './base/generator.js', './base/async.js']
+		base: ['./base/test.js', './base/iterator.js', './base/generator.js', './base/async.js', './base/object.js', './base/inherit.js']
 	},
   module:{
     rules: [{
