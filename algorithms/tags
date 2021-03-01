@@ -1,0 +1,15 @@
+buildHeap	sort/heapify.js	/^export function buildHeap(arr) {$/
+defaultHash	sort/bucketsort.js	/^function defaultHash(d) {$/
+defaultNumBuckets	sort/bucketsort.js	/^function defaultNumBuckets(numElements) {$/
+extract	sort/bucketsort.js	/^function extract(buckets, arr) {$/
+findMaxIndex	sort/heapify.js	/^function findMaxIndex(arr, a, b, c, max) {$/
+for	search/benchmark.js	/^for (let n =0; n < SAMPLE_SIZE; n++) {$/
+function	sort/insert.js	/^const sort = function(arr) {$/
+getPivot	sort/quicksort.js	/^function getPivot(left, right) {$/
+heapify	sort/heapify.js	/^function heapify(arr, idxParent, idxMax) {$/
+mergeLeftRight	sort/mergesort.js	/^function mergeLeftRight(arr, result, left, mid, ri/
+mergesort	sort/mergesort.js	/^function mergesort(arr, result, left, right) {$/
+partition	sort/quicksort.js	/^function partition(arr, left, right) {$/
+quicksort	sort/quicksort.js	/^function quicksort(arr, left, right) {$/
+search	search/binary-search.js	/^export function search(arr, t){$/
+sort	sort/bucketsort.js	/^export function sort(arr, hash, numBuckets) {$/

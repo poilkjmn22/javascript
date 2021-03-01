@@ -74,5 +74,5 @@ SubType.prototype.sayAge = function(){
   console.log(this.age);
 }
 
-const person3 = new SubType('fangqi', 31);
+let person3 = new SubType('fangqi', 31);
 console.dir(person3);

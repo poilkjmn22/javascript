@@ -21,7 +21,9 @@ module.exports = {
       exclude: /node_modules/,
       use: {
         loader: 'babel-loader',
-        options: babelConfig
+        options: Object.assign({
+          cacheDirectory: true
+        }, babelConfig)
       },
     }],
   },
