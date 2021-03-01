@@ -5,6 +5,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
 
 const babelConfig = require('./babel.config.json');
+
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
 module.exports = {
 	mode: 'development',
 	devtool: 'inline-source-map',
@@ -13,19 +16,36 @@ module.exports = {
 		benchmark: ['./algorithms/sort/benchmark.js'],
 		['benchmark-search']: ['./algorithms/search/benchmark.js'],
 		search: ['./algorithms/search/test.js'],
-		base: ['./base/test.js', './base/iterator.js', './base/generator.js', './base/async.js', './base/object.js', './base/inherit.js']
+		base: ['./base/test.js', './base/iterator.js', './base/generator.js', './base/async.js', './base/object.js', './base/inherit.js'],
+    vue: ['./MVx/vue/index.js'],
 	},
   module:{
-    rules: [{
-      test: /\.m?js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: Object.assign({
-          cacheDirectory: true
-        }, babelConfig)
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: file => (
+          /node_modules/.test(file) &&
+          !/\.vue\.js/.test(file)
+        ),
+        use: {
+          loader: 'babel-loader',
+          options: Object.assign({
+            cacheDirectory: true
+          }, babelConfig)
+        },
       },
-    }],
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader'
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ]
+      },
+    ],
   },
 	output: {
 		path: path.resolve(__dirname, 'dist'),
@@ -64,11 +84,18 @@ module.exports = {
 			template: './algorithms/search/search.html',
 			chunks: ['search'],
 		}),
+		new HtmlWebpackPlugin({
+			title: '深入浅出Vue.js',
+			filename: 'vue-base.html',
+			template: './MVx/vue/index.html',
+			chunks: ['vue'],
+		}),
 		new EslintPlugin({
 			outputReport: false,
 			emitError: false,
 			emitWarning: false,
-		})
+		}),
+    new VueLoaderPlugin(),
 	],
 
 	devServer: {
