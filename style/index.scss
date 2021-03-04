@@ -1,0 +1,7 @@
+@import "sass-common-mixins-fq/lib/base.scss";
+.color-red{
+  color: red;
+}
+body{
+  background-color: map-get($status-colors, info);
+}

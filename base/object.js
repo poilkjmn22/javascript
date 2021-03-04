@@ -54,25 +54,25 @@ let person2 = {
 };
 console.log(person2);
 
-//function SuperType(name){
-//  this.name = name;
-//  this.colors = ['red', 'blue', 'green'];
-//}
-//
-//SuperType.prototype.sayName = function(){
-//  console.log(this.name);
-//}
-//
-//function SubType(name, age){
-//  SuperType.call(this, name);
-//  this.age = age;
-//}
-//
-//inheritPrototype(SubType, SuperType);
-//
-//SubType.prototype.sayAge = function(){
-//  console.log(this.age);
-//}
-//
-//let person3 = new SubType('fangqi', 31);
-//console.dir(person3);
+function SuperType(name){
+  this.name = name;
+  this.colors = ['red', 'blue', 'green'];
+}
+
+SuperType.prototype.sayName = function(){
+  console.log(this.name);
+}
+
+function SubType(name, age){
+  SuperType.call(this, name);
+  this.age = age;
+}
+
+inheritPrototype(SubType, SuperType);
+
+SubType.prototype.sayAge = function(){
+  console.log(this.age);
+}
+
+let person3 = new SubType('fangqi', 31);
+console.dir(person3);

@@ -7,14 +7,12 @@ export default {
   data: function() {
     return {
       greeting: "Hello",
-      message: "fangqi"
+      message: "sushi"
     };
   }
 };
 </script>
 
 <style >
-.color-red {
-  color: red;
-}
+
 </style>

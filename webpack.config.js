@@ -8,6 +8,8 @@ const babelConfig = require('./babel.config.json');
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+debugger;
+
 module.exports = {
 	mode: 'development',
 	devtool: 'inline-source-map',
@@ -22,30 +24,51 @@ module.exports = {
   module:{
     rules: [
       {
-        test: /\.js$/,
-        exclude: file => (
-          /node_modules/.test(file) &&
-          !/\.vue\.js/.test(file)
-        ),
-        use: {
-          loader: 'babel-loader',
-          options: Object.assign({
-            cacheDirectory: true
-          }, babelConfig)
-        },
-      },
-      {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
+      //{
+        //test: /\.js$/,
+        //exclude: file => (
+          ///node_modules/.test(file) &&
+          //!/\.vue\.js/.test(file)
+        //),
+        //use: {
+          //loader: 'babel-loader',
+          //options: Object.assign({
+            //cacheDirectory: true
+          //}, babelConfig)
+        //},
+      //},
       {
         test: /\.css$/,
         use: [
-          'vue-style-loader',
+          'style-loader',
           'css-loader'
         ]
       },
+      {
+        test: /\.s[ac]ss$/,
+        use: [
+        'style-loader',
+        'css-loader', 
+        {
+          loader: 'sass-loader',
+          options: {
+            implementation: require("sass"),
+            sassOptions: {
+              fiber: false,
+            },
+          }, 
+        }],
+      },
     ],
+  },
+  resolve:{
+    mainFields: ['module', 'main'],
+    alias: {
+      style: path.resolve(__dirname, './style/')
+    }
   },
 	output: {
 		path: path.resolve(__dirname, 'dist'),

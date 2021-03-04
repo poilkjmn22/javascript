@@ -38,7 +38,17 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
+      {
+        test: /\.css$/,
+        use: [
+          'vue-style-loader',
+          'css-loader'
+        ]
+      },
     ],
+  },
+  resolve:{
+    mainFields: ['module', 'main']
   },
 	output: {
 		path: path.resolve(__dirname, 'dist'),
