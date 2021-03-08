@@ -1,5 +1,6 @@
 const path = require('path');
 
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const EslintPlugin = require('eslint-webpack-plugin');
@@ -20,6 +21,7 @@ module.exports = {
 		search: ['./algorithms/search/test.js'],
 		base: ['./base/test.js', './base/iterator.js', './base/generator.js', './base/async.js', './base/object.js', './base/inherit.js'],
     vue: ['./MVx/vue/index.js'],
+    mianshi: ['./algorithms/mianshi.js'],
 	},
   module:{
     rules: [
@@ -50,7 +52,7 @@ module.exports = {
       {
         test: /\.s[ac]ss$/,
         use: [
-        'style-loader',
+        'vue-style-loader',
         'css-loader', 
         {
           loader: 'sass-loader',
@@ -77,6 +79,9 @@ module.exports = {
 
 	plugins: [
 		new CleanWebpackPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    }),
 		new HtmlWebpackPlugin({
 			title: 'algorithms in a nutshell, second edition',
 			filename: 'algorithms.html',
@@ -106,6 +111,12 @@ module.exports = {
 			filename: 'algorithms-search.html',
 			template: './algorithms/search/search.html',
 			chunks: ['search'],
+		}),
+		new HtmlWebpackPlugin({
+			title: '面试中的算法题',
+			filename: 'algorithms-mianshi.html',
+			template: './algorithms/mianshi.html',
+			chunks: ['mianshi'],
 		}),
 		new HtmlWebpackPlugin({
 			title: '深入浅出Vue.js',
