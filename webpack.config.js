@@ -22,6 +22,8 @@ module.exports = {
 		base: ['./base/test.js', './base/iterator.js', './base/generator.js', './base/async.js', './base/object.js', './base/inherit.js'],
     vue: ['./MVx/vue/index.js'],
     mianshi: ['./algorithms/mianshi.js'],
+    net: ['./base/net/xhr.js', './base/net/fetch.js'],
+    regexp: ['./regexp/base.js', './regexp/numbers.js'],
 	},
   module:{
     rules: [
@@ -69,7 +71,8 @@ module.exports = {
   resolve:{
     mainFields: ['module', 'main'],
     alias: {
-      style: path.resolve(__dirname, './style/')
+      style: path.resolve(__dirname, './style/'),
+      root: path.resolve(__dirname)
     }
   },
 	output: {
@@ -119,6 +122,18 @@ module.exports = {
 			chunks: ['mianshi'],
 		}),
 		new HtmlWebpackPlugin({
+			title: '网络请求与远程资源',
+			filename: 'base-net.html',
+			template: './base/net.html',
+			chunks: ['net'],
+		}),
+		new HtmlWebpackPlugin({
+			title: '正则表达式',
+			filename: 'regexp.html',
+			template: './regexp/index.html',
+			chunks: ['regexp'],
+		}),
+		new HtmlWebpackPlugin({
 			title: '深入浅出Vue.js',
 			filename: 'vue-base.html',
 			template: './MVx/vue/index.html',
@@ -135,6 +150,25 @@ module.exports = {
 	devServer: {
 		port: 9000,
 		hot: true,
-		contentBase: path.resolve(__dirname, 'dist')
+		contentBase: path.resolve(__dirname, 'dist'),
+    before(app){
+      app.get('/get-sample', (req, res) => {
+        const params = req.query;
+        res.json(params.name);
+      });
+      app.get('/get-timeout', (req, res) => {
+        const params = req.query;
+        setTimeout(() => res.json(params.name), 3000);
+      });
+      app.get('/package.json', (req, res) => {
+        res.json(require('./package.json'));
+      });
+      app.post('/send-me-json', (req, res) => {
+        //console.dir(req);
+        res.json({
+          status: 200
+        })
+      });
+    }
 	},
 }

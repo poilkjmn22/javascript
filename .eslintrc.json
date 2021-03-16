@@ -18,6 +18,9 @@
       "Set": "readable",
       "setTimeout": "readable",
       "Proxy": "readable",
-      "Promise": "readable"
+      "Promise": "readable",
+      "XMLHttpRequest": "readable",
+      "fetch": "readable",
+      "Headers": "readable"
     }
 }
