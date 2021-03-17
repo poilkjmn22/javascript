@@ -3,5 +3,5 @@
   color: red;
 }
 body{
-  background-color: map-get($status-colors, info);
+  background-color: map-get($status-colors, success);
 }

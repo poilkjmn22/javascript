@@ -55,12 +55,12 @@ let person2 = {
 console.log(person2);
 
 function SuperType(name){
-  this.name = name;
+  this._name = name;
   this.colors = ['red', 'blue', 'green'];
 }
 
 SuperType.prototype.sayName = function(){
-  console.log(this.name);
+  console.log(this._name);
 }
 
 function SubType(name, age){
@@ -76,3 +76,5 @@ SubType.prototype.sayAge = function(){
 
 let person3 = new SubType('fangqi', 31);
 console.dir(person3);
+console.log(person3.sayName);
+console.log(person3.sayAge);

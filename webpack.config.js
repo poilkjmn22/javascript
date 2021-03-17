@@ -51,10 +51,25 @@ module.exports = {
           'css-loader'
         ]
       },
+      //{
+        //test: /\.s[ac]ss$/,
+        //use: [
+        //'vue-style-loader',
+        //'css-loader', 
+        //{
+          //loader: 'sass-loader',
+          //options: {
+            //implementation: require("sass"),
+            //sassOptions: {
+              //fiber: false,
+            //},
+          //}, 
+        //}],
+      //},
       {
         test: /\.s[ac]ss$/,
         use: [
-        'vue-style-loader',
+        'style-loader',
         'css-loader', 
         {
           loader: 'sass-loader',
