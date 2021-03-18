@@ -1,14 +1,48 @@
-const object = (o) => {
+const hasPrototypeProperty = (obj, name) => !obj.hasOwnProperty(name) && name in obj;
+const object = Object.create || function(o) {
   function F(){}
   F.prototype = o;
   return new F();
 };
 
 export default function inheritPrototype(SubType, SuperType){
-  let prototype = object(SuperType);
+  let prototype = object(SuperType.prototype);
   prototype.constructor = SubType;
   SubType.prototype = prototype;
 }
+
+
+/*****
+使用抽象类继承的设计模式
+*****/
+function SuperTypeInherit(name){
+  this._name = name;
+  this.colors = ['red', 'blue', 'green'];
+}
+
+SuperTypeInherit.prototype.sayName = function(){
+  console.log(`My Name is ${this._name}`);
+}
+
+function SubTypeInherit(name, age){
+  SuperTypeInherit.call(this, name);
+  this.age = age;
+}
+
+inheritPrototype(SubTypeInherit, SuperTypeInherit);
+
+SubTypeInherit.prototype.sayAge = function(){
+  this.sayName();
+  console.log(this.age);
+}
+
+const person = new SuperTypeInherit('xiaoming');
+person.sayName();
+console.log(hasPrototypeProperty(person, 'sayName'));
+
+let person3 = new SubTypeInherit('xiaohong', 35);
+console.log(hasPrototypeProperty(person3, 'sayName'));
+person3.sayAge();
 
 /*****
   使用行为委托的设计模式实现类继承《你不知道的Javascript（上）-5～6章》
