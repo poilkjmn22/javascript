@@ -23,7 +23,7 @@ module.exports = {
     vue: ['./MVx/vue/index.js'],
     mianshi: ['./algorithms/mianshi.js'],
     net: ['./base/net/xhr.js', './base/net/fetch.js'],
-    regexp: ['./regexp/base.js', './regexp/numbers.js'],
+    regexp: ['./regexp/base.js', './regexp/numbers.js', './regexp/program.js'],
 	},
   module:{
     rules: [
@@ -165,7 +165,7 @@ module.exports = {
 	devServer: {
 		port: 9000,
 		hot: true,
-		contentBase: path.resolve(__dirname, 'dist'),
+		//contentBase: path.resolve(__dirname, 'dist'),
     before(app){
       app.get('/get-sample', (req, res) => {
         const params = req.query;
