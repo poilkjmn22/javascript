@@ -8,12 +8,13 @@
     },
     "extends": "eslint:recommended",
     "rules": {
-      "no-undef": "error",
+      "no-undef": "warn",
       "no-unused-vars": "warn",
       "no-prototype-builtins": "off"
     },
     "globals": {
       "console": "readable",
+      "window": "readable",
       "Symbol": "readable",
       "Map": "readable",
       "Set": "readable",

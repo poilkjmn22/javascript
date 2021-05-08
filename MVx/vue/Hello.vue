@@ -13,6 +13,8 @@ export default {
 };
 </script>
 
-<style >
-
+<style lang="sass" scoped>
+.color-red{
+  color: gray;
+}
 </style>

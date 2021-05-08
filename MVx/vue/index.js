@@ -1,4 +1,4 @@
-import indexCss from  "root/style/index.scss";
+//import indexCss from  "root/style/index.scss";
 import Vue from "vue";
 import App from "./Hello.vue";
 

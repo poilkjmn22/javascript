@@ -21,9 +21,13 @@ module.exports = {
 		search: ['./algorithms/search/test.js'],
 		base: ['./base/test.js', './base/iterator.js', './base/generator.js', './base/async.js', './base/object.js', './base/inherit.js'],
     vue: ['./MVx/vue/index.js'],
+    react: ['./MVx/react/index.jsx'],
     mianshi: ['./algorithms/mianshi.js'],
     net: ['./base/net/xhr.js', './base/net/fetch.js'],
-    regexp: ['./regexp/base.js', './regexp/numbers.js', './regexp/program.js'],
+    regexp: ['./regexp/base.js', './regexp/numbers.js', './regexp/program.js', './regexp/validate.js'],
+    bom: ['./base/bom/index.js'],
+    dom: ['./base/dom/sticky-bar.js'],
+    generator: ['./deep/generator.js'],
 	},
   module:{
     rules: [
@@ -31,19 +35,19 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
-      //{
-        //test: /\.js$/,
-        //exclude: file => (
-          ///node_modules/.test(file) &&
-          //!/\.vue\.js/.test(file)
-        //),
-        //use: {
-          //loader: 'babel-loader',
-          //options: Object.assign({
-            //cacheDirectory: true
-          //}, babelConfig)
-        //},
-      //},
+      {
+        test: /\.jsx?$/,
+        exclude: file => (
+          /node_modules/.test(file) &&
+          !/\.vue\.js/.test(file)
+        ),
+        use: {
+          loader: 'babel-loader',
+          options: Object.assign({
+            cacheDirectory: true
+          }, babelConfig)
+        },
+      },
       {
         test: /\.css$/,
         use: [
@@ -51,21 +55,6 @@ module.exports = {
           'css-loader'
         ]
       },
-      //{
-        //test: /\.s[ac]ss$/,
-        //use: [
-        //'vue-style-loader',
-        //'css-loader', 
-        //{
-          //loader: 'sass-loader',
-          //options: {
-            //implementation: require("sass"),
-            //sassOptions: {
-              //fiber: false,
-            //},
-          //}, 
-        //}],
-      //},
       {
         test: /\.s[ac]ss$/,
         use: [
@@ -137,6 +126,24 @@ module.exports = {
 			chunks: ['mianshi'],
 		}),
 		new HtmlWebpackPlugin({
+			title: 'BOM',
+			filename: 'base-bom.html',
+			template: './base/net.html',
+			chunks: ['bom'],
+		}),
+		new HtmlWebpackPlugin({
+			title: 'DOM',
+			filename: 'base-dom.html',
+			template: './base/dom/index.html',
+			chunks: ['dom'],
+		}),
+		new HtmlWebpackPlugin({
+			title: 'Deep-Generator',
+			filename: 'deep-generator.html',
+			template: './base/index.html',
+			chunks: ['generator'],
+		}),
+		new HtmlWebpackPlugin({
 			title: '网络请求与远程资源',
 			filename: 'base-net.html',
 			template: './base/net.html',
@@ -147,6 +154,12 @@ module.exports = {
 			filename: 'regexp.html',
 			template: './regexp/index.html',
 			chunks: ['regexp'],
+		}),
+		new HtmlWebpackPlugin({
+			title: 'React快速上手',
+			filename: 'react-demo.html',
+			template: './MVx/react/index.html',
+			chunks: ['react'],
 		}),
 		new HtmlWebpackPlugin({
 			title: '深入浅出Vue.js',
