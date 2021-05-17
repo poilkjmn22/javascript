@@ -63,3 +63,7 @@ for(const n of nTimesRec(4)) {
 console.log(g);
 g.return(4);//g.throw(4)
 console.log(g);
+
+export {
+  nTimesRec
+}
