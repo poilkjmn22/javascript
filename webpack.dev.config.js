@@ -26,6 +26,7 @@ module.exports = merge(require('./webpack.base.config.js'), {
     proxy: {
       '/api': 'http://localhost:3004'
     },
+    host: '0.0.0.0',
 		hot: true,
 		contentBase: path.resolve(__dirname, 'dist'),
     before(app){

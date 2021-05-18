@@ -3,4 +3,5 @@ node_modules/
 **/tags/
 **/*.iso
 **/*.doc
+build/
 *.un~
