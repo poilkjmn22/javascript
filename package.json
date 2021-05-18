@@ -4,12 +4,11 @@
   "description": "base knowledge",
   "main": "base.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node ./build/test.js",
     "start": "concurrently \"npm run dev-serve\" \"npm run serve\"",
     "dev-serve": "webpack serve --config webpack.dev.config.js",
     "serve": "npm run build && node ./build/server.js",
     "server": "node ./build/server.js",
-    "test": "node ./build/test.js",
     "build": "npm run build-server && npm run build-client",
     "build-server": "webpack --config webpack.server.config.js",
     "build-client": "webpack --config webpack.prod.config.js"
@@ -21,6 +20,7 @@
     "@babel/preset-env": "^7.13.8",
     "@babel/preset-react": "^7.13.13",
     "@babel/register": "^7.13.16",
+    "@fangqi/web-dev-cli": "^1.0.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^3.0.0",
     "concurrently": "^6.1.0",
