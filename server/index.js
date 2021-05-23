@@ -23,6 +23,7 @@ const bugRecord = require('./routes/bug-record.js');
 app.get('/api/subjects', subject.list)
 app.get('/api/bug-record-list', bugRecord.list);
 app.post('/api/bug-record', bugRecord.submit);
+app.post('/api/bug-record/delete', bugRecord.delete);
 
 app.get('/', index.app);
 

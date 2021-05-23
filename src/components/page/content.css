@@ -1,0 +1,26 @@
+@import "sass-common-mixins-fq/lib/postcss/common.css";
+.main-content{
+  @mixin clear-fix;
+}
+@mixin layout-float navbar, content;
+.content{
+  border-left: 1px solid var(--color-purple);
+  > div{
+    padding: var(--gap-small);
+  }
+}
+
+h1.header{
+  text-align: center;
+  background-image: linear-gradient(to right, purple, gold);
+  margin: 0;
+  
+  height: 60px;
+  line-height: 60px;
+
+  color: white;
+}
+
+.bug-record-card-list{
+  margin-top: var(--gap-small); 
+}

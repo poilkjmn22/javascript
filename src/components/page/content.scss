@@ -1,6 +1,0 @@
-@import "sass-common-mixins-fq/lib/base.scss";
-
-.main-content{
-  @include clearfix();
-}
-@include layout-float(navbar, content);

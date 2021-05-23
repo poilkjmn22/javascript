@@ -14,11 +14,25 @@ exports.submit = (req, res, next) => {
 }
 
 exports.list = (req, res, next) => {
-  BugRecord.getRange(0, 1000, (err, bugRecords) => {
+  BugRecord.getRange(0, -1, (err, bugRecords) => {
     if(err) return next(err);
     res.format({
       'application/json': () => {
         res.send(bugRecords);
+      }
+    })
+  })
+}
+
+exports.delete = (req, res, next) => {
+  BugRecord.delete(req.body.bugRecord, (err) => {
+    if(err) return next(err)
+    res.format({
+      'application/json': () => {
+        res.send({
+          code: 0,
+          msg: 'success'
+        })
       }
     })
   })

@@ -1,0 +1,54 @@
+.bug-record-card{
+  border: 1px solid var(--color-gold);
+  padding: var(--gap-small);
+  color: var(--color-desc);
+  border-radius: var(--radius);
+  margin-bottom: var(--gap-small); 
+  font-size: 14px;
+  cursor: pointer;
+  &:last-child{
+    margin-bottom: 0;
+  }
+  .footer{
+    text-align: right;
+  }
+  time{
+    font-size: 9px;
+    font-style: italic;
+  }
+
+  .content-area{
+    p.text {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      line-height: 20px;
+      height: 60px;
+    }
+  }
+  overflow: hidden;
+  position: relative;
+  .opra-area{
+    width: 90px;
+    position: absolute;
+    right:0;
+    top: 0;
+    height: 100%;
+    background: white;
+    opacity: 0.8;
+    border-left: 1px solid var(--color-gray);
+    border-radius: var(--radius) 0 0 var(--radius);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transform: translate(100%, 0);
+    transition: transform 0.3s ease-out;
+  }
+  &:hover{
+    .opra-area{
+      transform: translate(0,0);
+    }
+  }
+}

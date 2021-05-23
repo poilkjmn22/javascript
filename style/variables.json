@@ -1,0 +1,19 @@
+{
+  "--color-purple": "purple",
+  "--color-purple-lighten-1": "lighten(purple, 10%)",
+  "--color-purple-lighten-2": "lighten(purple, 15%)",
+  "--color-purple-lighten-3": "lighten(purple, 20%)",
+  "--color-gold": "gold",
+  "--color-desc": "#666",
+  "--color-gray": "#dedede",
+
+  "--gap": "20px",
+  "--gap-small": "10px",
+  "--gap-mini": "6px",
+
+  "--radius": "6px",
+
+  "--btn-bg-primary": "purple",
+  "--btn-bg-hover": "gold",
+  "--btn-bg-active": "gold"
+}

@@ -11,8 +11,9 @@ class BugRecord{
   }
   save(cb){
     bugReportJSON = JSON.stringify(this);
-    db.lpush(
-      'bug-records',
+    db.zadd(
+      'note--cate-default',
+      this.ts,
       bugReportJSON,
       (err) => {
         if(err) return cb(err);
@@ -21,10 +22,16 @@ class BugRecord{
     )
   }
   static getRange(from, to, cb){
-    db.lrange('bug-records', from, to, (err, items) => {
+    db.zrevrange('note--cate-default', from, to, (err, items) => {
       if(err) return cb(err);
       cb(null, items.map((item) => JSON.parse(item)))
     });
+  }
+  static delete(value, cb){
+    db.zrem('note--cate-default', value, (err) => {
+      if(err) return cb(err);
+      cb(null);
+    })
   }
 }
 

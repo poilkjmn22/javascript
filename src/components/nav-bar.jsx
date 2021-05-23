@@ -10,7 +10,7 @@ class NavBar extends React.Component{
           {this.props.items.map((item,idx) => {
             return (
               <li key={idx} className="">
-                <Link to={`/${item.name}`}>
+                <Link className="link-base" to={`/${item.name}`}>
                   {item.title}
                 </Link>
               </li>

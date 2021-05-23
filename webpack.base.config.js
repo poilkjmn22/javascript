@@ -49,23 +49,9 @@ module.exports = {
         test: /\.css$/,
         use: [
           'style-loader',
-          'css-loader'
+          'css-loader',
+          'postcss-loader'
         ]
-      },
-      {
-        test: /\.s[ac]ss$/,
-        use: [
-        'style-loader',
-        'css-loader', 
-        {
-          loader: 'sass-loader',
-          options: {
-            implementation: require("sass"),
-            sassOptions: {
-              fiber: false,
-            },
-          }, 
-        }],
       },
     ],
   },
@@ -73,7 +59,8 @@ module.exports = {
     mainFields: ['module', 'main'],
     alias: {
       style: path.resolve(__dirname, './style/'),
-      root: path.resolve(__dirname)
+      root: path.resolve(__dirname),
+      comp: path.resolve(__dirname, 'src/components'),
     }
   },
 	output: {

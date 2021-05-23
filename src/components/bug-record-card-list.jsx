@@ -6,7 +6,7 @@ const BugRecordCardList = (props) => {
   return (
     <div className="bug-record-card-list">
       {props.items.map((item, idx) => {
-        return <BugRecordCard key={idx} bugRecord={item} />
+        return <BugRecordCard handleDelete={props.handleDelete} key={idx} bugRecord={item} />
       })}
     </div>
   )

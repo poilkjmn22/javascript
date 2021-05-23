@@ -18,7 +18,7 @@ class Content extends React.Component {
   render() {
     return (
       <div>
-        <h1>JavaScript Palyground.</h1>
+        <h1 className="header">JavaScript Palyground.</h1>
         <div className="main-content">
           <NavBar {...this.props}  />
           <div className="content">
