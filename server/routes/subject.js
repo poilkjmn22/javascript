@@ -9,3 +9,37 @@ exports.list = (req, res, next) => {
     })
   })
 }
+
+exports.add = (req, res, next) => {
+  const {name, title} = req.body;
+  const subject = new Subject({
+    name,
+    title,
+  })
+  subject.save(req.body.score, (err) => {
+    if(err) return next(err)
+    res.format({
+      'application/json': () => {
+        res.send({
+          code: 0,
+          msg: 'success'
+        })
+      }
+    })
+  })
+}
+
+exports.delete = (req, res, next) => {
+  Subject.delete(JSON.stringify(req.body.navItem), (err) => {
+    if(err) return next(err);
+    res.format({
+      'application/json': () => {
+        res.send({
+          code: 0,
+          msg: 'success'
+        })
+      }
+    })
+  })
+}
+

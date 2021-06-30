@@ -2,6 +2,7 @@
 const redis = require('redis');
 const dbConf = require('../db.conf.json');
 const db = redis.createClient(dbConf.PORT, dbConf.HOST);
+const NoteCate = require('./note-cate.js');
 
 class BugRecord{
   constructor(obj){
@@ -12,7 +13,7 @@ class BugRecord{
   save(cb){
     bugReportJSON = JSON.stringify(this);
     db.zadd(
-      'note--cate-default',
+      'notes',
       this.ts,
       bugReportJSON,
       (err) => {
@@ -22,13 +23,20 @@ class BugRecord{
     )
   }
   static getRange(from, to, cb){
-    db.zrevrange('note--cate-default', from, to, (err, items) => {
+    db.zrevrange('notes', from, to, (err, notes) => {
       if(err) return cb(err);
-      cb(null, items.map((item) => JSON.parse(item)))
+      NoteCate.getAll((err, noteCates) => {
+        if(err) return cb(err);
+        cb(null, notes.map((item) => {
+          const note = JSON.parse(item);
+          note.cateTitle = noteCates[note.cate];
+          return note;
+        }))
+      });
     });
   }
   static delete(value, cb){
-    db.zrem('note--cate-default', value, (err) => {
+    db.zrem('notes', value, (err) => {
       if(err) return cb(err);
       cb(null);
     })

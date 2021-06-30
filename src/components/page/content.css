@@ -22,5 +22,5 @@ h1.header{
 }
 
 .bug-record-card-list{
-  margin-top: var(--gap-small); 
+  margin-bottom: var(--gap-small); 
 }

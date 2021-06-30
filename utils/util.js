@@ -37,3 +37,11 @@ export function round(d, n = 2){
 export function random(from, to){
 	return Math.floor(Math.random() * (to - from)) + from;
 }
+
+export function insertStrAt(source,idx, str){
+  return source.substring(0, idx) + str + source.substring(idx);
+}
+
+export function replaceStrAt(source, idx, str){
+  return source.substring(0, idx) + str + source.substring(idx + str.length)
+}

@@ -4,7 +4,7 @@ const PropTypes = require('prop-types')
 const NavBar = require('root/src/components/nav-bar.common.jsx')
 const Base = require('./Base.common.jsx');
 const Algorithms = require('./Algorithms.common.jsx');
-const Mianshi = require('./Mianshi.common.jsx');
+const ConfigNotecate = require('./config-notecate.jsx');
 const Regexp  = require('./Regexp.common.jsx');
 const BugRecord  = require('../bug-record.common.jsx');
 
@@ -23,20 +23,11 @@ class Content extends React.Component {
           <NavBar {...this.props}  />
           <div className="content">
             <Switch>
-              <Route path="/algorithms">
-                <Algorithms />
-              </Route>
-              <Route path="/mianshi">
-                <Mianshi />
-              </Route>
-              <Route path='/base'>
-                <Base />
-              </Route>
-              <Route path='/regexp'>
-                <Regexp />
-              </Route>
-              <Route path='/bug-record'>
+              <Route path='/'>
                 <BugRecord />
+              </Route>
+              <Route path='/config-notecate'>
+                <ConfigNotecate />
               </Route>
             </Switch>
           </div>

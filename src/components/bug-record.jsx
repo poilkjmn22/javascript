@@ -3,37 +3,49 @@ import ReactDOM from 'react-dom'
 const fn = ReactDOM.findDOMNode;
 import axios from 'axios'
 import BugRecordCardList from './bug-record-card-list.jsx'
-import Validator from './validator.jsx'
+import FormNote from './form-note.jsx'
 
 class BugRecord extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      text: '',
       bugRecordList: [],
-
-      errorMsgText: '',
       isEditing: false,
     }
-    this.handleChangeText = this.handleChangeText.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
     this.handleAddBugRecord = this.handleAddBugRecord.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
+    this.onSubmitCallback = this.onSubmitCallback.bind(this)
   }
   render(){
     return (
       <div>
-        <form style={{display: this.state.isEditing ? 'block' : 'none'}} className={`form-${this.props.name}`} action="/api/bug-record" method="post" ref="formBugRecord" onSubmit={this.handleSubmit}>
-          <textarea rows="10" cols="50" onChange={this.handleChangeText} name="text" value={this.state.text}>
-          </textarea>
-          <br />
-          <Validator errorMsg={this.state.errorMsgText} />
-          <input className="button-base button-primary" type="submit" value="提交"/>
-        </form>
-        <button onClick={this.handleAddBugRecord} style={{fontSize: '20px'}} className="button-base button-primary">{this.state.isEditing ? '-' : '+'}</button>
         <BugRecordCardList handleDelete={this.handleDelete} items={this.state.bugRecordList} />
+        <FormNote isShow={this.state.isEditing} onSubmitCallback={this.onSubmitCallback}/>
+        <button onClick={this.handleAddBugRecord} style={{fontSize: '20px'}} className="button-base button-primary">{this.state.isEditing ? '-' : '+'}</button>
       </div>
     )
+  }
+  onSubmitCallback(compFormNote){
+    axios.post('/api/bug-record', {
+      text: compFormNote.state.text,
+      notecate: compFormNote.state.notecate,
+    })
+      .then(res => {
+          if(res.data.code === 0){
+            this.getApiBugRecordList()
+            this.setState({
+              isEditing: false
+            })
+            //
+            compFormNote.setState({
+              text: '',
+              notecate: '',
+            })
+          }else{
+            window.alert('获取bug-record-list数据失败！')
+          }
+      })
+      .catch(console.error)
   }
   handleDelete(event){
     axios.post('/api/bug-record/delete', {
@@ -48,50 +60,9 @@ class BugRecord extends React.Component{
       })
       .catch(console.error)
   }
-  handleChangeText(event){
-    this.setState({
-      text: event.target.value
-    }, this.validateText)
-  }
   handleAddBugRecord(){
     this.setState({
       isEditing: !this.state.isEditing
-    })
-  }
-  validateText(){
-    if(!this.state.text){
-      this.setState({
-        errorMsgText: '文本内容不可为空！'
-      })
-    }else{
-      this.setState({
-        errorMsgText: ''
-      })
-    }
-  }
-  handleSubmit(event){
-    event.preventDefault()
-    //fn(this.refs.formBugRecord).submit()
-    this.validateText()
-    setTimeout(() => {
-      if(!this.state.errorMsgText){
-        axios.post('/api/bug-record', {
-          text: this.state.text
-        })
-          .then(res => {
-              if(res.data.code === 0){
-                this.getApiBugRecordList()
-                //
-                this.setState({
-                  text: '',
-                  isEditing: false
-                })
-              }else{
-                window.alert('获取bug-record-list数据失败！')
-              }
-          })
-          .catch(console.error)
-      }
     })
   }
   getApiBugRecordList(){

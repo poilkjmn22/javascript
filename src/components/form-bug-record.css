@@ -1,0 +1,5 @@
+.form-note{
+  > .form-row{
+    margin-bottom: var(--gap);
+  }
+}

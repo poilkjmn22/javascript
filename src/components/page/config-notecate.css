@@ -1,0 +1,11 @@
+.config-notecate{
+  .tag{
+    margin: 6px;
+    cursor: pointer;
+  }
+}
+.config-notecate {
+  .notecate-list{
+    display: inline-block;
+  }
+}

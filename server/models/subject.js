@@ -9,10 +9,22 @@ class Subject{
     }
   }
   static getRange(from, to, cb){
-    db.lrange('subjects', from, to, (err, items) => {
+    db.zrange('nav-items', from, to, (err, items) => {
       if(err) return cb(err);
       const subjects = items.map((item) => JSON.parse(item));
       cb(null, subjects);
+    })
+  }
+  save(score, cb){
+    db.zadd('nav-items', score, JSON.stringify(this), (err) => {
+      if(err) return cb(err);
+      cb(null);
+    })
+  }
+  static delete(value, cb){
+    db.zrem('nav-items', value, (err) => {
+      if(err) return cb(err);
+      cb(null);
     })
   }
 }

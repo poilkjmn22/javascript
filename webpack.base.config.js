@@ -61,7 +61,8 @@ module.exports = {
       style: path.resolve(__dirname, './style/'),
       root: path.resolve(__dirname),
       comp: path.resolve(__dirname, 'src/components'),
-    }
+    },
+    //modules: ['node_modules', 'src']
   },
 	output: {
 		filename: '[name].bundle.js'
@@ -154,5 +155,22 @@ module.exports = {
 		}),
     new VueLoaderPlugin(),
 	],
-
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+          name: 'vendor',
+          chunks: 'all',
+          priority: -10,
+        },
+        default: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'default',
+          chunks: 'all',
+          priority: -20,
+        }
+      }
+    }
+  }
 }

@@ -4,7 +4,7 @@
   "description": "base knowledge",
   "main": "base.js",
   "scripts": {
-    "test": "node ./build/test.js",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js ./utils",
     "start": "concurrently \"npm run dev-serve\" \"npm run serve\"",
     "dev-serve": "webpack serve --config webpack.dev.config.js",
     "serve": "npm run build && node ./build/server.js",
@@ -34,6 +34,7 @@
     "eslint": "^7.18.0",
     "eslint-webpack-plugin": "^2.4.3",
     "html-webpack-plugin": "^4.5.1",
+    "jest": "^27.0.4",
     "mini-css-extract-plugin": "^1.6.0",
     "postcss": "^8.2.15",
     "postcss-css-variables": "^0.18.0",
@@ -52,13 +53,16 @@
     "webpack-merge": "^5.7.3"
   },
   "dependencies": {
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "core-js": "^3.9.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "normalize.css": "^8.0.1",
+    "pinyin": "^2.10.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-common-components-fq": "^1.0.0",

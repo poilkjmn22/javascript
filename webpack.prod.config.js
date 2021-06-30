@@ -13,23 +13,9 @@ module.exports = merge(require('./webpack.base.config.js'), {
         test: /\.css$/,
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader'
+          'css-loader',
+          'postcss-loader',
         ]
-      },
-      {
-        test: /\.s[ac]ss$/,
-        use: [
-        MiniCssExtractPlugin.loader,
-        'css-loader', 
-        {
-          loader: 'sass-loader',
-          options: {
-            implementation: require("sass"),
-            sassOptions: {
-              fiber: false,
-            },
-          }, 
-        }],
       },
     ]
   },
