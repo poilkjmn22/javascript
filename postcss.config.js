@@ -8,7 +8,7 @@ module.exports = {
     ],
     require('postcss-nested')(),
     require('postcss-css-variables')({
-      variables: require('./style/variables.json')
+      variables: require('./src/style/variables.json')
     }),
     require('postcss-mixins')(),
     require("autoprefixer")(),

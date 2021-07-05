@@ -1,4 +1,4 @@
-import {insertStrAt, replaceStrAt} from 'root/utils/util.js'
+import {insertStrAt, replaceStrAt} from '@/utils/util.js'
 
 function traverseNode(node){
   const res = [];

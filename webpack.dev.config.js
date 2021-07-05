@@ -15,7 +15,7 @@ module.exports = merge(require('./webpack.base.config.js'), {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        {from: 'assets', to: '', globOptions: {
+        {from: 'public/assets', to: '', globOptions: {
           ignore: ['**/*.iso', '**/*.doc']
         }}
       ]

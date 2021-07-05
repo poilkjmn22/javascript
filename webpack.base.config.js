@@ -58,8 +58,9 @@ module.exports = {
   resolve:{
     mainFields: ['module', 'main'],
     alias: {
-      style: path.resolve(__dirname, './style/'),
+      style: path.resolve(__dirname, 'src/style/'),
       root: path.resolve(__dirname),
+      '@': path.resolve(__dirname, 'src/'),
       comp: path.resolve(__dirname, 'src/components'),
     },
     //modules: ['node_modules', 'src']

@@ -3,11 +3,11 @@ export default class NotecateLoader{
   static load(notecate){
     switch(notecate){
       case '算法':
-        import('root/algorithms/sort/benchmark.js')
+        import('@/algorithms/sort/benchmark.js')
           .then((module) => {
           })
           .catch(console.error)
-        import('root/algorithms/exhaustive-search/dfs/examples.js')
+        import('@/algorithms/exhaustive-search/dfs/examples.js')
           .then((module) => {
           })
           .catch(console.error)
