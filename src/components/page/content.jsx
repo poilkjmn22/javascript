@@ -4,6 +4,7 @@ const PropTypes = require('prop-types')
 import NavBar from 'root/src/components/nav-bar.jsx'
 import ConfigNotecate from './config-notecate.jsx';
 import ConfigNav from './config-nav.jsx';
+import RecordDetail from './record-detail.jsx';
 import BugRecord from '../bug-record.jsx';
 import Mianshi from '../mianshi.jsx';
 
@@ -31,6 +32,9 @@ class Content extends React.Component {
               </Route>
               <Route path='/config-nav'>
                 <ConfigNav refreshNavItemsCallback={this.props.refreshNavItemsCallback} />
+              </Route>
+              <Route path='/record/detail'>
+                <RecordDetail />
               </Route>
               <Route path='/'>
                 <BugRecord />

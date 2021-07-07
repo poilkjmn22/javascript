@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {withRouter} from 'react-router-dom'
 const fn = ReactDOM.findDOMNode;
 import axios from 'axios'
 import BugRecordCardList from './bug-record-card-list.jsx'
@@ -14,12 +15,13 @@ class BugRecord extends React.Component{
     }
     this.handleAddBugRecord = this.handleAddBugRecord.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
+    this.handleClickCard = this.handleClickCard.bind(this)
     this.onSubmitCallback = this.onSubmitCallback.bind(this)
   }
   render(){
     return (
       <div>
-        <BugRecordCardList handleDelete={this.handleDelete} items={this.state.bugRecordList} />
+        <BugRecordCardList handleClickCard={this.handleClickCard} handleDelete={this.handleDelete} items={this.state.bugRecordList} />
         <FormNote isShow={this.state.isEditing} onSubmitCallback={this.onSubmitCallback}/>
         <button onClick={this.handleAddBugRecord} style={{fontSize: '20px'}} className="button-base button-primary">{this.state.isEditing ? '-' : '+'}</button>
       </div>
@@ -46,6 +48,9 @@ class BugRecord extends React.Component{
           }
       })
       .catch(console.error)
+  }
+  handleClickCard(){
+    this.props.history.push('/record/detail')
   }
   handleDelete(event){
     axios.post('/api/bug-record/delete', {
@@ -82,4 +87,4 @@ BugRecord.defaultProps = {
   name: 'bug-record'
 }
 
-export default BugRecord
+export default withRouter(BugRecord)
