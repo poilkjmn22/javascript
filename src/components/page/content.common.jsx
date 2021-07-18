@@ -4,7 +4,7 @@ const PropTypes = require('prop-types')
 const NavBar = require('root/src/components/nav-bar.common.jsx')
 const Base = require('./Base.common.jsx');
 const Algorithms = require('./Algorithms.common.jsx');
-const ConfigNotecate = require('./config-notecate.jsx');
+const ConfigNotecate = require('./config-notecate.common.jsx');
 const Regexp  = require('./Regexp.common.jsx');
 const BugRecord  = require('../bug-record.common.jsx');
 

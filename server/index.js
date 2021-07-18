@@ -21,6 +21,7 @@ app.engine('.ejs', ejs);
 const subject = require('./routes/subject.js');
 const bugRecord = require('./routes/bug-record.js');
 const noteCate = require('./routes/note-cate.js');
+
 app.get('/api/subjects', subject.list)
 app.post('/api/nav-items/add', subject.add);
 app.post('/api/nav-items/delete', subject.delete);
@@ -28,6 +29,8 @@ app.post('/api/nav-items/delete', subject.delete);
 app.get('/api/bug-record-list', bugRecord.list);
 app.post('/api/bug-record', bugRecord.submit);
 app.post('/api/bug-record/delete', bugRecord.delete);
+app.post('/api/bug-record/statistic', bugRecord.statistic);
+
 app.get('/api/note-cate-map', noteCate.map);
 app.post('/api/note-cate/add', noteCate.add);
 

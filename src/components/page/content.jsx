@@ -7,6 +7,7 @@ import ConfigNav from './config-nav.jsx';
 import RecordDetail from './record-detail.jsx';
 import BugRecord from '../bug-record.jsx';
 import Mianshi from '../mianshi.jsx';
+import StatisticAnalysis from './statistic-analysis.jsx';
 
 import * as api from 'axios';
 
@@ -35,6 +36,9 @@ class Content extends React.Component {
               </Route>
               <Route path='/record/detail'>
                 <RecordDetail />
+              </Route>
+              <Route path='/statistic-analysis'>
+                <StatisticAnalysis />
               </Route>
               <Route path='/'>
                 <BugRecord />

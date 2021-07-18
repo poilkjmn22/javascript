@@ -1,0 +1,10 @@
+.chart-box{
+  text-align: center;
+  svg{
+    margin: 0 auto;
+    width: 80%;
+    height: 80vh;
+    border: 1px solid var(--color-gray);
+    /* box-shadow: */ 
+  }
+}

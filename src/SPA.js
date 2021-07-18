@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import {BrowserRouter, HashRouter} from 'react-router-dom'
 import Content from './components/page/content.jsx'
 import api from './api.js'
+import global from './global.js'
 function renderApp(items){
   const Router = process.env.NODE_ENV !== 'dev' ? BrowserRouter : HashRouter
   ReactDOM.render((

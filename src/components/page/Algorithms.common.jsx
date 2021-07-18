@@ -1,4 +1,3 @@
-
 const React = require('react');
 class Algorithms extends React.Component{
   render(){
@@ -9,7 +8,7 @@ class Algorithms extends React.Component{
     )
   }
   componentDidMount(){
-    import('root/base/generator.js')
+    import('@/base/generator.js')
       .then((module) => {
         console.dir(module)
       })

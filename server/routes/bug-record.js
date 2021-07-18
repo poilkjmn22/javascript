@@ -1,4 +1,5 @@
 const BugRecord = require('../models/bug-record.js');
+const _ = require('lodash')
 exports.submit = (req, res, next) => {
   const bugRecord = new BugRecord({
     text: req.body.text,
@@ -34,6 +35,18 @@ exports.delete = (req, res, next) => {
           code: 0,
           msg: 'success'
         })
+      }
+    })
+  })
+}
+
+exports.statistic = (req, res, next) => {
+  BugRecord.getRange(0, -1, (err, bugRecords) => {
+    if(err) return next(err);
+    const statisticData = _.groupBy(bugRecords, 'cate')
+    res.format({
+      'application/json': () => {
+        res.send(statisticData);
       }
     })
   })
