@@ -24,7 +24,7 @@ class ConfigNotecate extends React.Component {
       tagList.push(<Tag handleClick={this.handleClickNotecate} key={k} name={k} title={notecateList[k]}></Tag>);
     }
     return (
-      <div className={this.props.name}>
+      <div className={this.props.name} ref="elConfigNotecate">
         <div className="notecate-list">
           {tagList}
         </div>
@@ -32,6 +32,7 @@ class ConfigNotecate extends React.Component {
           <input className={['input-add-notecate',this.state.isEditing ? '' :  'display-none'].join(' ')} value={this.state.addNotecateTitle} onChange={this.handleChangeNotecateTitle} type="text" onKeyUp={this.handleKeyupNotecate} />
           <button onClick={this.handleClick}  className="button-base">{this.state.isEditing ? '-' : '+'}</button>
         </div>
+        <div className="modules" ref="elModules"></div>
       </div>
     )
   }
@@ -50,7 +51,7 @@ class ConfigNotecate extends React.Component {
     })
   }
   handleClickNotecate(event){
-    NotecateLoader.load(event.target.dataset.notecate)
+    NotecateLoader.load(event.target.dataset.notecate, this)
   }
   handleChangeNotecateTitle(event){
     this.setState({

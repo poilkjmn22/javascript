@@ -25,33 +25,33 @@ const arr = [p,p1,p2]
 //   }
 // }
 
-async function asyncRp(p){
+async function asyncRp(){
+  console.log(0)
   console.log(await p)
+  console.log(await p1)
+  console.log(3)
 }
 //并行模式
-// asyncRp(p)
-// asyncRp(p1)
-// asyncRp(p2)
-
+asyncRp()
 // foo()
 // ASQ(done => done('hello'))
 //   .val(greeting => `${greeting} asynquence`)
 //   .then(( done, msg ) => setTimeout(done, 1000, msg))
 //   .then(( done, msg ) => report(msg))
 
-ASQ(done => setTimeout(() => {
-  report('step 1')
-  done()
-}, 1000)) 
-  .gate(
-    done => setTimeout(() => {
-      done('hello ')
-    }, 500),
-    done => setTimeout(() => {
-      done('asynquence', '!')
-    }, 500),
-  )
-  .val(( msg1, msg2 ) => {
-    report(msg1)
-    report(msg2)
-  })
+// ASQ(done => setTimeout(() => {
+//   report('step 1')
+//   done()
+// }, 1000)) 
+//   .gate(
+//     done => setTimeout(() => {
+//       done('hello ')
+//     }, 500),
+//     done => setTimeout(() => {
+//       done('asynquence', '!')
+//     }, 500),
+//   )
+//   .val(( msg1, msg2 ) => {
+//     report(msg1)
+//     report(msg2)
+//   })

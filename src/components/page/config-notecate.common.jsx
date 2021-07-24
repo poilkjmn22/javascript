@@ -49,7 +49,7 @@ class ConfigNotecate extends React.Component {
     })
   }
   handleClickNotecate(event){
-    NotecateLoader.load(event.target.dataset.notecate)
+    NotecateLoader.load(event.target.dataset.notecate, this)
   }
   handleChangeNotecateTitle(event){
     this.setState({
