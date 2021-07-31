@@ -9,6 +9,17 @@
   > * {
     padding: 10px;
   }
+
+  .notecate-tree svg{
+    height: 80vh;
+    width: 100%;
+  }
+
+  .opra-area{
+    > *{
+      margin-right: 10px;
+    }
+  }
 }
 
 svg{

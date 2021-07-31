@@ -9,7 +9,7 @@ class FormNote extends React.Component{
       text: '',
       errorMsgText: '',
       notecate: '',
-      noteCates: {},
+      noteCates: [],
     }
     this.handleChangeText = this.handleChangeText.bind(this)
     this.handleChangeNoteCate = this.handleChangeNoteCate.bind(this)
@@ -18,8 +18,8 @@ class FormNote extends React.Component{
   render(){
     const noteCates = this.state.noteCates;
     const options = [<option key='' value=''>请选择</option>];
-    for(const k in noteCates){
-      options.push(<option key={k} value={k}>{noteCates[k]}</option>);
+    for(const k of noteCates){
+      options.push(<option key={k.name} value={k.name}>{k.name}</option>);
     }
     return (
       <form style={{display: this.props.isShow ? 'block' : 'none'}} className={this.props.name} action="/api/bug-record" method="post" ref="formBugRecord" onSubmit={this.handleSubmit}>
@@ -71,8 +71,9 @@ class FormNote extends React.Component{
     })
   }
   componentDidMount(){
-    axios.get('/api/note-cate-map')
+    axios.get('/api/note-cate/list')
       .then(res => {
+        console.log(res.data)
         this.setState({
           noteCates: res.data
         })

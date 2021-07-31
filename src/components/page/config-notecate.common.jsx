@@ -19,8 +19,8 @@ class ConfigNotecate extends React.Component {
   render(){
     const notecateList = this.state.notecateList;
     const tagList = [];
-    for(const k in notecateList){
-      tagList.push(<Tag handleClick={this.handleClickNotecate} key={k} name={k} title={notecateList[k]}></Tag>);
+    for(const k of notecateList){
+      tagList.push(<Tag handleClick={this.handleClickNotecate} key={k.name} name={k.name} title={k.name}></Tag>);
     }
     return (
       <div className={this.props.name}>
@@ -35,7 +35,7 @@ class ConfigNotecate extends React.Component {
     )
   }
   getApiNotecateList(){
-    axios.get('/api/note-cate-map')
+    axios.get('/api/note-cate/list')
       .then(res => {
         this.setState({
           notecateList: res.data

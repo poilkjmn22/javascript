@@ -20,7 +20,7 @@ app.engine('.ejs', ejs);
 //RESTFUL API
 const subject = require('./routes/subject.js');
 const bugRecord = require('./routes/bug-record.js');
-const noteCate = require('./routes/note-cate.js');
+const noteCateList = require('./routes/note-cate-list.js');
 
 app.get('/api/subjects', subject.list)
 app.post('/api/nav-items/add', subject.add);
@@ -31,8 +31,8 @@ app.post('/api/bug-record', bugRecord.submit);
 app.post('/api/bug-record/delete', bugRecord.delete);
 app.post('/api/bug-record/statistic', bugRecord.statistic);
 
-app.get('/api/note-cate-map', noteCate.map);
-app.post('/api/note-cate/add', noteCate.add);
+app.get('/api/note-cate/list', noteCateList.list);
+app.post('/api/note-cate/add', noteCateList.add);
 
 app.get('/', index.app);
 
