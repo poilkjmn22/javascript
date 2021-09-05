@@ -4,7 +4,6 @@
   "description": "base knowledge",
   "main": "base.js",
   "scripts": {
-    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js ./utils",
     "start": "concurrently \"npm run dev-serve\" \"npm run serve\"",
     "dev-serve": "webpack serve --config webpack.dev.config.js",
     "serve": "npm run build && node ./build/server.js",
