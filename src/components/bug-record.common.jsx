@@ -2,7 +2,7 @@ const React = require('react')
 const ReactDOM = require('react-dom')
 const fn = ReactDOM.findDOMNode;
 const axios = require('axios');
-const BugRecordCardList = require('./bug-record-card-list.jsx');
+const BugRecordCardList = require('./bug-record-card-list.common.jsx');
 class BugRecord extends React.Component{
   constructor(props){
     super(props)

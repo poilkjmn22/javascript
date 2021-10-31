@@ -1,6 +1,6 @@
-const React = require('react')
-const {Switch, Route} = require('react-router-dom')
-const PropTypes = require('prop-types')
+import React from 'react'
+import {Switch, Route} from 'react-router-dom'
+import PropTypes from 'prop-types'
 import NavBar from 'root/src/components/nav-bar.jsx'
 import ConfigNotecate from './config-notecate.jsx';
 import ConfigNav from './config-nav.jsx';

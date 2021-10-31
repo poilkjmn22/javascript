@@ -1,5 +1,5 @@
 const React = require('react');
-const Tag = require('../tag.jsx')
+const Tag = require('../tag.common.jsx')
 const axios = require('axios')
 const NotecateLoader = require('@/NotecateLoader.js')
 

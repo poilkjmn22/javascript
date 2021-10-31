@@ -8,6 +8,7 @@
     "dev-serve": "webpack serve --config webpack.dev.config.js",
     "serve": "npm run build && node ./build/server.js",
     "server": "node ./build/server.js",
+    "server-test": "node ./build/test.js",
     "dump": "cp /usr/local/var/db/redis/dump.rdb dump;cp ~/.vimrc ../atom-config/backup",
     "restore": "cp dump/dump.rdb /usr/local/var/db/redis;cp ../atom-config/backup/.vimrc ~/vimfiles",
     "build": "npm run build-server && npm run build-client",
@@ -50,6 +51,7 @@
     "webpack": "^5.18.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.4.0",
+    "webpack-dashboard": "^3.3.6",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3"
   },

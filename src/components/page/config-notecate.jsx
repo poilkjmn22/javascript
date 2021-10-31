@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import Tag from '../tag.jsx';
 import axios from 'axios';
 import "./config-notecate.css";

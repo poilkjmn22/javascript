@@ -1,4 +1,4 @@
-import React from 'react';
+const React = require('react');
 class RecordDetail extends React.Component {
   constructor(props){
     super(props)
@@ -17,4 +17,4 @@ RecordDetail.defaultProps = {
   name: 'record-detail'
 }
 
-export default RecordDetail
+module.exports = RecordDetail

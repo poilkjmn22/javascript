@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 import Table from '../table.jsx';
 import api from 'root/src/api.js';
 import {last as _last} from 'lodash-es';
