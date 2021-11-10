@@ -2,8 +2,12 @@ const path = require('path');
 const {merge} = require('webpack-merge');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
+const SizePlugin = require('size-plugin');
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+const smp = new SpeedMeasurePlugin();
 
-module.exports = merge(require('./webpack.base.config.js'), {
+module.exports = smp.wrap(merge(require('./webpack.base.config.js'), {
   mode: 'development',
   devtool: 'inline-source-map',
   output: {
@@ -19,7 +23,9 @@ module.exports = merge(require('./webpack.base.config.js'), {
           ignore: ['**/*.iso', '**/*.doc']
         }}
       ]
-    })
+    }),
+    new SizePlugin(),
+    new DashboardPlugin(),
   ],
 	devServer: {
 		port: 9000,
@@ -49,4 +55,4 @@ module.exports = merge(require('./webpack.base.config.js'), {
       });
     }
 	},
-});
+}));
