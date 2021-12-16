@@ -35,3 +35,9 @@ svg{
   display: block;
   margin-bottom: 20px;
 }
+
+.modules {
+  position: relative;
+  min-height: 800px;
+  padding: 0 !important;
+}

@@ -1,10 +1,12 @@
 import { CSvg } from '@/utils/svg.js'
+import { empty } from '@/utils/dom.js'
 
 export default class NotecateLoader{
   constructor(){}
   static async load(notecate, comp){
     const { elModules } = comp.refs
-    switch(notecate){
+    empty(elModules)
+    switch(notecate.replace(/\./g, '-')){
       case '深度优先遍历':
         // import('@/algorithms/sort/benchmark.js')
         //   .then((module) => {
@@ -81,6 +83,10 @@ export default class NotecateLoader{
           setTimeout(() => console.log(getDimensions(target)), 2000)
         })
         elModules.appendChild(img2)
+        break;
+      case 'three-js':
+        const { init, init_light_material, init_light_material2, init_motion} = await import('@/threejs/lesson1.js')
+        init_motion(elModules)
         break;
       default:
         break;
