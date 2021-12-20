@@ -1,11 +1,14 @@
 import { CSvg } from '@/utils/svg.js'
 import { empty } from '@/utils/dom.js'
+import { addLessonGUIControls, deleteGUI } from '@/threejs/util.js'
 
 export default class NotecateLoader{
   constructor(){}
   static async load(notecate, comp){
     const { elModules } = comp.refs
     empty(elModules)
+    deleteGUI('lessonGUI')
+    deleteGUI('lessonCateGUI')
     switch(notecate.replace(/\./g, '-')){
       case '深度优先遍历':
         // import('@/algorithms/sort/benchmark.js')
@@ -84,9 +87,13 @@ export default class NotecateLoader{
         })
         elModules.appendChild(img2)
         break;
-      case 'three-js':
-        const { init, init_light_material, init_light_material2, init_motion} = await import('@/threejs/lesson1.js')
-        init_motion(elModules)
+      case 'lesson1':
+        const lesson1 = await import('@/threejs/lesson1.js')
+        addLessonGUIControls(lesson1, elModules)
+        break;
+      case 'lesson2':
+        const lesson2 = await import('@/threejs/lesson2.js')
+        addLessonGUIControls(lesson2, elModules)
         break;
       default:
         break;

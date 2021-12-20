@@ -9,7 +9,7 @@
 import * as THREE from 'three'
 import Stats from 'stats.js'
 import * as dat from 'dat.gui'
-import TrackballControls from 'three-trackballcontrols'
+import { initTrackballControls, initLessonCateGUI } from './util.js'
 
 function init(elContainer) {
     // create a scene, that will hold all our elements such as objects, cameras and lights.
@@ -390,8 +390,7 @@ function init_motion(elContainer) {
     elContainer.appendChild(stats.dom);
     stats.showPanel(0);
 
-    const gui = new dat.GUI({
-    });
+    const gui = initLessonCateGUI();
     var controller = {
       rotationSpeed: 0.02,
       bouncingSpeed: 0.03
@@ -399,12 +398,13 @@ function init_motion(elContainer) {
     gui.add(controller, 'rotationSpeed', 0, 0.5);
     gui.add(controller, 'bouncingSpeed', 0, 0.5);
 
-    const trackballControls = new TrackballControls(camera, renderer.domElement);
-    trackballControls.update();
+    const trackballControls = initTrackballControls(camera, renderer);
+    const clock = new THREE.Clock();
 
     renderScene();
 
     function renderScene() {
+        trackballControls.update(clock.getDelta())
         stats.begin();
 
         // rotate the cube around its axes
@@ -419,7 +419,6 @@ function init_motion(elContainer) {
 
         // render using requestAnimationFrame
         requestAnimationFrame(renderScene);
-        trackballControls.update();
         renderer.render(scene, camera);
         stats.end();
     }
