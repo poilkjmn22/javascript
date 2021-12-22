@@ -7,9 +7,8 @@
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
 import * as THREE from 'three'
-import Stats from 'stats.js'
 import * as dat from 'dat.gui'
-import { initTrackballControls, initLessonCateGUI } from './util.js'
+import { initTrackballControls, initLessonCateGUI, initStats } from './util.js'
 
 function init(elContainer) {
     // create a scene, that will hold all our elements such as objects, cameras and lights.
@@ -385,10 +384,7 @@ function init_motion(elContainer) {
 
     // call the render function
     var step = 0;
-    var stats = new Stats();
-    stats.dom.style.position = 'absolute';
-    elContainer.appendChild(stats.dom);
-    stats.showPanel(0);
+    var stats = initStats(elContainer);
 
     const gui = initLessonCateGUI();
     var controller = {

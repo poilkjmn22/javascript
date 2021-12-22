@@ -7,9 +7,8 @@
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
 import * as THREE from 'three'
-import Stats from 'stats.js'
 import * as dat from 'dat.gui'
-import { initTrackballControls, initLessonCateGUI } from './util.js'
+import { initTrackballControls, initLessonCateGUI, initStats } from './util.js'
 
 function init(elContainer) {
 
@@ -64,10 +63,7 @@ function init(elContainer) {
 
     // call the render function
     var step = 0;
-    var stats = new Stats();
-    stats.dom.style.position = 'absolute';
-    elContainer.appendChild(stats.dom);
-    stats.showPanel(0);
+    var stats = initStats(elContainer);
 
     var controls = new function () {
         this.rotationSpeed = 0.02;
@@ -197,10 +193,7 @@ function init_fog(elContainer) {
 
     // call the render function
     var step = 0;
-    var stats = new Stats();
-    stats.dom.style.position = 'absolute';
-    elContainer.appendChild(stats.dom);
-    stats.showPanel(0);
+    var stats = initStats(elContainer);
 
     var controls = new function () {
         this.rotationSpeed = 0.02;
@@ -332,10 +325,7 @@ function init_override_material(elContainer) {
 
     // call the render function
     var step = 0;
-    var stats = new Stats();
-    stats.dom.style.position = 'absolute';
-    elContainer.appendChild(stats.dom);
-    stats.showPanel(0);
+    var stats = initStats(elContainer);
 
     var controls = new function () {
         this.rotationSpeed = 0.02;
@@ -469,10 +459,7 @@ function init_geometries(elContainer) {
 
     // call the render function
     var step = 0;
-    var stats = new Stats();
-    stats.dom.style.position = 'absolute';
-    elContainer.appendChild(stats.dom);
-    stats.showPanel(0);
+    var stats = initStats(elContainer);
     
     var trackballControls = initTrackballControls(camera, renderer);
     var clock = new THREE.Clock();
@@ -621,10 +608,7 @@ function init_custom_geom(elContainer) {
   // call the render function
   var step = 0;
 
-  var stats = new Stats();
-  stats.dom.style.position = 'absolute';
-  elContainer.appendChild(stats.dom);
-  stats.showPanel(0);
+  var stats = initStats(elContainer);
 
   var vertices = [
       new THREE.Vector3(1, 3, 1),
@@ -801,10 +785,7 @@ function init_mesh_properties(elContainer) {
   // call the render function
   var step = 0;
 
-  var stats = new Stats();
-  stats.dom.style.position = 'absolute';
-  elContainer.appendChild(stats.dom);
-  stats.showPanel(0);
+  var stats = initStats(elContainer);
 
   var controls = new function () {
       this.scaleX = 1;
@@ -1016,10 +997,7 @@ function init_both_cameras(elContainer) {
   trackballControls = initTrackballControls(camera, renderer);
   var clock = new THREE.Clock();
 
-  var stats = new Stats();
-  stats.dom.style.position = 'absolute';
-  elContainer.appendChild(stats.dom);
-  stats.showPanel(0);
+  var stats = initStats(elContainer);
 
   render();
 
@@ -1131,10 +1109,7 @@ function init_camera_lookat(elContainer) {
 
   var step = 0;
 
-  var stats = new Stats();
-  stats.dom.style.position = 'absolute';
-  elContainer.appendChild(stats.dom);
-  stats.showPanel(0);
+  var stats = initStats(elContainer);
 
   render();
 
