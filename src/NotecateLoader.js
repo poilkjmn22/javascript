@@ -87,6 +87,9 @@ export default class NotecateLoader{
         })
         elModules.appendChild(img2)
         break;
+      case 'set':
+        await import('@/lib/set.js')
+        break;
       case 'lesson1':
         const lesson1 = await import('@/threejs/lesson1.js')
         addLessonGUIControls(lesson1, elModules)
@@ -98,6 +101,10 @@ export default class NotecateLoader{
       case 'lesson3':
         const lesson3 = await import('@/threejs/lesson3.js')
         addLessonGUIControls(lesson3, elModules)
+        break;
+      case 'lesson4':
+        const lesson4 = await import('@/threejs/lesson4.js')
+        addLessonGUIControls(lesson4, elModules)
         break;
       default:
         break;
