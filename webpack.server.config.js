@@ -36,6 +36,7 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns:[
         {from: 'server/views', to: 'views'},
+        {from: 'server/js', to: 'js'},
       ]
     })
   ],

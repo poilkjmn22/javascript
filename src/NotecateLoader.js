@@ -88,7 +88,8 @@ export default class NotecateLoader{
         elModules.appendChild(img2)
         break;
       case 'set':
-        await import('@/lib/set.js')
+        const { init } = await import('@/lib/set.js')
+        init()
         break;
       case 'lesson1':
         const lesson1 = await import('@/threejs/lesson1.js')

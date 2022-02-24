@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const index = require('./routes/index.js');
 const {PORT = 3004, PWD = __dirname} = process.env;
@@ -9,6 +10,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 //view engine setup
 const ejs = require('ejs').__express;
@@ -36,7 +38,7 @@ app.post('/api/note-cate/add', noteCateList.add);
 
 app.get('/', index.app);
 
-app.use(express.static(path.resolve(PWD, 'build/public')));
+app.use(express.static(path.resolve(PWD, 'server')));
 app.use('*', index.app);
 
 app.listen(PORT, () => console.log(`Running server on port ${PORT}`))

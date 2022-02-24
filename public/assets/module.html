@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>ES 6+后的模块</title>
+    <script async src="./js/async.js"></script>    
+  </head>
+  <body>
+    <h1>ES 6+后的模块</h1>
+    <script>
+      document.write('<div id="module-box"></div>')
+    </script>    
+
+    <input type="button" id="btn-import-js" value="dynamic import js"></input>
+    <script defer src="./js/deferred.js"></script>    
+    <script type="module" src="./js/moduleA.js"></script>    
+    <script type="module" src="./js/moduleB.js"></script>    
+    <script type="module" src="http://127.0.0.1:3004/js/testCORS.mjs"></script>    
+    <script type="module" src="./js/import.js"></script>    
+    <script src="http://127.0.0.1:3004/js/testCORS.js"></script>    
+  </body>
+</html>
