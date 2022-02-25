@@ -87,6 +87,11 @@ export default class NotecateLoader{
         })
         elModules.appendChild(img2)
         break;
+      case '迭代器':
+        const iterator = await import('@/base/iterator/index.js')
+        addLessonGUIControls(iterator, elModules)
+
+        break;
       case 'set':
         const { init } = await import('@/lib/set.js')
         init()

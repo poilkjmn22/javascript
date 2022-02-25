@@ -29,15 +29,4 @@ class Counter {
 	}
 }
 
-let counter = new Counter(5);
-
-for(let i of counter) {
-  if (i > 3) {
-    break;
-  }
-  console.log(i);
-}
-
-for(let i of counter) {
-	console.log(i);
-}
+export default Counter
