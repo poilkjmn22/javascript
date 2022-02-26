@@ -92,6 +92,11 @@ export default class NotecateLoader{
         addLessonGUIControls(iterator, elModules)
 
         break;
+      case '生成器':
+        const generator = await import('@/base/generator/index.js')
+        addLessonGUIControls(generator, elModules)
+
+        break;
       case 'set':
         const { init } = await import('@/lib/set.js')
         init()
