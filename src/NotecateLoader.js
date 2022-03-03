@@ -97,6 +97,11 @@ export default class NotecateLoader{
         addLessonGUIControls(generator, elModules)
 
         break;
+      case '异步编程':
+        const async = await import('@/base/async/index.js')
+        addLessonGUIControls(async, elModules)
+
+        break;
       case 'set':
         const { init } = await import('@/lib/set.js')
         init()
