@@ -35,6 +35,8 @@ app.post('/api/bug-record/statistic', bugRecord.statistic);
 
 app.get('/api/note-cate/list', noteCateList.list);
 app.post('/api/note-cate/add', noteCateList.add);
+app.post('/api/note-cate/delete', noteCateList.delete);
+app.post('/api/note-cate/update', noteCateList.update);
 
 app.get('/', index.app);
 

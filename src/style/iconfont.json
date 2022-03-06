@@ -1,0 +1,16 @@
+{
+  "id": "3225228",
+  "name": "JavaScript Playground",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7008905",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e6e9",
+      "unicode_decimal": 59113
+    }
+  ]
+}

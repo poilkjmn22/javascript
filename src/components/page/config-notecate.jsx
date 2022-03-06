@@ -4,6 +4,7 @@ import axios from 'axios';
 import "./config-notecate.css";
 import NotecateLoader from 'root/src/NotecateLoader.js'
 import { toTree } from '@/utils/array-to-tree.js'
+import DialogNotecate from '@/components/dialog-notecate.jsx'
 import * as d3 from 'd3'
 
 class ConfigNotecate extends React.Component {
@@ -11,23 +12,19 @@ class ConfigNotecate extends React.Component {
     super(props)
     this.state = {
       notecateList: [],
-      addNotecateTitle: '',
-      isEditing: false,
-      parentNodecate: '',
+      currentNotecate: {},
+      isShowDialogNotecate: false,
     }
-    this.handleChangeNotecateTitle = this.handleChangeNotecateTitle.bind(this)
-    this.handleChangeNotecate= this.handleChangeNotecate.bind(this)
-    this.handleKeyupNotecate = this.handleKeyupNotecate.bind(this)
+
+    this.handleCloseDialog = this.handleCloseDialog.bind(this)
+    this.refreshNotecateList = this.getApiNotecateList.bind(this)
   }
   render(){
     return (
       <div className={this.props.name} ref="elConfigNotecate">
         <div ref="notecateTreeBox" className="notecate-tree">
         </div>
-        <div className={['opra-area',this.state.isEditing ? '' :  'display-none'].join(' ')}>
-          <input ref="inputNotecate" value={this.state.addNotecateTitle} onChange={this.handleChangeNotecateTitle} type="text" onKeyUp={this.handleKeyupNotecate} />
-          <span>父节点：{this.state.parentNodecate}</span>        
-        </div>
+        <DialogNotecate refreshNotecateList={this.refreshNotecateList} handleCloseDialog={ this.handleCloseDialog } notecate={this.state.currentNotecate} isShow={ this.state.isShowDialogNotecate } />
         <div className="modules" ref="elModules"></div>
       </div>
     )
@@ -45,56 +42,18 @@ class ConfigNotecate extends React.Component {
       })
       .catch(console.error)
   }
-  handleChangeNotecateTitle(event){
-    this.setState({
-      addNotecateTitle: event.target.value
-    })
-  }
-  handleChangeNotecate(event){
-    this.setState({
-      parentNodecate: event.target.value
-    })
-  }
-  handleKeyupNotecate(event){
-    if(event.keyCode === 13){
-      if(!event.target.value) return
-      axios.post('/api/note-cate/add', {
-        name: event.target.value,
-        _parent: this.state.parentNodecate === 'root' ? '' : this.state.parentNodecate,
-      })
-        .then(res => {
-          if(res.data.code === 0){
-            this.setState({
-              addNotecateTitle: '',
-              isEditing: false
-            })
-            this.getApiNotecateList()
-          }
-        })
-        .catch(console.error)
-    }
-  }
   componentDidMount(){
     this.getApiNotecateList()
   }
   clearDrawn(){
     d3.select('#svg-notecate-tree').remove()    
   }
-  handleClickSvg(e){
-    this.setState({
-      isEditing: false
-    })
-    this.setState({
-      parentNodecate: ''
-    })
-  }
   handleClickNode(e, node){
     e.stopPropagation()
     this.setState({
-      parentNodecate: node.data.name,
-      isEditing: true,
+      currentNotecate: node.data,
+      isShowDialogNotecate: true,
     })
-    this.refs.inputNotecate.focus()
     NotecateLoader.load(node.data.name, this)
   }
   drawNotecateTree(data){
@@ -116,7 +75,6 @@ class ConfigNotecate extends React.Component {
     const svg = d3.create("svg")
         .attr('id', 'svg-notecate-tree')
         .attr("viewBox", [0, 0, width, x1 - x0 + root.dx * 2])
-        .on('click', () => this.handleClickSvg())
     this.refs.notecateTreeBox.appendChild(svg.node())
     
     const g = svg.append("g")
@@ -159,6 +117,11 @@ class ConfigNotecate extends React.Component {
         .text(d => d.data.name)
       .clone(true).lower()
         .attr("stroke", "white");
+  }
+  handleCloseDialog() {
+    this.setState({
+      isShowDialogNotecate: false
+    })
   }
 } 
 ConfigNotecate.defaultProps = {

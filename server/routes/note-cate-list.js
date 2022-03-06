@@ -30,7 +30,7 @@ exports.add = (req, res, next) => {
 }
 
 exports.delete = (req, res, next) => {
-  NoteCateList.delete(JSON.stringify(req.body.navItem), (err) => {
+  NoteCateList.delete(req.body, (err) => {
     if(err) return next(err);
     res.format({
       'application/json': () => {
@@ -43,3 +43,16 @@ exports.delete = (req, res, next) => {
   })
 }
 
+exports.update = (req, res, next) => {
+  NoteCateList.update(req.body, (err) => {
+    if(err) return next(err);
+    res.format({
+      'application/json': () => {
+        res.send({
+          code: 0,
+          msg: 'success'
+        })
+      }
+    })
+  })
+}

@@ -21,10 +21,19 @@ class NoteCateList{
       cb(null);
     })
   }
-  static delete(value, cb){
-    db.zrem('nav-items', value, (err) => {
+  static delete(body, cb){
+    const value = new NoteCateList(body)
+    db.lrem('note-cate-list', 1, JSON.stringify(value), (err) => {
       if(err) return cb(err);
       cb(null);
+    })
+  }
+  static update(body, cb){
+    const { lastValue, newValue } = body
+    db.lrem('note-cate-list', 1, JSON.stringify(lastValue), (err) => {
+      if(err) return cb(err);
+      const newObj = new NoteCateList(newValue)
+      newObj.save(cb)
     })
   }
 }

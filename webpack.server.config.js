@@ -11,24 +11,15 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-react', '@babel/preset-env',],
-            // plugins: [ '@babel/plugin-transform-runtime'],
+            presets: ['@babel/preset-env'],
           }
         }
       },
-      {
-        test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader'
-        ]
-      }
     ]
   },
   plugins: [

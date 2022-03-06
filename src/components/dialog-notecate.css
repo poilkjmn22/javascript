@@ -1,0 +1,33 @@
+@import "sass-common-mixins-fq/lib/postcss/common.css";
+.dialog-box {
+  padding: 0;
+  border: 1px solid var(--color-gold);
+  @mixin absolute-center;
+  background-color: white;
+  .dialog-header {
+    background-color: var(--color-gold);
+    color: white;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+
+    display: flex;
+    justify-content: space-between;
+
+    .btn-close {
+      cursor: pointer;
+      font-size: 20px;
+    }
+  }
+  .dialog-body {
+    padding: 20px;
+  }
+  .dialog-footer {
+    padding: 10px;
+  }
+
+  .handle-type {
+    border: 1px solid var(--color-gray);
+    margin: 10px;
+  }
+}

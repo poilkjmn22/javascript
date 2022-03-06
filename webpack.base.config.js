@@ -40,6 +40,13 @@ module.exports = {
           'postcss-loader'
         ]
       },
+      {
+        test: /\.(png|jpe?g|gif|eot|woff2?|ttf|svg)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]',
+        },
+      }
     ],
   },
   resolve:{
