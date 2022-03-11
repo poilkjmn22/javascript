@@ -1,17 +1,23 @@
-/* 
+/*
  * @Author: fangqi
  * @Date: 2021-12-24 14:30:22
  * @LastEditors: fangqi
- * @LastEditTime: 2021-12-24 14:30:22
+ * @LastEditTime: 2022-03-12 00:07:01
  * @Description: Mesh
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
-import * as THREE from 'three'
-import 'three/examples/js/renderers/CanvasRenderer.js' // 需要做一些特殊处理(ES6模块化导出)
-import 'three/examples/js/utils/SceneUtils.js'
-import {initStats, initRenderer, initCamera, initLessonCateGUI, addBasicMaterialSettings, loadGopher } from './util.js'
+import * as THREE from 'three';
+import 'three/examples/js/renderers/CanvasRenderer.js'; // 需要做一些特殊处理(ES6模块化导出)
+import 'three/examples/js/utils/SceneUtils.js';
+import {
+  initStats,
+  initRenderer,
+  initCamera,
+  initLessonCateGUI,
+  addBasicMaterialSettings,
+  loadGopher,
+} from './util.js';
 function init_basic_mesh_material(elContainer) {
-
   // use the defaults
   var stats = initStats(elContainer);
   var camera = initCamera(elContainer);
@@ -23,15 +29,18 @@ function init_basic_mesh_material(elContainer) {
   webGLRenderer.setClearColor(new THREE.Color(0x000000));
   webGLRenderer.setSize(elContainer.clientWidth, elContainer.clientHeight);
   webGLRenderer.shadowMapEnabled = true;
-  
+
   var canvasRenderer = new THREE.CanvasRenderer1();
   canvasRenderer.setSize(elContainer.clientWidth, elContainer.clientHeight);
   let renderer = webGLRenderer;
 
   var groundGeom = new THREE.PlaneGeometry(100, 100, 4, 4);
-  var groundMesh = new THREE.Mesh(groundGeom, new THREE.MeshBasicMaterial({
-    color: 0x777777
-  }));
+  var groundMesh = new THREE.Mesh(
+    groundGeom,
+    new THREE.MeshBasicMaterial({
+      color: 0x777777,
+    })
+  );
   groundMesh.rotation.x = -Math.PI / 2;
   groundMesh.position.y = -20;
   scene.add(groundMesh);
@@ -40,11 +49,10 @@ function init_basic_mesh_material(elContainer) {
   var cubeGeometry = new THREE.BoxGeometry(15, 15, 15);
   var planeGeometry = new THREE.PlaneGeometry(14, 14, 4, 4);
 
-
   var meshMaterial = new THREE.MeshBasicMaterial({
     color: 0x7777ff,
     name: 'Basic Material',
-    flatShading: true
+    flatShading: true,
   });
 
   var sphere = new THREE.Mesh(sphereGeometry, meshMaterial);
@@ -56,10 +64,8 @@ function init_basic_mesh_material(elContainer) {
   sphere.position.y = 3;
   sphere.position.z = 2;
 
-
   cube.position.copy(sphere.position);
   plane.position.copy(sphere.position);
-
 
   // add the sphere to the scene
   scene.add(cube);
@@ -85,78 +91,81 @@ function init_basic_mesh_material(elContainer) {
 
   // call the render function
   var step = 0;
-  var oldContext = null;
 
-  var controls = new function () {
+  var controls = new (function () {
     this.rotationSpeed = 0.02;
     this.bouncingSpeed = 0.03;
 
     this.color = meshMaterial.color.getStyle();
-    this.selectedMesh = "cube";
+    this.selectedMesh = 'cube';
 
     this.switchRenderer = function () {
       if (renderer instanceof THREE.WebGLRenderer) {
         renderer = canvasRenderer;
-        elContainer.innerHTML = "";
+        elContainer.innerHTML = '';
         elContainer.appendChild(renderer.domElement);
       } else {
         renderer = webGLRenderer;
-        elContainer.innerHTML = "";
+        elContainer.innerHTML = '';
         elContainer.appendChild(renderer.domElement);
       }
-    }
-  };
+    };
+  })();
 
   var gui = initLessonCateGUI();
   var selectedMesh = cube;
-  
+
   addBasicMaterialSettings(gui, controls, meshMaterial);
 
-  var spGui = gui.addFolder("THREE.MeshBasicMaterial");
+  var spGui = gui.addFolder('THREE.MeshBasicMaterial');
   spGui.addColor(controls, 'color').onChange(function (e) {
-    meshMaterial.color.setStyle(e)
+    meshMaterial.color.setStyle(e);
   });
   spGui.add(meshMaterial, 'wireframe');
   spGui.add(meshMaterial, 'wireframeLinewidth', 0, 20);
-  spGui.add(meshMaterial, 'wireframeLinejoin', ['round', 'bevel', 'miter']).onChange(function (e) {
-    meshMaterial.wireframeLinejoin = e
-  });
-  spGui.add(meshMaterial, 'wireframeLinecap', ['butt', 'round', 'square']).onChange(function (e) {
-    meshMaterial.wireframeLinecap = e
-  });
+  spGui
+    .add(meshMaterial, 'wireframeLinejoin', ['round', 'bevel', 'miter'])
+    .onChange(function (e) {
+      meshMaterial.wireframeLinejoin = e;
+    });
+  spGui
+    .add(meshMaterial, 'wireframeLinecap', ['butt', 'round', 'square'])
+    .onChange(function (e) {
+      meshMaterial.wireframeLinecap = e;
+    });
 
-  loadGopher(meshMaterial).then(function(gopher) {
+  loadGopher(meshMaterial).then(function (gopher) {
     gopher.scale.x = 4;
     gopher.scale.y = 4;
     gopher.scale.z = 4;
-    gui.add(controls, 'selectedMesh', ["cube", "sphere", "plane", "gopher"]).onChange(function (e) {
+    gui
+      .add(controls, 'selectedMesh', ['cube', 'sphere', 'plane', 'gopher'])
+      .onChange(function (e) {
+        scene.remove(plane);
+        scene.remove(cube);
+        scene.remove(sphere);
+        scene.remove(gopher);
 
-      scene.remove(plane);
-      scene.remove(cube);
-      scene.remove(sphere);
-      scene.remove(gopher);
-  
-      switch (e) {
-        case "cube":
-          scene.add(cube);
-          selectedMesh = cube;
-          break;
-        case "sphere":
-          scene.add(sphere);
-          selectedMesh = sphere;
-          break;
-        case "plane":
-          scene.add(plane);
-          selectedMesh = plane;
-          break;
-        case "gopher":
-          scene.add(gopher);
-          selectedMesh = gopher;
-          break;
-      }
-    });
+        switch (e) {
+          case 'cube':
+            scene.add(cube);
+            selectedMesh = cube;
+            break;
+          case 'sphere':
+            scene.add(sphere);
+            selectedMesh = sphere;
+            break;
+          case 'plane':
+            scene.add(plane);
+            selectedMesh = plane;
+            break;
+          case 'gopher':
+            scene.add(gopher);
+            selectedMesh = gopher;
+            break;
+        }
+      });
   });
-
 
   gui.add(controls, 'switchRenderer');
 
@@ -175,7 +184,6 @@ function init_basic_mesh_material(elContainer) {
 }
 
 function init_depth_material(elContainer) {
-
   // use the defaults
   var stats = initStats(elContainer);
   var renderer = initRenderer(elContainer);
@@ -184,15 +192,18 @@ function init_depth_material(elContainer) {
   var scene = new THREE.Scene();
   scene.overrideMaterial = new THREE.MeshDepthMaterial();
 
-  var camera = new THREE.PerspectiveCamera(45, elContainer.clientWidth / elContainer.clientHeight, 50, 110);
+  var camera = new THREE.PerspectiveCamera(
+    45,
+    elContainer.clientWidth / elContainer.clientHeight,
+    50,
+    110
+  );
   camera.position.set(-50, 40, 50);
   camera.lookAt(scene.position);
 
-
   // call the render function
-  var step = 0;
 
-  var controls = new function () {
+  var controls = new (function () {
     this.cameraNear = camera.near;
     this.cameraFar = camera.far;
     this.rotationSpeed = 0.02;
@@ -208,19 +219,18 @@ function init_depth_material(elContainer) {
     };
 
     this.addCube = function () {
-
-      var cubeSize = Math.ceil(3 + (Math.random() * 3));
+      var cubeSize = Math.ceil(3 + Math.random() * 3);
       var cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
       var cubeMaterial = new THREE.MeshLambertMaterial({
-        color: Math.random() * 0xffffff
+        color: Math.random() * 0xffffff,
       });
       var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
       cube.castShadow = true;
 
       // position the cube randomly in the scene
-      cube.position.x = -60 + Math.round((Math.random() * 100));
-      cube.position.y = Math.round((Math.random() * 10));
-      cube.position.z = -100 + Math.round((Math.random() * 150));
+      cube.position.x = -60 + Math.round(Math.random() * 100);
+      cube.position.y = Math.round(Math.random() * 10);
+      cube.position.z = -100 + Math.round(Math.random() * 150);
 
       // add the cube to the scene
       scene.add(cube);
@@ -229,12 +239,12 @@ function init_depth_material(elContainer) {
 
     this.outputObjects = function () {
       console.log(scene.children);
-    }
-  };
+    };
+  })();
 
   var gui = initLessonCateGUI();
   addBasicMaterialSettings(gui, controls, scene.overrideMaterial);
-  var spGui = gui.addFolder("THREE.MeshDepthMaterial");
+  var spGui = gui.addFolder('THREE.MeshDepthMaterial');
   spGui.add(scene.overrideMaterial, 'wireframe');
   spGui.add(scene.overrideMaterial, 'wireframeLinewidth', 0, 20);
 
@@ -256,7 +266,6 @@ function init_depth_material(elContainer) {
     i++;
   }
 
-
   render();
 
   function render() {
@@ -265,7 +274,6 @@ function init_depth_material(elContainer) {
     // rotate the cubes around its axes
     scene.traverse(function (e) {
       if (e instanceof THREE.Mesh) {
-
         e.rotation.x += controls.rotationSpeed;
         e.rotation.y += controls.rotationSpeed;
         e.rotation.z += controls.rotationSpeed;
@@ -276,12 +284,10 @@ function init_depth_material(elContainer) {
     requestAnimationFrame(render);
     renderer.render(scene, camera);
     stats.end();
-
   }
 }
 
 function init_combined_material(elContainer) {
-
   // use the defaults
   var stats = initStats(elContainer);
   var renderer = initRenderer(elContainer);
@@ -289,20 +295,23 @@ function init_combined_material(elContainer) {
   var scene = new THREE.Scene();
 
   // create a camera, which defines where we're looking at.
-  var camera = new THREE.PerspectiveCamera(45, elContainer.clientWidth / elContainer.clientHeight, 50, 110);
+  var camera = new THREE.PerspectiveCamera(
+    45,
+    elContainer.clientWidth / elContainer.clientHeight,
+    50,
+    110
+  );
   camera.position.set(-50, 40, 50);
   camera.lookAt(scene.position);
 
   // call the render function
-  var step = 0;
 
-  var controls = new function () {
+  var controls = new (function () {
     this.cameraNear = camera.near;
     this.cameraFar = camera.far;
     this.rotationSpeed = 0.02;
     this.numberOfObjects = scene.children.length;
     this.color = 0x00ff00;
-
 
     this.removeCube = function () {
       var allChildren = scene.children;
@@ -314,8 +323,7 @@ function init_combined_material(elContainer) {
     };
 
     this.addCube = function () {
-
-      var cubeSize = Math.ceil(3 + (Math.random() * 3));
+      var cubeSize = Math.ceil(3 + Math.random() * 3);
       var cubeGeometry = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
 
       //var cubeMaterial = new THREE.MeshLambertMaterial({color:  Math.random() * 0xffffff });
@@ -323,18 +331,19 @@ function init_combined_material(elContainer) {
       var colorMaterial = new THREE.MeshBasicMaterial({
         color: controls.color,
         transparent: true,
-        blending: THREE.MultiplyBlending
+        blending: THREE.MultiplyBlending,
       });
-      var cube = new THREE.SceneUtils1.createMultiMaterialObject(cubeGeometry, [colorMaterial,
-        cubeMaterial
+      var cube = new THREE.SceneUtils1.createMultiMaterialObject(cubeGeometry, [
+        colorMaterial,
+        cubeMaterial,
       ]);
       cube.children[1].scale.set(0.99, 0.99, 0.99);
       cube.castShadow = true;
 
       // position the cube randomly in the scene
-      cube.position.x = -60 + Math.round((Math.random() * 100));
-      cube.position.y = Math.round((Math.random() * 10));
-      cube.position.z = -100 + Math.round((Math.random() * 150));
+      cube.position.x = -60 + Math.round(Math.random() * 100);
+      cube.position.y = Math.round(Math.random() * 10);
+      cube.position.z = -100 + Math.round(Math.random() * 150);
 
       // add the cube to the scene
       scene.add(cube);
@@ -343,8 +352,8 @@ function init_combined_material(elContainer) {
 
     this.outputObjects = function () {
       console.log(scene.children);
-    }
-  };
+    };
+  })();
 
   var gui = initLessonCateGUI();
   gui.addColor(controls, 'color');
@@ -388,7 +397,6 @@ function init_combined_material(elContainer) {
 }
 
 function init_mesh_normal_material(elContainer) {
-
   // use the defaults
   var stats = initStats(elContainer);
   var camera = initCamera();
@@ -397,7 +405,12 @@ function init_mesh_normal_material(elContainer) {
   var scene = new THREE.Scene();
 
   // create a camera, which defines where we're looking at.
-  var camera = new THREE.PerspectiveCamera(45, elContainer.clientWidth / elContainer.clientHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(
+    45,
+    elContainer.clientWidth / elContainer.clientHeight,
+    0.1,
+    1000
+  );
   camera.position.set(-20, 30, 40);
   camera.lookAt(new THREE.Vector3(10, 0, 0));
 
@@ -412,9 +425,12 @@ function init_mesh_normal_material(elContainer) {
   renderer = webGLRenderer;
 
   var groundGeom = new THREE.PlaneGeometry(100, 100, 4, 4);
-  var groundMesh = new THREE.Mesh(groundGeom, new THREE.MeshBasicMaterial({
-    color: 0x777777
-  }));
+  var groundMesh = new THREE.Mesh(
+    groundGeom,
+    new THREE.MeshBasicMaterial({
+      color: 0x777777,
+    })
+  );
   groundMesh.rotation.x = -Math.PI / 2;
   groundMesh.position.y = -20;
   scene.add(groundMesh);
@@ -422,7 +438,6 @@ function init_mesh_normal_material(elContainer) {
   var sphereGeometry = new THREE.SphereGeometry(14, 20, 20);
   var cubeGeometry = new THREE.BoxGeometry(15, 15, 15);
   var planeGeometry = new THREE.PlaneGeometry(14, 14, 4, 4);
-
 
   var meshMaterial = new THREE.MeshNormalMaterial();
   var sphere = new THREE.Mesh(sphereGeometry, meshMaterial);
@@ -448,21 +463,18 @@ function init_mesh_normal_material(elContainer) {
       face.normal,
       centroid,
       2,
-      0x3333FF,
+      0x3333ff,
       0.5,
-      0.5);
+      0.5
+    );
     sphere.add(arrow);
   }
-
 
   cube.position.copy(sphere.position);
   plane.position.copy(sphere.position);
 
-
   // add the sphere to the scene
   scene.add(cube);
-
-
 
   // add subtle ambient lighting
   var ambientLight = new THREE.AmbientLight(0x0c0c0c);
@@ -479,49 +491,48 @@ function init_mesh_normal_material(elContainer) {
 
   // call the render function
   var step = 0;
-  var oldContext = null;
 
-  var controls = new function () {
+  var controls = new (function () {
     this.rotationSpeed = 0.02;
     this.bouncingSpeed = 0.03;
-    this.selectedMesh = "cube";
-  };
+    this.selectedMesh = 'cube';
+  })();
 
-  var gui = initLessonCateGUI();    
+  var gui = initLessonCateGUI();
   addBasicMaterialSettings(gui, controls, meshMaterial);
 
-  loadGopher(meshMaterial).then(function(gopher) {
+  loadGopher(meshMaterial).then(function (gopher) {
     gopher.scale.x = 4;
     gopher.scale.y = 4;
     gopher.scale.z = 4;
-    gui.add(controls, 'selectedMesh', ["cube", "sphere", "plane", "gopher"]).onChange(function (e) {
+    gui
+      .add(controls, 'selectedMesh', ['cube', 'sphere', 'plane', 'gopher'])
+      .onChange(function (e) {
+        scene.remove(plane);
+        scene.remove(cube);
+        scene.remove(sphere);
+        scene.remove(gopher);
 
-      scene.remove(plane);
-      scene.remove(cube);
-      scene.remove(sphere);
-      scene.remove(gopher);
-  
-      switch (e) {
-        case "cube":
-          scene.add(cube);
-          selectedMesh = cube;
-          break;
-        case "sphere":
-          scene.add(sphere);
-          selectedMesh = sphere;
-          break;
-        case "plane":
-          scene.add(plane);
-          selectedMesh = plane;
-          break;
-        case "gopher":
-          scene.add(gopher);
-          selectedMesh = gopher;
-          break;
-      }
-    });
+        switch (e) {
+          case 'cube':
+            scene.add(cube);
+            selectedMesh = cube;
+            break;
+          case 'sphere':
+            scene.add(sphere);
+            selectedMesh = sphere;
+            break;
+          case 'plane':
+            scene.add(plane);
+            selectedMesh = plane;
+            break;
+          case 'gopher':
+            scene.add(gopher);
+            selectedMesh = gopher;
+            break;
+        }
+      });
   });
-
 
   render();
 
@@ -534,7 +545,6 @@ function init_mesh_normal_material(elContainer) {
     renderer.render(scene, camera);
     stats.end();
   }
-
 }
 
 export {
@@ -542,4 +552,4 @@ export {
   init_depth_material,
   init_combined_material,
   init_mesh_normal_material,
-}
+};

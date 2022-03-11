@@ -1,4 +1,2 @@
-const test = 'b1'
-export {
-  test
-}
+const test = 'b1';
+export { test };

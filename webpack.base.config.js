@@ -10,35 +10,31 @@ const babelConfig = require('./babel.config.json');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
-	entry: {
+  entry: {
     SPA: './src/SPA.js',
-	},
-  module:{
+  },
+  module: {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
       },
       {
         test: /\.jsx?$/,
-        exclude: file => (
-          /node_modules/.test(file) &&
-          !/\.vue\.js/.test(file)
-        ),
+        exclude: (file) => /node_modules/.test(file) && !/\.vue\.js/.test(file),
         use: {
           loader: 'babel-loader',
-          options: Object.assign({
-            cacheDirectory: true
-          }, babelConfig)
+          options: Object.assign(
+            {
+              cacheDirectory: true,
+            },
+            babelConfig
+          ),
         },
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader'
-        ]
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.(png|jpe?g|gif|eot|woff2?|ttf|svg)$/i,
@@ -46,10 +42,10 @@ module.exports = {
         options: {
           name: '[path][name].[ext]',
         },
-      }
+      },
     ],
   },
-  resolve:{
+  resolve: {
     mainFields: ['module', 'main'],
     alias: {
       style: path.resolve(__dirname, 'src/style/'),
@@ -59,25 +55,25 @@ module.exports = {
     },
     //modules: ['node_modules', 'src']
   },
-	output: {
-		filename: '[name].bundle.js'
-	},
+  output: {
+    filename: '[name].bundle.js',
+  },
 
-	plugins: [
-		new CleanWebpackPlugin(),
-		new HtmlWebpackPlugin({
-			title: 'javascript Playground',
-			filename: 'index.html',
-			template: './src/index.template.html',
-			chunks: ['SPA'],
-		}),
-		new EslintPlugin({
-			outputReport: false,
-			emitError: false,
-			emitWarning: false,
-		}),
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'javascript Playground',
+      filename: 'index.html',
+      template: './src/index.template.html',
+      chunks: ['SPA'],
+    }),
+    new EslintPlugin({
+      outputReport: false,
+      emitError: false,
+      emitWarning: false,
+    }),
     new VueLoaderPlugin(),
-	],
+  ],
   optimization: {
     splitChunks: {
       cacheGroups: {
@@ -92,8 +88,8 @@ module.exports = {
           name: 'default',
           chunks: 'all',
           priority: -20,
-        }
-      }
-    }
-  }
-}
+        },
+      },
+    },
+  },
+};

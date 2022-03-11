@@ -1,5 +1,5 @@
-function * foo(x){
-  var y = x * (yield "Hello");
+function* foo(x) {
+  var y = x * (yield 'Hello');
   return y;
 }
 

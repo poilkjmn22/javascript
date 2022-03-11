@@ -1,24 +1,30 @@
-const SVG_NS = 'http://www.w3.org/2000/svg'
-
-function CSvg(tagName = 'svg', attrs){
-  var svgEl = document.createElementNS(SVG_NS, tagName || 'svg')
-  if(tagName === 'svg') {
-    svgEl.setAttribute('xmlns', SVG_NS)
+const SVG_NS = 'http://www.w3.org/2000/svg';
+function svg(tagName) {
+  var svgEl = document.createElementNS(SVG_NS, tagName || 'svg');
+  if (!tagName) {
+    svgEl.setAttribute('xmlns', SVG_NS);
   }
-  attr(svgEl, attrs)
-  return svgEl
+  return svgEl;
+}
+function CSvg(tagName = 'svg', attrs) {
+  var svgEl = document.createElementNS(SVG_NS, tagName || 'svg');
+  if (tagName === 'svg') {
+    svgEl.setAttribute('xmlns', SVG_NS);
+  }
+  attr(svgEl, attrs);
+  return svgEl;
 }
 
-function attr(el, values){
-  for(let k in values){
-    el.setAttribute(k, values[k])
+function attr(el, values) {
+  for (let k in values) {
+    el.setAttribute(k, values[k]);
   }
 }
 
-function createSvgEl(tagName, attrs){
-  var svgEl = svg(tagName)
-  attr(svgEl, attrs)
-  return svgEl
+function createSvgEl(tagName, attrs) {
+  var svgEl = svg(tagName);
+  attr(svgEl, attrs);
+  return svgEl;
 }
 
 // function createGFlower(){
@@ -33,13 +39,13 @@ function createSvgEl(tagName, attrs){
 //   gFlower.appendChild(imageFlower)
 //   return gFlower
 // }
-function setXLinkHref(el, url){
-  el.href.baseVal = url
+function setXLinkHref(el, url) {
+  el.href.baseVal = url;
 }
 export {
   CSvg,
   attr,
   createSvgEl,
   // createGFlower,
-  setXLinkHref
-}
+  setXLinkHref,
+};

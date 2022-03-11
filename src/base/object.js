@@ -3,7 +3,7 @@ let person = {};
 
 Object.defineProperty(person, 'name', {
   writeble: false,
-  value: 'qi'
+  value: 'qi',
 });
 
 console.log(person.name);
@@ -12,7 +12,7 @@ console.log(person.name);
 
 let book = {
   year_: 2017,
-  edition: 1
+  edition: 1,
 };
 
 Object.defineProperty(book, 'year', {
@@ -20,11 +20,11 @@ Object.defineProperty(book, 'year', {
     return this.year_;
   },
   set(newValue) {
-    if(newValue > 2017){
+    if (newValue > 2017) {
       this.year_ = newValue;
-      this.edition += (newValue - 2017);
+      this.edition += newValue - 2017;
     }
-  }
+  },
 });
 
 book.year = 2020;
@@ -32,13 +32,18 @@ console.log(book);
 console.dir(Object.getOwnPropertyDescriptors(book));
 
 let dest = {
-  set id(x){
+  set id(x) {
     console.log(x);
     this.id_ = x;
-  }
+  },
 };
-let copy = {c : {}};
-let result = Object.assign(dest, {id: 'src1', a: 'foo'}, {id: 'src2', b: 'bar'}, copy);
+let copy = { c: {} };
+let result = Object.assign(
+  dest,
+  { id: 'src1', a: 'foo' },
+  { id: 'src2', b: 'bar' },
+  copy
+);
 console.dir(result);
 console.log(result === dest);
 console.log(result.c === dest.c);
@@ -52,4 +57,3 @@ let person2 = {
   [getUniqueKey('job')]: 'web engineer',
 };
 console.log(person2);
-

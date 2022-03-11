@@ -1,4 +1,4 @@
-/* 
+/*
  * @Author: fangqi
  * @Date: 2021-12-15 17:51:57
  * @LastEditors: fangqi
@@ -8,12 +8,10 @@
  */
 
 function empty(el) {
-  const childNodes = [...el.childNodes]
-  for(let i = 0; i < childNodes.length; i++) {
-    el.removeChild(childNodes[i])
+  const childNodes = [...el.childNodes];
+  for (let i = 0; i < childNodes.length; i++) {
+    el.removeChild(childNodes[i]);
   }
 }
 
-export {
-  empty
-}
+export { empty };

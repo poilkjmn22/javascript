@@ -1,17 +1,17 @@
-ul.nav{
-  li{
-    a.link-base{
+ul.nav {
+  li {
+    a.link-base {
       display: block;
       height: 45px;
       line-height: 45px;
       padding-left: 10px;
       border-top: 1px solid var(--color-purple);
-      &:hover{
+      &:hover {
         cursor: pointer;
       }
     }
-    
-    &:last-child a.link-base{
+
+    &:last-child a.link-base {
       border-bottom: 1px solid var(--color-purple);
     }
   }

@@ -1,12 +1,18 @@
-import {flattenDeep as _flattenDeep, flattenDepth as _flattenDepth} from 'lodash-es';
-function flatten(arr, depth){
+import {
+  flattenDeep as _flattenDeep,
+  flattenDepth as _flattenDepth,
+} from 'lodash-es';
+function flatten(arr, depth) {
   let res = [];
   let path = [];
-  function innerWalk(arr){
-    if(Object.prototype.toString.call(arr) !== '[object Array]' || (depth && path.length > depth)){
+  function innerWalk(arr) {
+    if (
+      Object.prototype.toString.call(arr) !== '[object Array]' ||
+      (depth && path.length > depth)
+    ) {
       return res.push(arr);
     }
-    for(let a of arr){
+    for (let a of arr) {
       path.push(a);
       innerWalk(a);
       path.pop();

@@ -1,11 +1,11 @@
 const target = {
-  foo: 'bar'
+  foo: 'bar',
 };
 
 const proxy = new Proxy(target, {
-  get(){
+  get() {
     return 'handler override';
-  }
+  },
 });
 
 console.log(target.foo);
@@ -14,9 +14,9 @@ console.log(proxy['foo']);
 console.log(Object.create(proxy)['foo']);
 
 const proxyReflect = new Proxy(target, {
-  get(){
+  get() {
     return Reflect.get(...arguments);
-  }
+  },
 });
 
 console.log(proxyReflect.foo);

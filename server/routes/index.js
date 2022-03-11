@@ -7,7 +7,7 @@ const Subject = require('../models/subject.js');
 // const Content =require('root/src/components/page/content.common.jsx');
 exports.app = (req, res, next) => {
   Subject.getRange(0, 100, (err, subjects) => {
-    if(err) return next(err);
+    if (err) return next(err);
     res.render('index');
     // const context = {};
     // const appHTML = ReactDOMServer.renderToString(
@@ -21,4 +21,4 @@ exports.app = (req, res, next) => {
     //   _SSR_DATA: `<script type="text/javascript">var _SSR_DATA_subjects = '${JSON.stringify(subjects)}'</script>`
     // });
   });
-}
+};

@@ -1,1 +1,1 @@
-console.log('test CORS .js')
+console.log('test CORS .js');

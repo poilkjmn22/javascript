@@ -1,8 +1,8 @@
-async function sleep(delay){
+async function sleep(delay) {
   return new Promise((resolve) => setTimeout(resolve, delay));
 }
 
-async function foo(){
+async function foo() {
   const t0 = Date.now();
   await sleep(1500);
   console.log(Date.now() - t0);

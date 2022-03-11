@@ -1,16 +1,12 @@
 const path = require('path');
 module.exports = {
   plugins: [
-    [
-      'postcss-import',
-      {
-      }
-    ],
+    ['postcss-import', {}],
     require('postcss-nested')(),
     require('postcss-css-variables')({
-      variables: require('./src/style/variables.json')
+      variables: require('./src/style/variables.json'),
     }),
     require('postcss-mixins')(),
-    require("autoprefixer")(),
-  ]
-}
+    require('autoprefixer')(),
+  ],
+};

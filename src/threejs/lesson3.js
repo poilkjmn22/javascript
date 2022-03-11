@@ -1,14 +1,23 @@
-/* 
+/*
  * @Author: fangqi
  * @Date: 2021-12-20 15:34:48
  * @LastEditors: fangqi
- * @LastEditTime: 2021-12-20 15:34:48
+ * @LastEditTime: 2022-03-12 00:10:00
  * @Description: Lesson 3
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
-import * as THREE from 'three'
-import LensFlare from 'three/examples/js/objects/Lensflare.js' // 需要做一些特殊处理(ES6模块化导出)
-import {initStats, initRenderer, initCamera, initLessonCateGUI, addHouseAndTree, addDefaultCubeAndSphere, addGroundPlane, initTrackballControls } from './util.js'
+import * as THREE from 'three';
+import LensFlare from 'three/examples/js/objects/Lensflare.js'; // 需要做一些特殊处理(ES6模块化导出)
+import {
+  initStats,
+  initRenderer,
+  initCamera,
+  initLessonCateGUI,
+  addHouseAndTree,
+  addDefaultCubeAndSphere,
+  addGroundPlane,
+  initTrackballControls,
+} from './util.js';
 
 function init_ambient_light(elContainer) {
   // use the defaults
@@ -20,7 +29,7 @@ function init_ambient_light(elContainer) {
   var scene = new THREE.Scene();
 
   // add ambient lighting
-  var ambientLight = new THREE.AmbientLight("#606008", 1);
+  var ambientLight = new THREE.AmbientLight('#606008', 1);
   scene.add(ambientLight);
 
   // add spotlight for the shadows
@@ -31,7 +40,7 @@ function init_ambient_light(elContainer) {
   scene.add(spotLight);
 
   // add a simple scene
-  addHouseAndTree(scene)
+  addHouseAndTree(scene);
 
   // add controls
   setupControls();
@@ -47,18 +56,18 @@ function init_ambient_light(elContainer) {
   }
 
   function setupControls() {
-    var controls = new function () {
+    var controls = new (function () {
       this.intensity = ambientLight.intensity;
       this.ambientColor = ambientLight.color.getStyle();
       this.disableSpotlight = false;
-    };
+    })();
 
     var gui = initLessonCateGUI();
-    gui.add(controls, 'intensity', 0, 3, 0.1).onChange(function (e) {
+    gui.add(controls, 'intensity', 0, 3, 0.1).onChange(function () {
       ambientLight.color = new THREE.Color(controls.ambientColor);
       ambientLight.intensity = controls.intensity;
     });
-    gui.addColor(controls, 'ambientColor').onChange(function (e) {
+    gui.addColor(controls, 'ambientColor').onChange(function () {
       ambientLight.color = new THREE.Color(controls.ambientColor);
       ambientLight.intensity = controls.intensity;
     });
@@ -71,7 +80,6 @@ function init_ambient_light(elContainer) {
 }
 
 function init_spot_light(elContainer) {
-
   // use the defaults
   var stats = initStats(elContainer);
   var renderer = initRenderer(elContainer);
@@ -84,10 +92,9 @@ function init_spot_light(elContainer) {
   var cube = cubeAndSphere.cube;
   var sphere = cubeAndSphere.sphere;
   var plane = addGroundPlane(scene);
-  
 
   // add subtle ambient lighting
-  var ambiColor = "#1c1c1c";
+  var ambiColor = '#1c1c1c';
   var ambientLight = new THREE.AmbientLight(ambiColor);
   scene.add(ambientLight);
 
@@ -101,7 +108,7 @@ function init_spot_light(elContainer) {
   var target = new THREE.Object3D();
   target.position.set(5, 0, 0);
 
-  var spotLight = new THREE.SpotLight("#ffffff");
+  var spotLight = new THREE.SpotLight('#ffffff');
   spotLight.position.set(-40, 60, -10);
   spotLight.castShadow = true;
   spotLight.shadow.camera.near = 1;
@@ -113,13 +120,13 @@ function init_spot_light(elContainer) {
   scene.add(spotLight);
   var debugCamera = new THREE.CameraHelper(spotLight.shadow.camera);
 
-  var pp = new THREE.SpotLightHelper(spotLight)
-  scene.add(pp)
+  var pp = new THREE.SpotLightHelper(spotLight);
+  scene.add(pp);
 
   // add a small sphere simulating the pointlight
   var sphereLight = new THREE.SphereGeometry(0.2);
   var sphereLightMaterial = new THREE.MeshBasicMaterial({
-    color: 0xac6c25
+    color: 0xac6c25,
   });
   var sphereLightMesh = new THREE.Mesh(sphereLight, sphereLightMaterial);
   sphereLightMesh.castShadow = true;
@@ -144,8 +151,8 @@ function init_spot_light(elContainer) {
 
     // bounce the sphere up and down
     step += controls.bouncingSpeed;
-    sphere.position.x = 20 + (10 * (Math.cos(step)));
-    sphere.position.y = 2 + (10 * Math.abs(Math.sin(step)));
+    sphere.position.x = 20 + 10 * Math.cos(step);
+    sphere.position.y = 2 + 10 * Math.abs(Math.sin(step));
 
     // move the light simulation
     if (!controls.stopMovingLight) {
@@ -155,13 +162,14 @@ function init_spot_light(elContainer) {
       } else {
         phase += controls.rotationSpeed;
       }
-      sphereLightMesh.position.z = +(7 * (Math.sin(phase)));
-      sphereLightMesh.position.x = +(14 * (Math.cos(phase)));
+      sphereLightMesh.position.z = +(7 * Math.sin(phase));
+      sphereLightMesh.position.x = +(14 * Math.cos(phase));
       sphereLightMesh.position.y = 15;
 
       if (invert < 0) {
         var pivot = 14;
-        sphereLightMesh.position.x = (invert * (sphereLightMesh.position.x - pivot)) + pivot;
+        sphereLightMesh.position.x =
+          invert * (sphereLightMesh.position.x - pivot) + pivot;
       }
 
       spotLight.position.copy(sphereLightMesh.position);
@@ -175,7 +183,7 @@ function init_spot_light(elContainer) {
   }
 
   function setupControls() {
-    var controls = new function () {
+    var controls = new (function () {
       this.rotationSpeed = 0.03;
       this.bouncingSpeed = 0.03;
       this.ambientColor = ambiColor;
@@ -185,10 +193,10 @@ function init_spot_light(elContainer) {
       this.angle = 0.1;
       this.shadowDebug = false;
       this.castShadow = true;
-      this.target = "Plane";
+      this.target = 'Plane';
       this.stopMovingLight = false;
       this.penumbra = 0;
-    };
+    })();
 
     var gui = initLessonCateGUI();
     gui.addColor(controls, 'ambientColor').onChange(function (e) {
@@ -227,20 +235,21 @@ function init_spot_light(elContainer) {
       spotLight.castShadow = e;
     });
 
-    gui.add(controls, 'target', ['Plane', 'Sphere', 'Cube']).onChange(function (e) {
-      switch (e) {
-        case "Plane":
-          spotLight.target = plane;
-          break;
-        case "Sphere":
-          spotLight.target = sphere;
-          break;
-        case "Cube":
-          spotLight.target = cube;
-          break;
-      }
-
-    });
+    gui
+      .add(controls, 'target', ['Plane', 'Sphere', 'Cube'])
+      .onChange(function (e) {
+        switch (e) {
+          case 'Plane':
+            spotLight.target = plane;
+            break;
+          case 'Sphere':
+            spotLight.target = sphere;
+            break;
+          case 'Cube':
+            spotLight.target = cube;
+            break;
+        }
+      });
 
     gui.add(controls, 'stopMovingLight').onChange(function (e) {
       controls.stopMovingLight = e;
@@ -248,11 +257,9 @@ function init_spot_light(elContainer) {
 
     return controls;
   }
-
 }
 
 function init_point_light(elContainer) {
-
   // use the defaults
   var stats = initStats(elContainer);
   var renderer = initRenderer(elContainer);
@@ -265,16 +272,16 @@ function init_point_light(elContainer) {
   var scene = new THREE.Scene();
 
   // add a simple scene
-  addHouseAndTree(scene)
+  addHouseAndTree(scene);
 
   // add subtle ambient lighting
-  var ambientLight = new THREE.AmbientLight("#0c0c0c");
+  var ambientLight = new THREE.AmbientLight('#0c0c0c');
   scene.add(ambientLight);
 
   // the point light where working with
-  var pointColor = "#ccffcc";
+  var pointColor = '#ccffcc';
   var pointLight = new THREE.PointLight(pointColor);
-  pointLight.decay = 0.1
+  pointLight.decay = 0.1;
 
   pointLight.castShadow = true;
 
@@ -283,22 +290,19 @@ function init_point_light(elContainer) {
   var helper = new THREE.PointLightHelper(pointLight);
   // scene.add(helper);
 
-  var shadowHelper = new THREE.CameraHelper(pointLight.shadow.camera)
+  var shadowHelper = new THREE.CameraHelper(pointLight.shadow.camera);
   // scene.add(shadowHelper)
-
-
 
   // add a small sphere simulating the pointlight
   var sphereLight = new THREE.SphereGeometry(0.2);
   var sphereLightMaterial = new THREE.MeshBasicMaterial({
-    color: 0xac6c25
+    color: 0xac6c25,
   });
   var sphereLightMesh = new THREE.Mesh(sphereLight, sphereLightMaterial);
   sphereLightMesh.position.set(3, 0, 5);
   scene.add(sphereLightMesh);
 
   // call the render function
-  var step = 0;
 
   // used to determine the switch point for the light animation
   var invert = 1;
@@ -308,7 +312,6 @@ function init_point_light(elContainer) {
   render();
 
   function render() {
-
     helper.update();
     shadowHelper.update();
 
@@ -323,15 +326,15 @@ function init_point_light(elContainer) {
     } else {
       phase += controls.rotationSpeed;
     }
-    sphereLightMesh.position.z = +(25 * (Math.sin(phase)));
-    sphereLightMesh.position.x = +(14 * (Math.cos(phase)));
+    sphereLightMesh.position.z = +(25 * Math.sin(phase));
+    sphereLightMesh.position.x = +(14 * Math.cos(phase));
     sphereLightMesh.position.y = 5;
 
     if (invert < 0) {
       var pivot = 14;
-      sphereLightMesh.position.x = (invert * (sphereLightMesh.position.x - pivot)) + pivot;
+      sphereLightMesh.position.x =
+        invert * (sphereLightMesh.position.x - pivot) + pivot;
     }
-
 
     // render using requestAnimationFrame
     requestAnimationFrame(render);
@@ -340,16 +343,14 @@ function init_point_light(elContainer) {
   }
 
   function setupControls() {
-    var controls = new function () {
+    var controls = new (function () {
       this.rotationSpeed = 0.01;
       this.bouncingSpeed = 0.03;
-      this.ambientColor = ambientLight.color.getStyle();;
-      this.pointColor = pointLight.color.getStyle();;
+      this.ambientColor = ambientLight.color.getStyle();
+      this.pointColor = pointLight.color.getStyle();
       this.intensity = 1;
       this.distance = pointLight.distance;
-    };
-
-    
+    })();
 
     var gui = initLessonCateGUI();
     gui.addColor(controls, 'ambientColor').onChange(function (e) {
@@ -373,7 +374,6 @@ function init_point_light(elContainer) {
 }
 
 function init_directional_light(elContainer) {
-
   // use the defaults
   var stats = initStats(elContainer);
   var renderer = initRenderer(elContainer);
@@ -382,14 +382,13 @@ function init_directional_light(elContainer) {
   var trackballControls = initTrackballControls(camera, renderer);
   var clock = new THREE.Clock();
 
-
   // create a scene, that will hold all our elements such as objects, cameras and lights.
   var scene = new THREE.Scene();
 
   // create the ground plane
   var planeGeometry = new THREE.PlaneGeometry(600, 200, 20, 20);
   var planeMaterial = new THREE.MeshLambertMaterial({
-    color: 0xffffff
+    color: 0xffffff,
   });
   var plane = new THREE.Mesh(planeGeometry, planeMaterial);
   plane.receiveShadow = true;
@@ -406,7 +405,7 @@ function init_directional_light(elContainer) {
   // create a cube
   var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
   var cubeMaterial = new THREE.MeshLambertMaterial({
-    color: 0xff3333
+    color: 0xff3333,
   });
   var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
   cube.castShadow = true;
@@ -421,7 +420,7 @@ function init_directional_light(elContainer) {
 
   var sphereGeometry = new THREE.SphereGeometry(4, 20, 20);
   var sphereMaterial = new THREE.MeshLambertMaterial({
-    color: 0x7777ff
+    color: 0x7777ff,
   });
   var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
@@ -435,14 +434,14 @@ function init_directional_light(elContainer) {
   scene.add(sphere);
 
   // add subtle ambient lighting
-  var ambiColor = "#1c1c1c";
+  var ambiColor = '#1c1c1c';
   var ambientLight = new THREE.AmbientLight(ambiColor);
   scene.add(ambientLight);
 
   var target = new THREE.Object3D();
   target.position.set(5, 0, 0);
 
-  var pointColor = "#ff5808";
+  var pointColor = '#ff5808';
   var directionalLight = new THREE.DirectionalLight(pointColor);
   directionalLight.position.set(-40, 60, -10);
   directionalLight.castShadow = true;
@@ -458,12 +457,12 @@ function init_directional_light(elContainer) {
   directionalLight.shadow.mapSize.height = 1024;
 
   scene.add(directionalLight);
-  var shadowCamera = new THREE.CameraHelper(directionalLight.shadow.camera)
+  var shadowCamera = new THREE.CameraHelper(directionalLight.shadow.camera);
 
   // add a small sphere simulating the pointlight
   var sphereLight = new THREE.SphereGeometry(0.2);
   var sphereLightMaterial = new THREE.MeshBasicMaterial({
-    color: 0xac6c25
+    color: 0xac6c25,
   });
   var sphereLightMesh = new THREE.Mesh(sphereLight, sphereLightMaterial);
   sphereLightMesh.castShadow = true;
@@ -472,10 +471,8 @@ function init_directional_light(elContainer) {
   scene.add(sphereLightMesh);
   // call the render function
   var step = 0;
-  var invert = 1;
-  var phase = 0;
 
-  var controls = new function () {
+  var controls = new (function () {
     this.rotationSpeed = 0.03;
     this.bouncingSpeed = 0.03;
     this.ambientColor = ambiColor;
@@ -484,9 +481,8 @@ function init_directional_light(elContainer) {
     this.debug = false;
     this.castShadow = true;
     this.onlyShadow = false;
-    this.target = "Plane";
-
-  };
+    this.target = 'Plane';
+  })();
 
   var gui = initLessonCateGUI();
 
@@ -514,22 +510,22 @@ function init_directional_light(elContainer) {
     directionalLight.onlyShadow = e;
   });
 
-  gui.add(controls, 'target', ['Plane', 'Sphere', 'Cube']).onChange(function (e) {
-    console.log(e);
-    switch (e) {
-      case "Plane":
-        directionalLight.target = plane;
-        break;
-      case "Sphere":
-        directionalLight.target = sphere;
-        break;
-      case "Cube":
-        directionalLight.target = cube;
-        break;
-    }
-
-  });
-
+  gui
+    .add(controls, 'target', ['Plane', 'Sphere', 'Cube'])
+    .onChange(function (e) {
+      console.log(e);
+      switch (e) {
+        case 'Plane':
+          directionalLight.target = plane;
+          break;
+        case 'Sphere':
+          directionalLight.target = sphere;
+          break;
+        case 'Cube':
+          directionalLight.target = cube;
+          break;
+      }
+    });
 
   render();
 
@@ -544,18 +540,17 @@ function init_directional_light(elContainer) {
 
     // bounce the sphere up and down
     step += controls.bouncingSpeed;
-    sphere.position.x = 20 + (10 * (Math.cos(step)));
-    sphere.position.y = 2 + (10 * Math.abs(Math.sin(step)));
+    sphere.position.x = 20 + 10 * Math.cos(step);
+    sphere.position.y = 2 + 10 * Math.abs(Math.sin(step));
 
     sphereLightMesh.position.z = -8;
-    sphereLightMesh.position.y = +(27 * (Math.sin(step / 3)));
-    sphereLightMesh.position.x = 10 + (26 * (Math.cos(step / 3)));
+    sphereLightMesh.position.y = +(27 * Math.sin(step / 3));
+    sphereLightMesh.position.x = 10 + 26 * Math.cos(step / 3);
 
     directionalLight.position.copy(sphereLightMesh.position);
 
     // render using requestAnimationFrame
     requestAnimationFrame(render);
-
 
     renderer.render(scene, camera);
     stats.end();
@@ -563,7 +558,6 @@ function init_directional_light(elContainer) {
 }
 
 function init_hemisphere_light(elContainer) {
-
   var stats = initStats(elContainer);
   var renderer = initRenderer(elContainer);
   var camera = initCamera();
@@ -575,14 +569,16 @@ function init_hemisphere_light(elContainer) {
   var scene = new THREE.Scene();
 
   // create the ground plane
-  var textureGrass = new THREE.TextureLoader().load("textures/ground/grasslight-big.jpg");
+  var textureGrass = new THREE.TextureLoader().load(
+    'textures/ground/grasslight-big.jpg'
+  );
   textureGrass.wrapS = THREE.RepeatWrapping;
   textureGrass.wrapT = THREE.RepeatWrapping;
   textureGrass.repeat.set(10, 10);
 
   var planeGeometry = new THREE.PlaneGeometry(1000, 1000, 20, 20);
   var planeMaterial = new THREE.MeshLambertMaterial({
-    map: textureGrass
+    map: textureGrass,
   });
 
   //        var planeMaterial = new THREE.MeshLambertMaterial();
@@ -601,7 +597,7 @@ function init_hemisphere_light(elContainer) {
   // create a cube
   var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
   var cubeMaterial = new THREE.MeshLambertMaterial({
-    color: 0xff3333
+    color: 0xff3333,
   });
   var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
   cube.castShadow = true;
@@ -616,7 +612,7 @@ function init_hemisphere_light(elContainer) {
 
   var sphereGeometry = new THREE.SphereGeometry(4, 25, 25);
   var sphereMaterial = new THREE.MeshPhongMaterial({
-    color: 0x7777ff
+    color: 0x7777ff,
   });
   var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
@@ -642,7 +638,7 @@ function init_hemisphere_light(elContainer) {
   hemiLight.position.set(0, 500, 0);
   scene.add(hemiLight);
 
-  var pointColor = "#ffffff";
+  var pointColor = '#ffffff';
   var dirLight = new THREE.DirectionalLight(pointColor);
   dirLight.position.set(30, 10, -50);
   dirLight.castShadow = true;
@@ -661,11 +657,7 @@ function init_hemisphere_light(elContainer) {
   var step = 0;
 
   // used to determine the switch point for the light animation
-  var invert = 1;
-  var phase = 0;
   var controls = addControls();
-
-
 
   render();
 
@@ -681,8 +673,8 @@ function init_hemisphere_light(elContainer) {
 
     // bounce the sphere up and down
     step += controls.bouncingSpeed;
-    sphere.position.x = 20 + (10 * (Math.cos(step)));
-    sphere.position.y = 2 + (10 * Math.abs(Math.sin(step)));
+    sphere.position.x = 20 + 10 * Math.cos(step);
+    sphere.position.y = 2 + 10 * Math.abs(Math.sin(step));
 
     requestAnimationFrame(render);
     renderer.render(scene, camera);
@@ -690,20 +682,18 @@ function init_hemisphere_light(elContainer) {
   }
 
   function addControls() {
-    var controls = new function () {
+    var controls = new (function () {
       this.rotationSpeed = 0.03;
       this.bouncingSpeed = 0.03;
       this.hemisphere = true;
       this.color = 0x0000ff;
       this.groundColor = 0x00ff00;
       this.intensity = 0.6;
-
-    };
+    })();
 
     var gui = initLessonCateGUI();
 
     gui.add(controls, 'hemisphere').onChange(function (e) {
-
       if (!e) {
         hemiLight.intensity = 0;
       } else {
@@ -725,14 +715,13 @@ function init_hemisphere_light(elContainer) {
 }
 
 function init_area_light(elContainer) {
-
   var stats = initStats(elContainer);
   var renderer = initRenderer(elContainer, {
-    antialias: true
+    antialias: true,
   });
   var camera = initCamera();
-  
-  camera.position.set(-50, 30, 50)
+
+  camera.position.set(-50, 30, 50);
   // camera.lookAt(new THREE.Vector3(0, 0, -35));
 
   var trackballControls = initTrackballControls(camera, renderer);
@@ -745,8 +734,7 @@ function init_area_light(elContainer) {
   var planeGeometry = new THREE.PlaneGeometry(70, 70, 1, 1);
   var planeMaterial = new THREE.MeshStandardMaterial({
     roughness: 0.044676705160855, // calculated from shininess = 1000
-    metalness: 0.0
-
+    metalness: 0.0,
   });
   var plane = new THREE.Mesh(planeGeometry, planeMaterial);
   // plane.receiveShadow  = true;
@@ -761,7 +749,6 @@ function init_area_light(elContainer) {
   scene.add(plane);
 
   // call the render function
-  var step = 0;
 
   var spotLight0 = new THREE.SpotLight(0xcccccc);
   spotLight0.position.set(-40, 60, -10);
@@ -783,7 +770,7 @@ function init_area_light(elContainer) {
 
   var planeGeometry1 = new THREE.BoxGeometry(4, 10, 0);
   var planeGeometry1Mat = new THREE.MeshBasicMaterial({
-    color: 0xff0000
+    color: 0xff0000,
   });
   var plane1 = new THREE.Mesh(planeGeometry1, planeGeometry1Mat);
   plane1.position.copy(areaLight1.position);
@@ -800,15 +787,14 @@ function init_area_light(elContainer) {
 
   var planeGeometry3 = new THREE.BoxGeometry(4, 10, 0);
   var planeGeometry3Mat = new THREE.MeshBasicMaterial({
-    color: 0x0000ff
+    color: 0x0000ff,
   });
   var plane3 = new THREE.Mesh(planeGeometry3, planeGeometry3Mat);
 
   plane3.position.copy(areaLight3.position);
   scene.add(plane3);
 
-
-  var controls = new function () {
+  var controls = new (function () {
     this.rotationSpeed = 0.02;
     this.color1 = 0xff0000;
     this.intensity1 = 500;
@@ -816,7 +802,7 @@ function init_area_light(elContainer) {
     this.intensity2 = 500;
     this.color3 = 0x0000ff;
     this.intensity3 = 500;
-  };
+  })();
 
   var gui = initLessonCateGUI();
   gui.addColor(controls, 'color1').onChange(function (e) {
@@ -826,7 +812,6 @@ function init_area_light(elContainer) {
     plane1 = new THREE.Mesh(planeGeometry1, planeGeometry1Mat);
     plane1.position.copy(areaLight1.position);
     scene.add(plane1);
-
   });
   gui.add(controls, 'intensity1', 0, 1000).onChange(function (e) {
     areaLight1.intensity = e;
@@ -854,7 +839,6 @@ function init_area_light(elContainer) {
     areaLight3.intensity = e;
   });
 
-
   render();
 
   function render() {
@@ -869,10 +853,9 @@ function init_area_light(elContainer) {
 }
 
 function init_lensflares(elContainer) {
-
   var stats = initStats(elContainer);
   var renderer = initRenderer(elContainer, {
-    alpha: true
+    alpha: true,
   });
 
   var camera = initCamera();
@@ -884,19 +867,20 @@ function init_lensflares(elContainer) {
   var trackballControls = initTrackballControls(camera, renderer);
   var clock = new THREE.Clock();
 
-
   // create a scene, that will hold all our elements such as objects, cameras and lights.
   var scene = new THREE.Scene();
 
   // create the ground plane
-  var textureGrass = new THREE.TextureLoader().load("textures/ground/grasslight-big.jpg");
+  var textureGrass = new THREE.TextureLoader().load(
+    'textures/ground/grasslight-big.jpg'
+  );
   textureGrass.wrapS = THREE.RepeatWrapping;
   textureGrass.wrapT = THREE.RepeatWrapping;
   textureGrass.repeat.set(10, 10);
 
   var planeGeometry = new THREE.PlaneGeometry(1000, 1000, 20, 20);
   var planeMaterial = new THREE.MeshLambertMaterial({
-    map: textureGrass
+    map: textureGrass,
   });
   var plane = new THREE.Mesh(planeGeometry, planeMaterial);
   plane.receiveShadow = true;
@@ -913,7 +897,7 @@ function init_lensflares(elContainer) {
   // create a cube
   var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
   var cubeMaterial = new THREE.MeshLambertMaterial({
-    color: 0xff3333
+    color: 0xff3333,
   });
   var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
   cube.castShadow = true;
@@ -928,7 +912,7 @@ function init_lensflares(elContainer) {
 
   var sphereGeometry = new THREE.SphereGeometry(4, 25, 25);
   var sphereMaterial = new THREE.MeshLambertMaterial({
-    color: 0x7777ff
+    color: 0x7777ff,
   });
   var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 
@@ -942,7 +926,7 @@ function init_lensflares(elContainer) {
   scene.add(sphere);
 
   // add subtle ambient lighting
-  var ambiColor = "#1c1c1c";
+  var ambiColor = '#1c1c1c';
   var ambientLight = new THREE.AmbientLight(ambiColor);
   scene.add(ambientLight);
 
@@ -952,12 +936,10 @@ function init_lensflares(elContainer) {
   spotLight0.lookAt(plane);
   scene.add(spotLight0);
 
-
   var target = new THREE.Object3D();
   target.position.set(5, 0, 0);
 
-
-  var pointColor = "#ffffff";
+  var pointColor = '#ffffff';
   //    var spotLight = new THREE.SpotLight( pointColor);
   var spotLight = new THREE.DirectionalLight(pointColor);
   spotLight.position.set(30, 10, -50);
@@ -976,18 +958,14 @@ function init_lensflares(elContainer) {
   spotLight.shadowMapWidth = 2048;
   spotLight.shadowMapHeight = 2048;
 
-
   scene.add(spotLight);
-
 
   // call the render function
   var step = 0;
 
   // used to determine the switch point for the light animation
-  var invert = 1;
-  var phase = 0;
 
-  var controls = new function () {
+  var controls = new (function () {
     this.rotationSpeed = 0.03;
     this.bouncingSpeed = 0.03;
     this.ambientColor = ambiColor;
@@ -999,9 +977,8 @@ function init_lensflares(elContainer) {
     this.debug = false;
     this.castShadow = true;
     this.onlyShadow = false;
-    this.target = "Plane";
-
-  };
+    this.target = 'Plane';
+  })();
 
   var gui = initLessonCateGUI();
   gui.addColor(controls, 'ambientColor').onChange(function (e) {
@@ -1016,19 +993,32 @@ function init_lensflares(elContainer) {
     spotLight.intensity = e;
   });
 
-
-  var textureFlare0 = THREE.ImageUtils.loadTexture("textures/flares/lensflare0.png");
-  var textureFlare3 = THREE.ImageUtils.loadTexture("textures/flares/lensflare3.png");
+  var textureFlare0 = THREE.ImageUtils.loadTexture(
+    'textures/flares/lensflare0.png'
+  );
+  var textureFlare3 = THREE.ImageUtils.loadTexture(
+    'textures/flares/lensflare3.png'
+  );
 
   var flareColor = new THREE.Color(0xffaacc);
 
   var lensFlare = new LensFlare();
 
-  lensFlare.addElement(new THREE.LensflareElement(textureFlare0, 350, 0.0, flareColor));
-  lensFlare.addElement(new THREE.LensflareElement(textureFlare3, 60, 0.6, flareColor));
-  lensFlare.addElement(new THREE.LensflareElement(textureFlare3, 70, 0.7, flareColor));
-  lensFlare.addElement(new THREE.LensflareElement(textureFlare3, 120, 0.9, flareColor));
-  lensFlare.addElement(new THREE.LensflareElement(textureFlare3, 70, 1.0, flareColor));
+  lensFlare.addElement(
+    new THREE.LensflareElement(textureFlare0, 350, 0.0, flareColor)
+  );
+  lensFlare.addElement(
+    new THREE.LensflareElement(textureFlare3, 60, 0.6, flareColor)
+  );
+  lensFlare.addElement(
+    new THREE.LensflareElement(textureFlare3, 70, 0.7, flareColor)
+  );
+  lensFlare.addElement(
+    new THREE.LensflareElement(textureFlare3, 120, 0.9, flareColor)
+  );
+  lensFlare.addElement(
+    new THREE.LensflareElement(textureFlare3, 70, 1.0, flareColor)
+  );
   spotLight.add(lensFlare);
 
   render();
@@ -1043,8 +1033,8 @@ function init_lensflares(elContainer) {
 
     // bounce the sphere up and down
     step += controls.bouncingSpeed;
-    sphere.position.x = 20 + (10 * (Math.cos(step)));
-    sphere.position.y = 2 + (10 * Math.abs(Math.sin(step)));
+    sphere.position.x = 20 + 10 * Math.cos(step);
+    sphere.position.y = 2 + 10 * Math.abs(Math.sin(step));
 
     requestAnimationFrame(render);
     renderer.render(scene, camera);
@@ -1060,4 +1050,4 @@ export {
   init_hemisphere_light,
   init_area_light,
   init_lensflares,
-}
+};

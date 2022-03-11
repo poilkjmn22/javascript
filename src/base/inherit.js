@@ -1,40 +1,42 @@
-const hasPrototypeProperty = (obj, name) => !obj.hasOwnProperty(name) && name in obj;
-const object = Object.create || function(o) {
-  function F(){}
-  F.prototype = o;
-  return new F();
-};
+const hasPrototypeProperty = (obj, name) =>
+  !Object.prototype.hasOwnProperty.call(obj, name) && name in obj;
+const object =
+  Object.create ||
+  function (o) {
+    function F() {}
+    F.prototype = o;
+    return new F();
+  };
 
-export default function inheritPrototype(SubType, SuperType){
+export default function inheritPrototype(SubType, SuperType) {
   let prototype = object(SuperType.prototype);
   prototype.constructor = SubType;
   SubType.prototype = prototype;
 }
 
-
 /*****
 使用抽象类继承的设计模式
 *****/
-function SuperTypeInherit(name){
+function SuperTypeInherit(name) {
   this._name = name;
   this.colors = ['red', 'blue', 'green'];
 }
 
-SuperTypeInherit.prototype.sayName = function(){
+SuperTypeInherit.prototype.sayName = function () {
   console.log(`My Name is ${this._name}`);
-}
+};
 
-function SubTypeInherit(name, age){
+function SubTypeInherit(name, age) {
   SuperTypeInherit.call(this, name);
   this.age = age;
 }
 
 inheritPrototype(SubTypeInherit, SuperTypeInherit);
 
-SubTypeInherit.prototype.sayAge = function(){
+SubTypeInherit.prototype.sayAge = function () {
   this.sayName();
   console.log(this.age);
-}
+};
 
 const person = new SuperTypeInherit('xiaoming');
 person.sayName();
@@ -50,32 +52,32 @@ person3.sayAge();
 *****/
 var SuperType = {
   name: 'fangqi',
-  sayName(){
+  sayName() {
     console.log(`My name is ${this.name}`);
-  }
+  },
 };
 
 var SubType = Object.create(SuperType, {
   age: {
-    value: 31
+    value: 31,
   },
   sayAge: {
-    value: function(){
+    value: function () {
       this.sayName();
       console.log(`,is ${this.age} years old.`);
-    }
-  }
+    },
+  },
 });
 
 var subType1 = Object.create(SubType);
 
 var subType2 = Object.create(SubType, {
   age: {
-    value: 32
+    value: 32,
   },
   name: {
-    value: 'fangqi4'
-  }
+    value: 'fangqi4',
+  },
 });
 
 subType1.sayAge();
