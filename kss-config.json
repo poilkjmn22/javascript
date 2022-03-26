@@ -2,6 +2,6 @@
   "title": "css pattern library",
   "source": ["./src/style"],
   "destination": "docs/",
-  "css": ["./src/style/lib.css"],
-  "js": ["./src/style/lib.js"]
+  "css": ["../src/style/lib.css"],
+  "js": ["../src/style/lib.js"]
 }
