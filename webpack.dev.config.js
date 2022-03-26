@@ -27,6 +27,10 @@ module.exports = smp.wrap(
               ignore: ['**/*.iso', '**/*.doc'],
             },
           },
+          {
+            from: 'docs',
+            to: '',
+          },
         ],
       }),
       new SizePlugin(),

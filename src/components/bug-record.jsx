@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import BugRecordCardList from './bug-record-card-list.jsx';

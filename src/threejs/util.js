@@ -9,7 +9,7 @@
 import * as THREE from 'three';
 import TrackballControls from 'three-trackballcontrols';
 import * as dat from 'dat.gui';
-import 'three/examples/js/loaders/OBJLoader.js'; // 需要做一些特殊处理(ES6模块化导出)
+// import 'three/examples/js/loaders/OBJLoader.js'; // 需要做一些特殊处理(ES6模块化导出)
 import { empty } from '@/utils/dom.js';
 import Stats from 'stats.js';
 

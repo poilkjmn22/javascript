@@ -1,0 +1,17 @@
+node_modules
+.DS_Store
+**/tags/
+**/*.iso
+**/*.doc
+dist
+public
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.un~

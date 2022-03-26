@@ -5,8 +5,8 @@
   "main": "base.js",
   "scripts": {
     "start": "concurrently \"npm run dev-serve\" \"npm run serve\"",
-    "dev-serve": "webpack-dashboard -- webpack serve --config webpack.dev.config.js",
-    "dev-serve1": "webpack serve --config webpack.dev.config.js",
+    "dev-serve1": "webpack-dashboard -- webpack serve --config webpack.dev.config.js",
+    "dev": "webpack serve --config webpack.dev.config.js",
     "serve": "npm run build && node ./build/server.js",
     "server": "node ./build/server.js",
     "server-test": "node ./build/test.js",
@@ -20,7 +20,8 @@
     "analyze-bundle-dev": "webpack serve --config webpack.analysis-dev.config.js",
     "analyze-bundle-prod": "webpack --config webpack.analysis-prod.config.js",
     "lint": "eslint src/**/*.{js,jsx,vue}",
-    "prettier": "prettier --write {src,server}/**/*.{js,jsx,json,vue,css,scss} ./*.js ./\\.*.js"
+    "prettier": "prettier --write {src,server}/**/*.{js,jsx,json,vue,css,scss} ./*.js ./\\.*.js",
+    "css-pattern-lib": "kss --config kss-config.json"
   },
   "author": "fq",
   "license": "ISC",
@@ -44,6 +45,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.1",
     "jest": "^27.0.4",
+    "kss": "^3.0.1",
     "mini-css-extract-plugin": "^1.6.0",
     "postcss": "^8.3.11",
     "postcss-css-variables": "^0.18.0",
