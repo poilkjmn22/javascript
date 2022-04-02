@@ -11,15 +11,7 @@ export default class NotecateLoader {
     deleteGUI('lessonCateGUI');
     switch (notecate.replace(/\./g, '-')) {
       case '深度优先遍历':
-        // import('@/algorithms/sort/benchmark.js')
-        //   .then((module) => {
-        //   })
-        //   .catch(console.error)
-        import('@/algorithms/exhaustive-search/dfs/examples.js')
-          .then((module) => {
-            console.log(module);
-          })
-          .catch(console.error);
+        console.log('dfs');
         break;
       case 'async':
         // import('@/base/async.js')
