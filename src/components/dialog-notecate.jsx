@@ -42,7 +42,7 @@ class DialogNotecate extends React.Component {
         <div className="dialog-body">
           <div className="handle-type">
             <button
-              className="button-base button-primary"
+              className="button button--success"
               onClick={this.handleClickAddNotecate}
             >
               新增子分类
@@ -58,7 +58,7 @@ class DialogNotecate extends React.Component {
           </div>
           <div className="handle-type">
             <button
-              className="button-base button-primary"
+              className="button button--success"
               onClick={this.handleClickUpdateNotecate}
             >
               编辑
@@ -76,7 +76,7 @@ class DialogNotecate extends React.Component {
           </div>
           <div className="handle-type">
             <button
-              className="button-base button-delete"
+              className="button button--danger"
               onClick={this.handleDeleteNotecate}
             >
               删除

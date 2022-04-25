@@ -5,11 +5,8 @@
 @import '../components/bug-record-card.css';
 @import '../components/tag.css';
 @import '../components/form-bug-record.css';
-@import 'sass-common-mixins-fq/lib/postcss/button.css';
+@import 'lib.css';
 @import './iconfont.css';
-.button-primary {
-  @mixin button-primary white, purple, gold, gold;
-}
 .display-none {
   display: none;
 }
