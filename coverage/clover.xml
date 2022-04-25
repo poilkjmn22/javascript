@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1650869765702" clover="3.2.0">
-  <project timestamp="1650869765702" name="All files">
+<coverage generated="1650870185831" clover="3.2.0">
+  <project timestamp="1650870185832" name="All files">
     <metrics statements="16" coveredstatements="1" conditionals="3" coveredconditionals="0" methods="10" coveredmethods="1" elements="29" coveredelements="2" complexity="0" loc="16" ncloc="16" packages="1" files="1" classes="1"/>
     <file name="util.js" path="/Users/fangqi-apple/Library/Mobile Documents/com~apple~CloudDocs/Documents/WebDev/javascript/src/utils/util.js">
       <metrics statements="16" coveredstatements="1" conditionals="3" coveredconditionals="0" methods="10" coveredmethods="1"/>
