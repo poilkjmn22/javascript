@@ -20,5 +20,5 @@ export function prob_ALDS_1_3_A(input) {
       S.push(v);
     }
   }
-  return S.top();
+  return S.pop();
 }

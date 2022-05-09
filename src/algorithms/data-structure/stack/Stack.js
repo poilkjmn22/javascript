@@ -1,20 +1,32 @@
+// 用一维数组实现栈
+// S[0]不存放元素
 export default class Stack {
-  constructor() {
+  constructor(max) {
     this.S = [];
+    this.top = 0;
+    this.MAX = max || Number.MAX_SAFETY_INTEGER;
   }
   isEmpty() {
-    return this.S.length === 0;
+    return this.top === 0;
+  }
+  isFull() {
+    return this.top >= this.MAX;
   }
   push(x) {
-    this.S.push(x);
+    if (this.isFull()) {
+      throw new Error("栈已满");
+    }
+    this.top += 1;
+    this.S[this.top] = x;
   }
   pop() {
-    return this.S.pop();
-  }
-  top() {
-    return this.S[this.S.length - 1];
+    if (this.isEmpty()) {
+      throw new Error("栈已空");
+    }
+    this.top -= 1;
+    return this.S[this.top + 1];
   }
   size() {
-    return this.S.length;
+    return this.top;
   }
 }
