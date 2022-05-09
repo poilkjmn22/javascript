@@ -138,6 +138,12 @@ export default class NotecateLoader {
         );
         addLessonGUIControls(cateExports, elModules);
         break;
+      case "队列":
+        cateExports = await import(
+          "@/algorithms/data-structure/queue/index.js"
+        );
+        addLessonGUIControls(cateExports, elModules);
+        break;
       default:
         break;
     }
