@@ -4,7 +4,7 @@ export default class Stack {
   constructor(max) {
     this.S = [];
     this.top = 0;
-    this.MAX = max || Number.MAX_SAFETY_INTEGER;
+    this.MAX = max || Number.MAX_SAFE_INTEGER;
   }
   isEmpty() {
     return this.top === 0;

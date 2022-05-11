@@ -4,7 +4,7 @@ export default class Queue {
     this.Q = [];
     this.head = 0;
     this.tail = 0;
-    this.MAX = max + 1 || Number.MAX_SAFETY_INTEGER;
+    this.MAX = max + 1 || Number.MAX_SAFE_INTEGER;
   }
   isEmpty() {
     return this.head === this.tail;

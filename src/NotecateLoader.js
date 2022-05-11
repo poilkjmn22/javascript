@@ -144,6 +144,10 @@ export default class NotecateLoader {
         );
         addLessonGUIControls(cateExports, elModules);
         break;
+      case "最大堆":
+        cateExports = await import("@/algorithms/data-structure/heap/index.js");
+        addLessonGUIControls(cateExports, elModules);
+        break;
       default:
         break;
     }
