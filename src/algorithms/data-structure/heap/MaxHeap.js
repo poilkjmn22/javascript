@@ -14,18 +14,21 @@ function swap(A, a, b) {
   A[a] = A[b];
   A[b] = tmp;
 }
+
+const defaultKey = (a) => a;
 export default class MaxHeap {
-  constructor(arr = []) {
+  constructor(arr = [], key) {
+    this.key = key || defaultKey;
     this.buildHeap(arr);
   }
   heapify(A, i) {
     const l = left(i);
     const r = right(i);
     let large = i;
-    if (l <= A.length - 1 && A[l] > A[i]) {
+    if (l <= A.length - 1 && this.key(A[l]) > this.key(A[i])) {
       large = l;
     }
-    if (r <= A.length - 1 && A[r] > A[large]) {
+    if (r <= A.length - 1 && this.key(A[r]) > this.key(A[large])) {
       large = r;
     }
     if (large !== i) {
@@ -39,16 +42,16 @@ export default class MaxHeap {
       this.heapify(this.H, i);
     }
   }
-  insert(key) {
+  insert(item) {
     this.H.push(-Infinity);
-    this.increaseKey(this.H.length - 1, key);
+    this.increaseKey(this.H.length - 1, item);
   }
-  increaseKey(i, key) {
-    if (key < this.H[i]) {
+  increaseKey(i, item) {
+    if (this.H[i] !== -Infinity && this.key(item) < this.key(this.H[i])) {
       throw "新键值小于当前键值";
     }
-    this.H[i] = key;
-    while (i > 0 && key > this.H[parent(i)]) {
+    this.H[i] = item;
+    while (i > 0 && this.key(item) > this.key(this.H[parent(i)])) {
       const p = parent(i);
       swap(this.H, i, p);
       i = p;

@@ -3,6 +3,8 @@ describe("test the Queue class", () => {
   const h = new MaxHeap([4, 1, 3, 2, 16, 9, 10, 14, 8, 7]);
   test("a new MaxHeap instance", () => {
     expect(h.H).toEqual([16, 14, 10, 8, 7, 9, 3, 2, 4, 1]);
+    const h2 = new MaxHeap([4, 1, 3, 2, 16, 9, 10, 14, 8, 7], (a) => a * -1);
+    expect(h2.H).toEqual([1, 2, 3, 4, 7, 9, 10, 14, 8, 16]);
   });
   test("MaxHeap method buildHeap", () => {
     h.buildHeap([5, 86, 37, 12, 25, 32, 11, 7, 1, 2, 4, 19]);
