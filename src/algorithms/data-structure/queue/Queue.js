@@ -1,10 +1,14 @@
+import { isArray } from "../../../utils/util";
 // 使用由一维数组构成的环形缓冲区实现
 export default class Queue {
-  constructor(max) {
+  constructor(arr = [], max) {
     this.Q = [];
     this.head = 0;
     this.tail = 0;
     this.MAX = max + 1 || Number.MAX_SAFE_INTEGER;
+    for (const v of arr) {
+      this.enqueue(v);
+    }
   }
   isEmpty() {
     return this.head === this.tail;
@@ -20,6 +24,14 @@ export default class Queue {
     this.tail += 1;
     if (this.tail === this.MAX) {
       this.tail = 0;
+    }
+  }
+  enqueueMany(arr = []) {
+    if (!isArray(arr)) {
+      throw new Error("参数错误：arr应为数组！");
+    }
+    for (const v of arr) {
+      this.enqueue(v);
     }
   }
   dequeue() {

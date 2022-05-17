@@ -3,17 +3,66 @@ export function swap(arr, i, j) {
   arr[i] = arr[j];
   arr[j] = tmp;
 }
+export function isObject(o) {
+  return Object.prototype.toString.call(o) === "[object Object]";
+}
 
 export function isArray(value) {
-  return Object.prototype.toString.call(value) === '[object Array]';
+  return Object.prototype.toString.call(value) === "[object Array]";
 }
 
 export function isString(value) {
-  return Object.prototype.toString.call(value) === '[object String]';
+  return Object.prototype.toString.call(value) === "[object String]";
 }
 
 export function isFunction(value) {
-  return Object.prototype.toString.call(value) === '[object Function]';
+  return Object.prototype.toString.call(value) === "[object Function]";
+}
+
+export function deepClone(data) {
+  if (isArray(data)) {
+    return data.map(deepClone);
+  } else if (isObject(data)) {
+    return Object.keys(data).reduce(function (o, k) {
+      o[k] = deepClone(data[k]);
+      return o;
+    }, {});
+  } else {
+    return data;
+  }
+}
+
+export function keyBy(arr, iteratee) {
+  let _identity = iteratee;
+  if (isString(iteratee)) {
+    _identity = (d) => d[iteratee];
+  }
+  if (!isArray(arr)) {
+    throw new Error("参数错误：arr应为数组");
+  }
+  if (!isFunction(_identity)) {
+    throw new Error("参数错误：iteratee应为函数");
+  }
+  return arr.reduce((res, d) => {
+    res[_identity(d)] = d;
+    return res;
+  }, {});
+}
+
+export function omit(obj, props) {
+  let omits = [];
+  if (isString(props)) {
+    omits.push(props);
+  } else if (isArray(props)) {
+    omits = props;
+  }
+  const res = {};
+  for (const k in obj) {
+    if (!omits.includes(k)) {
+      res[k] = obj[k];
+    }
+  }
+  return res;
 }
 
 export function* nTimesRec(n) {
