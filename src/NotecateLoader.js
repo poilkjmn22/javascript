@@ -152,6 +152,12 @@ export default class NotecateLoader {
         cateExports = await import("@/algorithms/data-structure/tree/index.js");
         addLessonGUIControls(cateExports, elModules);
         break;
+      case "二叉搜索树":
+        cateExports = await import(
+          "@/algorithms/data-structure/binary-search-tree/index.js"
+        );
+        addLessonGUIControls(cateExports, elModules);
+        break;
       default:
         break;
     }

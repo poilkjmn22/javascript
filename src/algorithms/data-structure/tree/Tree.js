@@ -65,15 +65,16 @@ export default class Tree {
   findIndex(predicate) {
     let index = -1;
     let found = -1;
-    if (typeof predicate !== "function") {
-      throw new TypeError("参数类型不正确（predicate应为函数）");
+    let identity = predicate;
+    if (typeof identity !== "function") {
+      identity = (d) => d === predicate;
     }
     const { childrenProperty } = this.options;
     const q = new Queue(this.T);
     while (!q.isEmpty()) {
       const processing = q.dequeue();
       index += 1;
-      if (predicate.call(null, processing)) {
+      if (identity.call(null, processing)) {
         found = index;
         break;
       }
@@ -84,14 +85,15 @@ export default class Tree {
 
   find(predicate) {
     let found = null;
-    if (typeof predicate !== "function") {
-      throw new TypeError("参数类型不正确（predicate应为函数）");
+    let identity = predicate;
+    if (typeof identity !== "function") {
+      identity = (d) => d === predicate;
     }
     const { childrenProperty } = this.options;
     const q = new Queue(this.T);
     while (!q.isEmpty()) {
       const processing = q.dequeue();
-      if (predicate.call(null, processing)) {
+      if (identity.call(null, processing)) {
         found = omit(processing, childrenProperty);
         break;
       }

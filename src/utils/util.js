@@ -32,6 +32,16 @@ export function deepClone(data) {
   }
 }
 
+export function getKey(data, key) {
+  if (isString(key)) {
+    return data[key];
+  } else if (isFunction(key)) {
+    return key(data);
+  } else {
+    return data;
+  }
+}
+
 export function keyBy(arr, iteratee) {
   let _identity = iteratee;
   if (isString(iteratee)) {

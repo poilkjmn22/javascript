@@ -162,14 +162,14 @@ describe("test class Tree", () => {
   });
 
   it("tree method findIndex", () => {
-    expect(() => t.findIndex(6)).toThrow(/参数类型/);
+    expect(t.findIndex(6)).toBe(-1);
     expect(t.findIndex((n) => n.nodeId === 0)).toBe(0);
     expect(t.findIndex((n) => n.nodeId === 6)).toBe(7);
     expect(t.findIndex((n) => n.nodeId === 13)).toBe(-1);
   });
 
   it("tree method find", () => {
-    expect(() => t.find(6)).toThrow(/参数类型/);
+    expect(t.find(6)).toBeNull();
     expect(t.find((n) => n.nodeId === 0)).toEqual({
       nodeId: 0,
       parentId: undefined,
