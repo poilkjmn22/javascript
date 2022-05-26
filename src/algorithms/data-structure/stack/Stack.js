@@ -3,30 +3,33 @@
 export default class Stack {
   constructor(max) {
     this.S = [];
-    this.top = 0;
+    this._top = 0;
     this.MAX = max || Number.MAX_SAFE_INTEGER;
   }
   isEmpty() {
-    return this.top === 0;
+    return this._top === 0;
   }
   isFull() {
-    return this.top >= this.MAX;
+    return this._top >= this.MAX;
   }
   push(x) {
     if (this.isFull()) {
       throw new Error("栈已满");
     }
-    this.top += 1;
-    this.S[this.top] = x;
+    this._top += 1;
+    this.S[this._top] = x;
   }
   pop() {
     if (this.isEmpty()) {
       throw new Error("栈已空");
     }
-    this.top -= 1;
-    return this.S[this.top + 1];
+    this._top -= 1;
+    return this.S[this._top + 1];
+  }
+  top() {
+    return this.S[this._top];
   }
   size() {
-    return this.top;
+    return this._top;
   }
 }

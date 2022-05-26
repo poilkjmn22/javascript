@@ -17,6 +17,17 @@ describe("test the Stack class", () => {
     expect(s.pop()).toBe(1);
   });
 
+  test("class method top", () => {
+    const s1 = new Stack();
+    expect(s1.top()).toBe(undefined);
+    s1.push("x");
+    expect(s1.top()).toBe("x");
+    s1.push("y");
+    expect(s1.top()).toBe("y");
+    s1.pop();
+    expect(s1.top()).toBe("x");
+  });
+
   test("class method isEmpty", () => {
     expect(s.isEmpty()).toBe(true);
   });
