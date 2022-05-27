@@ -1,6 +1,12 @@
 import Stack from "../stack/Stack";
 import Queue from "../queue/Queue";
 import Vertice from "./Vertice";
+import { getKey } from "../../../utils/util";
+
+const defaultOptions = {
+  weight: "",
+  id: "",
+};
 
 const visitStatus = {
   UNVISITED: "UNVISITED",
@@ -10,13 +16,14 @@ const visitStatus = {
 let dfsTime = 0;
 // V * V 的矩阵来表示图
 export default class AdjacentMatrix {
-  constructor(data, weight) {
+  constructor(data = [], dataSourceType = "adjacentList", options) {
     this.M = [];
-    this.weight = weight;
-    this.V = this.convertData(data);
-    this.buildGraph(data);
+    this.V = [];
+    this.options = Object.assign({}, defaultOptions, options);
+    this.buildGraph(data, dataSourceType);
   }
-  buildGraph(data) {
+  buildGraph(data, dataSourceType) {
+    this.V = this.convertData(data, dataSourceType);
     for (let i = 0; i < this.V.length; i++) {
       this.M[i] = [];
       for (let j = 0; j < this.V.length; j++) {
@@ -24,29 +31,55 @@ export default class AdjacentMatrix {
       }
     }
     for (let i = 0; i < this.V.length; i++) {
-      const [, adjacent] = data[i];
+      const [, adjacent] = this.adjacentList[i];
       if (!adjacent) {
         continue;
       }
       for (const j of adjacent) {
-        this.M[i][j - 1] = 1;
+        const toVertice = this.V.find((v) => v.id === j);
+        if (!toVertice) {
+          throw new Error("到达顶点不存在！");
+        }
+        this.M[i][toVertice.verticeIndex] = 1;
       }
     }
   }
-  convertData(data) {
+  convertData(data, dataSourceType) {
+    let cd = [];
+    if (dataSourceType === "adjacentList") {
+      cd = data;
+    } else if (dataSourceType === "edgeList") {
+      cd = this.convertEdges(data);
+    }
+    this.adjacentList = cd;
     const V = [];
-    for (let i = 0; i < data.length; i++) {
-      const [vertice] = data[i];
-      V.push(new Vertice(vertice, i, this.weight));
+    for (let i = 0; i < cd.length; i++) {
+      const [vertice] = cd[i];
+      V.push(new Vertice(vertice, i, this.options));
     }
     return V;
+  }
+  convertEdges({ vertices, edges }) {
+    const adjacentList = new Map();
+    for (const v of vertices) {
+      const id = getKey(v, this.options.id);
+      adjacentList.set(id, [v, []]);
+    }
+    for (const edge of edges) {
+      const [from, to] = edge;
+      const [, a] = adjacentList.get(from);
+      if (a) {
+        a.push(to);
+      }
+    }
+    return [...adjacentList.values()];
   }
   traverse(cb) {
     this.initDfs();
     for (const v of this.V) {
       if (v.visitStatus === visitStatus.UNVISITED) {
         // this.dfs(v, cb);
-        this.dfsByRecusiveness(v, cb);
+        this.dfsByRecusiveness(v, cb, v);
       }
     }
   }
@@ -90,10 +123,10 @@ export default class AdjacentMatrix {
       }
     }
   }
-  dfsByRecusiveness(vertice, cb) {
+  dfsByRecusiveness(vertice, cb, startVertice) {
     vertice.visitStatus = visitStatus.VISITED;
     vertice.visitTime = ++dfsTime;
-    cb(vertice);
+    cb(vertice, startVertice);
     for (let i = 0; i < this.V.length; i++) {
       const v = this.V[i];
       if (

@@ -33,7 +33,7 @@ export function deepClone(data) {
 }
 
 export function getKey(data, key) {
-  if (isString(key)) {
+  if (isString(key) && key) {
     return data[key];
   } else if (isFunction(key)) {
     return key(data);
