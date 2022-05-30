@@ -106,4 +106,54 @@ describe("test the AdjacentMatrix class", () => {
       [4, 1],
     ]);
   });
+
+  test("method generateMinimumSpanningTree", () => {
+    const g = new AdjacentMatrix(
+      [
+        [
+          0,
+          [
+            { id: 1, weight: 2 },
+            { id: 2, weight: 3 },
+            { id: 3, weight: 1 },
+          ],
+        ],
+        [
+          1,
+          [
+            { id: 0, weight: 2 },
+            { id: 3, weight: 4 },
+          ],
+        ],
+        [
+          2,
+          [
+            { id: 0, weight: 3 },
+            { id: 3, weight: 1 },
+            { id: 4, weight: 1 },
+          ],
+        ],
+        [
+          3,
+          [
+            { id: 0, weight: 1 },
+            { id: 1, weight: 4 },
+            { id: 2, weight: 1 },
+            { id: 4, weight: 3 },
+          ],
+        ],
+        [
+          4,
+          [
+            { id: 2, weight: 1 },
+            { id: 3, weight: 3 },
+          ],
+        ],
+      ],
+      "adjacentList",
+      { weighted: true }
+    );
+    const { MST, P, MST_weight } = g.generateMinimumSpanningTree();
+    expect(MST_weight).toBe(5);
+  });
 });

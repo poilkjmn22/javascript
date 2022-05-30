@@ -1,10 +1,12 @@
 import Stack from "../stack/Stack";
 import Queue from "../queue/Queue";
+import PriorityQueue from "../priority-queue/PriorityQueue";
 import Vertice from "./Vertice";
+import Edge from "./Edge";
 import { getKey } from "../../../utils/util";
 
 const defaultOptions = {
-  weight: "",
+  weighted: false,
   id: "",
 };
 
@@ -27,7 +29,7 @@ export default class AdjacentMatrix {
     for (let i = 0; i < this.V.length; i++) {
       this.M[i] = [];
       for (let j = 0; j < this.V.length; j++) {
-        this.M[i].push(0);
+        this.M[i].push(this.options.weighted ? Infinity : 0);
       }
     }
     for (let i = 0; i < this.V.length; i++) {
@@ -36,11 +38,18 @@ export default class AdjacentMatrix {
         continue;
       }
       for (const j of adjacent) {
-        const toVertice = this.V.find((v) => v.id === j);
+        let id = j;
+        let weight = 1;
+        if (this.options.weighted) {
+          id = j.id;
+          weight = j.weight;
+        }
+
+        const toVertice = this.V.find((v) => v.id === id);
         if (!toVertice) {
           throw new Error("到达顶点不存在！");
         }
-        this.M[i][toVertice.verticeIndex] = 1;
+        this.M[i][toVertice.verticeIndex] = weight;
       }
     }
   }
@@ -73,6 +82,9 @@ export default class AdjacentMatrix {
       }
     }
     return [...adjacentList.values()];
+  }
+  hasEdge(value) {
+    return this.options.weighted ? Math.abs(value) !== Infinity : !!value;
   }
   traverse(cb) {
     this.initDfs();
@@ -130,7 +142,7 @@ export default class AdjacentMatrix {
     for (let i = 0; i < this.V.length; i++) {
       const v = this.V[i];
       if (
-        this.M[vertice.verticeIndex][i] === 1 &&
+        this.hasEdge(this.M[vertice.verticeIndex][i]) &&
         v.visitStatus === visitStatus.UNVISITED
       ) {
         this.dfsByRecusiveness(v, cb);
@@ -143,7 +155,7 @@ export default class AdjacentMatrix {
     let nextUnvisitedAdjacent;
     for (let i = 0; i < this.V.length; i++) {
       if (
-        this.M[vertice.verticeIndex][i] === 1 &&
+        this.hasEdge(this.M[vertice.verticeIndex][i]) &&
         this.V[i].visitStatus === visitStatus.UNVISITED
       ) {
         nextUnvisitedAdjacent = this.V[i];
@@ -175,7 +187,7 @@ export default class AdjacentMatrix {
       for (let i = 0; i < this.V.length; i++) {
         const nv = this.V[i];
         if (
-          this.M[v.verticeIndex][i] === 1 &&
+          this.hasEdge(this.M[v.verticeIndex][i]) &&
           nv.visitStatus === visitStatus.UNVISITED
         ) {
           Q.enqueue(nv);
@@ -184,5 +196,39 @@ export default class AdjacentMatrix {
         }
       }
     }
+  }
+  generateMinimumSpanningTree() {
+    let MST_weight = 0;
+    let cv = this.V[0];
+    const MST = [];
+    const P = [];
+    const checkingEdges = new PriorityQueue([], (edge) => edge.weight * -1);
+    const addConnEdges = (cv, from) => {
+      cv.added = true;
+      for (let i = 0; i < this.V.length; i++) {
+        if (!this.V[i].added && this.hasEdge(this.M[cv.verticeIndex][i])) {
+          checkingEdges.enqueue(
+            new Edge(cv.verticeIndex, i, this.M[cv.verticeIndex][i])
+          );
+        }
+      }
+      MST.push(cv.data);
+      P.push(from && from.data);
+    };
+    addConnEdges(cv);
+    for (let i = 1; i < this.V.length; i++) {
+      if (checkingEdges.isEmpty()) {
+        break;
+      }
+      const { from, to, weight } = checkingEdges.dequeue();
+      cv = this.V[to];
+      MST_weight += weight;
+      addConnEdges(cv, this.V[from]);
+    }
+    return {
+      MST,
+      P,
+      MST_weight,
+    };
   }
 }

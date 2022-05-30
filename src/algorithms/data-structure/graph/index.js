@@ -1,4 +1,4 @@
-import { prob_ASDL_1_11_A, prob_ASDL_1_11_D } from "./prob";
+import { prob_ASDL_1_11_A, prob_ASDL_1_11_D, prob_ASDL_1_12_A } from "./prob";
 import AdjacentMatrix from "./AdjacentMatrix";
 
 export function example_prob_ASDL_1_11_A() {
@@ -74,5 +74,93 @@ export function example_connected_components() {
       [0, 4],
       [5, 8],
     ]
+  );
+}
+
+export function example_minimum_spanning_tree() {
+  prob_ASDL_1_12_A(
+    [
+      [
+        0,
+        [
+          { id: 1, weight: 2 },
+          { id: 2, weight: 3 },
+          { id: 3, weight: 1 },
+        ],
+      ],
+      [
+        1,
+        [
+          { id: 0, weight: 2 },
+          { id: 3, weight: 4 },
+        ],
+      ],
+      [
+        2,
+        [
+          { id: 0, weight: 3 },
+          { id: 3, weight: 1 },
+          { id: 4, weight: 1 },
+        ],
+      ],
+      [
+        3,
+        [
+          { id: 0, weight: 1 },
+          { id: 1, weight: 4 },
+          { id: 2, weight: 1 },
+          { id: 4, weight: 3 },
+        ],
+      ],
+      [
+        4,
+        [
+          { id: 2, weight: 1 },
+          { id: 3, weight: 3 },
+        ],
+      ],
+    ],
+    "adjacentList",
+    { weighted: true }
+  );
+
+  prob_ASDL_1_12_A(
+    [
+      [
+        0,
+        [
+          { id: 1, weight: 8 },
+          { id: 2, weight: 12 },
+          { id: 3, weight: 3 },
+        ],
+      ],
+      [1, [{ id: 0, weight: 8 }]],
+      [2, [{ id: 0, weight: 12 }]],
+      [
+        3,
+        [
+          { id: 0, weight: 3 },
+          { id: 4, weight: 7 },
+          { id: 5, weight: 23 },
+        ],
+      ],
+      [
+        4,
+        [
+          { id: 3, weight: 7 },
+          { id: 5, weight: -2 },
+        ],
+      ],
+      [
+        5,
+        [
+          { id: 3, weight: 23 },
+          { id: 4, weight: -2 },
+        ],
+      ],
+      [6],
+    ],
+    "adjacentList",
+    { weighted: true }
   );
 }

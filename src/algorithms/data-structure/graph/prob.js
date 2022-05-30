@@ -28,3 +28,9 @@ export function prob_ASDL_1_11_D(friends, questions) {
     );
   }
 }
+
+export function prob_ASDL_1_12_A(data, dataSourceType, options) {
+  const g = new AdjacentMatrix(data, dataSourceType, options);
+  const { MST, P, MST_weight } = g.generateMinimumSpanningTree();
+  console.log(MST, P, MST_weight);
+}
