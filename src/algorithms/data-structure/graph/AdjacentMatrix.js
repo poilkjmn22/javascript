@@ -222,6 +222,9 @@ export default class AdjacentMatrix {
       }
       const { from, to, weight } = checkingEdges.dequeue();
       cv = this.V[to];
+      if (cv.added) {
+        break;
+      }
       MST_weight += weight;
       addConnEdges(cv, this.V[from]);
     }
