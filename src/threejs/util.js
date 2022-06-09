@@ -6,12 +6,12 @@
  * @Description: utils
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
-import * as THREE from 'three';
-import TrackballControls from 'three-trackballcontrols';
-import * as dat from 'dat.gui';
-// import 'three/examples/js/loaders/OBJLoader.js'; // 需要做一些特殊处理(ES6模块化导出)
-import { empty } from '@/utils/dom.js';
-import Stats from 'stats.js';
+import * as THREE from "three";
+import TrackballControls from "three-trackballcontrols";
+import * as dat from "dat.gui";
+import "three/examples/js/loaders/OBJLoader.js"; // 需要做一些特殊处理(ES6模块化导出)
+import { empty } from "@/utils/dom.js";
+import Stats from "stats.js";
 
 function initTrackballControls(camera, renderer) {
   var trackballControls = new TrackballControls(camera, renderer.domElement);
@@ -28,13 +28,13 @@ function initTrackballControls(camera, renderer) {
 }
 
 function addLessonGUIControls(objLesson, elModules) {
-  var gui = initLessonCateGUI({ width: 350 }, 'lessonGUI');
-  gui.domElement.style.float = 'left';
+  var gui = initLessonCateGUI({ width: 350 }, "lessonGUI");
+  gui.domElement.style.float = "left";
   const controls = {};
   for (const cate in objLesson) {
     controls[cate] = function () {
       empty(elModules);
-      deleteGUI('lessonCateGUI');
+      deleteGUI("lessonCateGUI");
       objLesson[cate](elModules);
     };
     gui.add(controls, cate);
@@ -48,7 +48,7 @@ function deleteGUI(guiName) {
   }
 }
 
-function initLessonCateGUI(options = {}, guiName = 'lessonCateGUI') {
+function initLessonCateGUI(options = {}, guiName = "lessonCateGUI") {
   deleteGUI(guiName);
   window[guiName] = new dat.GUI(options);
   return window[guiName];
@@ -56,7 +56,7 @@ function initLessonCateGUI(options = {}, guiName = 'lessonCateGUI') {
 
 function initStats(elContainer) {
   var stats = new Stats();
-  stats.dom.style.position = 'absolute';
+  stats.dom.style.position = "absolute";
   elContainer.appendChild(stats.dom);
   stats.showPanel(0);
 
@@ -71,7 +71,7 @@ function initStats(elContainer) {
  */
 function initRenderer(elContainer, additionalProperties) {
   var props =
-    typeof additionalProperties !== 'undefined' && additionalProperties
+    typeof additionalProperties !== "undefined" && additionalProperties
       ? additionalProperties
       : {};
   var renderer = new THREE.WebGLRenderer(props);
@@ -304,38 +304,38 @@ function addGroundPlane(scene) {
  * @param name optionally the name to assign to the folder
  */
 function addBasicMaterialSettings(gui, controls, material, name) {
-  var folderName = name !== undefined ? name : 'THREE.Material';
+  var folderName = name !== undefined ? name : "THREE.Material";
 
   controls.material = material;
 
   var folder = gui.addFolder(folderName);
-  folder.add(controls.material, 'id');
-  folder.add(controls.material, 'uuid');
-  folder.add(controls.material, 'name');
-  folder.add(controls.material, 'opacity', 0, 1, 0.01);
-  folder.add(controls.material, 'transparent');
-  folder.add(controls.material, 'overdraw', 0, 1, 0.01);
-  folder.add(controls.material, 'visible');
+  folder.add(controls.material, "id");
+  folder.add(controls.material, "uuid");
+  folder.add(controls.material, "name");
+  folder.add(controls.material, "opacity", 0, 1, 0.01);
+  folder.add(controls.material, "transparent");
+  folder.add(controls.material, "overdraw", 0, 1, 0.01);
+  folder.add(controls.material, "visible");
   folder
-    .add(controls.material, 'side', { FrontSide: 0, BackSide: 1, BothSides: 2 })
+    .add(controls.material, "side", { FrontSide: 0, BackSide: 1, BothSides: 2 })
     .onChange(function (side) {
       controls.material.side = parseInt(side);
     });
 
-  folder.add(controls.material, 'colorWrite');
-  folder.add(controls.material, 'flatShading').onChange(function (shading) {
+  folder.add(controls.material, "colorWrite");
+  folder.add(controls.material, "flatShading").onChange(function (shading) {
     controls.material.flatShading = shading;
     controls.material.needsUpdate = true;
   });
-  folder.add(controls.material, 'premultipliedAlpha');
-  folder.add(controls.material, 'dithering');
-  folder.add(controls.material, 'shadowSide', {
+  folder.add(controls.material, "premultipliedAlpha");
+  folder.add(controls.material, "dithering");
+  folder.add(controls.material, "shadowSide", {
     FrontSide: 0,
     BackSide: 1,
     BothSides: 2,
   });
   folder
-    .add(controls.material, 'vertexColors', {
+    .add(controls.material, "vertexColors", {
       NoColors: THREE.NoColors,
       FaceColors: THREE.FaceColors,
       VertexColors: THREE.VertexColors,
@@ -343,7 +343,7 @@ function addBasicMaterialSettings(gui, controls, material, name) {
     .onChange(function (vertexColors) {
       material.vertexColors = parseInt(vertexColors);
     });
-  folder.add(controls.material, 'fog');
+  folder.add(controls.material, "fog");
 
   return folder;
 }
@@ -357,7 +357,7 @@ function loadGopher(material) {
   var loader = new THREE.OBJLoader();
   var mesh = null;
   var p = new Promise(function (resolve) {
-    loader.load('models/gopher/gopher.obj', function (loadedMesh) {
+    loader.load("models/gopher/gopher.obj", function (loadedMesh) {
       // this is a group of meshes, so iterate until we reach a THREE.Mesh
       mesh = loadedMesh;
       if (material) {

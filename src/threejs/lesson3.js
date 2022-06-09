@@ -6,8 +6,8 @@
  * @Description: Lesson 3
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
-import * as THREE from 'three';
-import LensFlare from 'three/examples/js/objects/Lensflare.js'; // 需要做一些特殊处理(ES6模块化导出)
+import * as THREE from "three";
+import Lensflare from "three/examples/js/objects/Lensflare.js"; // 需要做一些特殊处理(ES6模块化导出)
 import {
   initStats,
   initRenderer,
@@ -17,7 +17,7 @@ import {
   addDefaultCubeAndSphere,
   addGroundPlane,
   initTrackballControls,
-} from './util.js';
+} from "./util.js";
 
 function init_ambient_light(elContainer) {
   // use the defaults
@@ -29,7 +29,7 @@ function init_ambient_light(elContainer) {
   var scene = new THREE.Scene();
 
   // add ambient lighting
-  var ambientLight = new THREE.AmbientLight('#606008', 1);
+  var ambientLight = new THREE.AmbientLight("#606008", 1);
   scene.add(ambientLight);
 
   // add spotlight for the shadows
@@ -63,15 +63,15 @@ function init_ambient_light(elContainer) {
     })();
 
     var gui = initLessonCateGUI();
-    gui.add(controls, 'intensity', 0, 3, 0.1).onChange(function () {
+    gui.add(controls, "intensity", 0, 3, 0.1).onChange(function () {
       ambientLight.color = new THREE.Color(controls.ambientColor);
       ambientLight.intensity = controls.intensity;
     });
-    gui.addColor(controls, 'ambientColor').onChange(function () {
+    gui.addColor(controls, "ambientColor").onChange(function () {
       ambientLight.color = new THREE.Color(controls.ambientColor);
       ambientLight.intensity = controls.intensity;
     });
-    gui.add(controls, 'disableSpotlight').onChange(function (e) {
+    gui.add(controls, "disableSpotlight").onChange(function (e) {
       spotLight.visible = !e;
     });
 
@@ -94,7 +94,7 @@ function init_spot_light(elContainer) {
   var plane = addGroundPlane(scene);
 
   // add subtle ambient lighting
-  var ambiColor = '#1c1c1c';
+  var ambiColor = "#1c1c1c";
   var ambientLight = new THREE.AmbientLight(ambiColor);
   scene.add(ambientLight);
 
@@ -108,7 +108,7 @@ function init_spot_light(elContainer) {
   var target = new THREE.Object3D();
   target.position.set(5, 0, 0);
 
-  var spotLight = new THREE.SpotLight('#ffffff');
+  var spotLight = new THREE.SpotLight("#ffffff");
   spotLight.position.set(-40, 60, -10);
   spotLight.castShadow = true;
   spotLight.shadow.camera.near = 1;
@@ -193,37 +193,37 @@ function init_spot_light(elContainer) {
       this.angle = 0.1;
       this.shadowDebug = false;
       this.castShadow = true;
-      this.target = 'Plane';
+      this.target = "Plane";
       this.stopMovingLight = false;
       this.penumbra = 0;
     })();
 
     var gui = initLessonCateGUI();
-    gui.addColor(controls, 'ambientColor').onChange(function (e) {
+    gui.addColor(controls, "ambientColor").onChange(function (e) {
       ambientLight.color = new THREE.Color(e);
     });
 
-    gui.addColor(controls, 'pointColor').onChange(function (e) {
+    gui.addColor(controls, "pointColor").onChange(function (e) {
       spotLight.color = new THREE.Color(e);
     });
 
-    gui.add(controls, 'angle', 0, Math.PI * 2).onChange(function (e) {
+    gui.add(controls, "angle", 0, Math.PI * 2).onChange(function (e) {
       spotLight.angle = e;
     });
 
-    gui.add(controls, 'intensity', 0, 5).onChange(function (e) {
+    gui.add(controls, "intensity", 0, 5).onChange(function (e) {
       spotLight.intensity = e;
     });
 
-    gui.add(controls, 'penumbra', 0, 1).onChange(function (e) {
+    gui.add(controls, "penumbra", 0, 1).onChange(function (e) {
       spotLight.penumbra = e;
     });
 
-    gui.add(controls, 'distance', 0, 200).onChange(function (e) {
+    gui.add(controls, "distance", 0, 200).onChange(function (e) {
       spotLight.distance = e;
     });
 
-    gui.add(controls, 'shadowDebug').onChange(function (e) {
+    gui.add(controls, "shadowDebug").onChange(function (e) {
       if (e) {
         scene.add(debugCamera);
       } else {
@@ -231,27 +231,27 @@ function init_spot_light(elContainer) {
       }
     });
 
-    gui.add(controls, 'castShadow').onChange(function (e) {
+    gui.add(controls, "castShadow").onChange(function (e) {
       spotLight.castShadow = e;
     });
 
     gui
-      .add(controls, 'target', ['Plane', 'Sphere', 'Cube'])
+      .add(controls, "target", ["Plane", "Sphere", "Cube"])
       .onChange(function (e) {
         switch (e) {
-          case 'Plane':
+          case "Plane":
             spotLight.target = plane;
             break;
-          case 'Sphere':
+          case "Sphere":
             spotLight.target = sphere;
             break;
-          case 'Cube':
+          case "Cube":
             spotLight.target = cube;
             break;
         }
       });
 
-    gui.add(controls, 'stopMovingLight').onChange(function (e) {
+    gui.add(controls, "stopMovingLight").onChange(function (e) {
       controls.stopMovingLight = e;
     });
 
@@ -275,11 +275,11 @@ function init_point_light(elContainer) {
   addHouseAndTree(scene);
 
   // add subtle ambient lighting
-  var ambientLight = new THREE.AmbientLight('#0c0c0c');
+  var ambientLight = new THREE.AmbientLight("#0c0c0c");
   scene.add(ambientLight);
 
   // the point light where working with
-  var pointColor = '#ccffcc';
+  var pointColor = "#ccffcc";
   var pointLight = new THREE.PointLight(pointColor);
   pointLight.decay = 0.1;
 
@@ -353,19 +353,19 @@ function init_point_light(elContainer) {
     })();
 
     var gui = initLessonCateGUI();
-    gui.addColor(controls, 'ambientColor').onChange(function (e) {
+    gui.addColor(controls, "ambientColor").onChange(function (e) {
       ambientLight.color = new THREE.Color(e);
     });
 
-    gui.addColor(controls, 'pointColor').onChange(function (e) {
+    gui.addColor(controls, "pointColor").onChange(function (e) {
       pointLight.color = new THREE.Color(e);
     });
 
-    gui.add(controls, 'distance', 0, 100).onChange(function (e) {
+    gui.add(controls, "distance", 0, 100).onChange(function (e) {
       pointLight.distance = e;
     });
 
-    gui.add(controls, 'intensity', 0, 3).onChange(function (e) {
+    gui.add(controls, "intensity", 0, 3).onChange(function (e) {
       pointLight.intensity = e;
     });
 
@@ -434,14 +434,14 @@ function init_directional_light(elContainer) {
   scene.add(sphere);
 
   // add subtle ambient lighting
-  var ambiColor = '#1c1c1c';
+  var ambiColor = "#1c1c1c";
   var ambientLight = new THREE.AmbientLight(ambiColor);
   scene.add(ambientLight);
 
   var target = new THREE.Object3D();
   target.position.set(5, 0, 0);
 
-  var pointColor = '#ff5808';
+  var pointColor = "#ff5808";
   var directionalLight = new THREE.DirectionalLight(pointColor);
   directionalLight.position.set(-40, 60, -10);
   directionalLight.castShadow = true;
@@ -481,47 +481,47 @@ function init_directional_light(elContainer) {
     this.debug = false;
     this.castShadow = true;
     this.onlyShadow = false;
-    this.target = 'Plane';
+    this.target = "Plane";
   })();
 
   var gui = initLessonCateGUI();
 
-  gui.addColor(controls, 'ambientColor').onChange(function (e) {
+  gui.addColor(controls, "ambientColor").onChange(function (e) {
     ambientLight.color = new THREE.Color(e);
   });
 
-  gui.addColor(controls, 'pointColor').onChange(function (e) {
+  gui.addColor(controls, "pointColor").onChange(function (e) {
     directionalLight.color = new THREE.Color(e);
   });
 
-  gui.add(controls, 'intensity', 0, 5).onChange(function (e) {
+  gui.add(controls, "intensity", 0, 5).onChange(function (e) {
     directionalLight.intensity = e;
   });
 
-  gui.add(controls, 'debug').onChange(function (e) {
+  gui.add(controls, "debug").onChange(function (e) {
     e ? scene.add(shadowCamera) : scene.remove(shadowCamera);
   });
 
-  gui.add(controls, 'castShadow').onChange(function (e) {
+  gui.add(controls, "castShadow").onChange(function (e) {
     directionalLight.castShadow = e;
   });
 
-  gui.add(controls, 'onlyShadow').onChange(function (e) {
+  gui.add(controls, "onlyShadow").onChange(function (e) {
     directionalLight.onlyShadow = e;
   });
 
   gui
-    .add(controls, 'target', ['Plane', 'Sphere', 'Cube'])
+    .add(controls, "target", ["Plane", "Sphere", "Cube"])
     .onChange(function (e) {
       console.log(e);
       switch (e) {
-        case 'Plane':
+        case "Plane":
           directionalLight.target = plane;
           break;
-        case 'Sphere':
+        case "Sphere":
           directionalLight.target = sphere;
           break;
-        case 'Cube':
+        case "Cube":
           directionalLight.target = cube;
           break;
       }
@@ -570,7 +570,7 @@ function init_hemisphere_light(elContainer) {
 
   // create the ground plane
   var textureGrass = new THREE.TextureLoader().load(
-    'textures/ground/grasslight-big.jpg'
+    "textures/ground/grasslight-big.jpg"
   );
   textureGrass.wrapS = THREE.RepeatWrapping;
   textureGrass.wrapT = THREE.RepeatWrapping;
@@ -638,7 +638,7 @@ function init_hemisphere_light(elContainer) {
   hemiLight.position.set(0, 500, 0);
   scene.add(hemiLight);
 
-  var pointColor = '#ffffff';
+  var pointColor = "#ffffff";
   var dirLight = new THREE.DirectionalLight(pointColor);
   dirLight.position.set(30, 10, -50);
   dirLight.castShadow = true;
@@ -693,20 +693,20 @@ function init_hemisphere_light(elContainer) {
 
     var gui = initLessonCateGUI();
 
-    gui.add(controls, 'hemisphere').onChange(function (e) {
+    gui.add(controls, "hemisphere").onChange(function (e) {
       if (!e) {
         hemiLight.intensity = 0;
       } else {
         hemiLight.intensity = controls.intensity;
       }
     });
-    gui.addColor(controls, 'groundColor').onChange(function (e) {
+    gui.addColor(controls, "groundColor").onChange(function (e) {
       hemiLight.groundColor = new THREE.Color(e);
     });
-    gui.addColor(controls, 'color').onChange(function (e) {
+    gui.addColor(controls, "color").onChange(function (e) {
       hemiLight.color = new THREE.Color(e);
     });
-    gui.add(controls, 'intensity', 0, 5).onChange(function (e) {
+    gui.add(controls, "intensity", 0, 5).onChange(function (e) {
       hemiLight.intensity = e;
     });
 
@@ -805,7 +805,7 @@ function init_area_light(elContainer) {
   })();
 
   var gui = initLessonCateGUI();
-  gui.addColor(controls, 'color1').onChange(function (e) {
+  gui.addColor(controls, "color1").onChange(function (e) {
     areaLight1.color = new THREE.Color(e);
     planeGeometry1Mat.color = new THREE.Color(e);
     scene.remove(plane1);
@@ -813,10 +813,10 @@ function init_area_light(elContainer) {
     plane1.position.copy(areaLight1.position);
     scene.add(plane1);
   });
-  gui.add(controls, 'intensity1', 0, 1000).onChange(function (e) {
+  gui.add(controls, "intensity1", 0, 1000).onChange(function (e) {
     areaLight1.intensity = e;
   });
-  gui.addColor(controls, 'color2').onChange(function (e) {
+  gui.addColor(controls, "color2").onChange(function (e) {
     areaLight2.color = new THREE.Color(e);
     planeGeometry2Mat.color = new THREE.Color(e);
     scene.remove(plane2);
@@ -824,10 +824,10 @@ function init_area_light(elContainer) {
     plane2.position.copy(areaLight2.position);
     scene.add(plane2);
   });
-  gui.add(controls, 'intensity2', 0, 1000).onChange(function (e) {
+  gui.add(controls, "intensity2", 0, 1000).onChange(function (e) {
     areaLight2.intensity = e;
   });
-  gui.addColor(controls, 'color3').onChange(function (e) {
+  gui.addColor(controls, "color3").onChange(function (e) {
     areaLight3.color = new THREE.Color(e);
     planeGeometry3Mat.color = new THREE.Color(e);
     scene.remove(plane3);
@@ -835,7 +835,7 @@ function init_area_light(elContainer) {
     plane3.position.copy(areaLight3.position);
     scene.add(plane3);
   });
-  gui.add(controls, 'intensity3', 0, 1000).onChange(function (e) {
+  gui.add(controls, "intensity3", 0, 1000).onChange(function (e) {
     areaLight3.intensity = e;
   });
 
@@ -872,7 +872,7 @@ function init_lensflares(elContainer) {
 
   // create the ground plane
   var textureGrass = new THREE.TextureLoader().load(
-    'textures/ground/grasslight-big.jpg'
+    "textures/ground/grasslight-big.jpg"
   );
   textureGrass.wrapS = THREE.RepeatWrapping;
   textureGrass.wrapT = THREE.RepeatWrapping;
@@ -926,7 +926,7 @@ function init_lensflares(elContainer) {
   scene.add(sphere);
 
   // add subtle ambient lighting
-  var ambiColor = '#1c1c1c';
+  var ambiColor = "#1c1c1c";
   var ambientLight = new THREE.AmbientLight(ambiColor);
   scene.add(ambientLight);
 
@@ -939,7 +939,7 @@ function init_lensflares(elContainer) {
   var target = new THREE.Object3D();
   target.position.set(5, 0, 0);
 
-  var pointColor = '#ffffff';
+  var pointColor = "#ffffff";
   //    var spotLight = new THREE.SpotLight( pointColor);
   var spotLight = new THREE.DirectionalLight(pointColor);
   spotLight.position.set(30, 10, -50);
@@ -977,32 +977,32 @@ function init_lensflares(elContainer) {
     this.debug = false;
     this.castShadow = true;
     this.onlyShadow = false;
-    this.target = 'Plane';
+    this.target = "Plane";
   })();
 
   var gui = initLessonCateGUI();
-  gui.addColor(controls, 'ambientColor').onChange(function (e) {
+  gui.addColor(controls, "ambientColor").onChange(function (e) {
     ambientLight.color = new THREE.Color(e);
   });
 
-  gui.addColor(controls, 'pointColor').onChange(function (e) {
+  gui.addColor(controls, "pointColor").onChange(function (e) {
     spotLight.color = new THREE.Color(e);
   });
 
-  gui.add(controls, 'intensity', 0, 5).onChange(function (e) {
+  gui.add(controls, "intensity", 0, 5).onChange(function (e) {
     spotLight.intensity = e;
   });
 
   var textureFlare0 = THREE.ImageUtils.loadTexture(
-    'textures/flares/lensflare0.png'
+    "textures/flares/lensflare0.png"
   );
   var textureFlare3 = THREE.ImageUtils.loadTexture(
-    'textures/flares/lensflare3.png'
+    "textures/flares/lensflare3.png"
   );
 
   var flareColor = new THREE.Color(0xffaacc);
 
-  var lensFlare = new LensFlare();
+  var lensFlare = new Lensflare();
 
   lensFlare.addElement(
     new THREE.LensflareElement(textureFlare0, 350, 0.0, flareColor)

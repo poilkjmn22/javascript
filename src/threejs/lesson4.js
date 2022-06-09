@@ -6,9 +6,10 @@
  * @Description: Mesh
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
-import * as THREE from 'three';
-import 'three/examples/js/renderers/CanvasRenderer.js'; // 需要做一些特殊处理(ES6模块化导出)
-import 'three/examples/js/utils/SceneUtils.js';
+import * as THREE from "three";
+import "three/examples/js/renderers/CanvasRenderer.js"; // 需要做一些特殊处理(ES6模块化导出)
+import "three/examples/js/renderers/Projector.js"; // 需要做一些特殊处理(ES6模块化导出)
+import "three/examples/js/utils/SceneUtils.js";
 import {
   initStats,
   initRenderer,
@@ -16,7 +17,7 @@ import {
   initLessonCateGUI,
   addBasicMaterialSettings,
   loadGopher,
-} from './util.js';
+} from "./util.js";
 function init_basic_mesh_material(elContainer) {
   // use the defaults
   var stats = initStats(elContainer);
@@ -30,7 +31,7 @@ function init_basic_mesh_material(elContainer) {
   webGLRenderer.setSize(elContainer.clientWidth, elContainer.clientHeight);
   webGLRenderer.shadowMapEnabled = true;
 
-  var canvasRenderer = new THREE.CanvasRenderer1();
+  var canvasRenderer = new THREE.CanvasRenderer();
   canvasRenderer.setSize(elContainer.clientWidth, elContainer.clientHeight);
   let renderer = webGLRenderer;
 
@@ -51,7 +52,7 @@ function init_basic_mesh_material(elContainer) {
 
   var meshMaterial = new THREE.MeshBasicMaterial({
     color: 0x7777ff,
-    name: 'Basic Material',
+    name: "Basic Material",
     flatShading: true,
   });
 
@@ -97,16 +98,16 @@ function init_basic_mesh_material(elContainer) {
     this.bouncingSpeed = 0.03;
 
     this.color = meshMaterial.color.getStyle();
-    this.selectedMesh = 'cube';
+    this.selectedMesh = "cube";
 
     this.switchRenderer = function () {
       if (renderer instanceof THREE.WebGLRenderer) {
         renderer = canvasRenderer;
-        elContainer.innerHTML = '';
+        elContainer.innerHTML = "";
         elContainer.appendChild(renderer.domElement);
       } else {
         renderer = webGLRenderer;
-        elContainer.innerHTML = '';
+        elContainer.innerHTML = "";
         elContainer.appendChild(renderer.domElement);
       }
     };
@@ -117,19 +118,19 @@ function init_basic_mesh_material(elContainer) {
 
   addBasicMaterialSettings(gui, controls, meshMaterial);
 
-  var spGui = gui.addFolder('THREE.MeshBasicMaterial');
-  spGui.addColor(controls, 'color').onChange(function (e) {
+  var spGui = gui.addFolder("THREE.MeshBasicMaterial");
+  spGui.addColor(controls, "color").onChange(function (e) {
     meshMaterial.color.setStyle(e);
   });
-  spGui.add(meshMaterial, 'wireframe');
-  spGui.add(meshMaterial, 'wireframeLinewidth', 0, 20);
+  spGui.add(meshMaterial, "wireframe");
+  spGui.add(meshMaterial, "wireframeLinewidth", 0, 20);
   spGui
-    .add(meshMaterial, 'wireframeLinejoin', ['round', 'bevel', 'miter'])
+    .add(meshMaterial, "wireframeLinejoin", ["round", "bevel", "miter"])
     .onChange(function (e) {
       meshMaterial.wireframeLinejoin = e;
     });
   spGui
-    .add(meshMaterial, 'wireframeLinecap', ['butt', 'round', 'square'])
+    .add(meshMaterial, "wireframeLinecap", ["butt", "round", "square"])
     .onChange(function (e) {
       meshMaterial.wireframeLinecap = e;
     });
@@ -139,7 +140,7 @@ function init_basic_mesh_material(elContainer) {
     gopher.scale.y = 4;
     gopher.scale.z = 4;
     gui
-      .add(controls, 'selectedMesh', ['cube', 'sphere', 'plane', 'gopher'])
+      .add(controls, "selectedMesh", ["cube", "sphere", "plane", "gopher"])
       .onChange(function (e) {
         scene.remove(plane);
         scene.remove(cube);
@@ -147,19 +148,19 @@ function init_basic_mesh_material(elContainer) {
         scene.remove(gopher);
 
         switch (e) {
-          case 'cube':
+          case "cube":
             scene.add(cube);
             selectedMesh = cube;
             break;
-          case 'sphere':
+          case "sphere":
             scene.add(sphere);
             selectedMesh = sphere;
             break;
-          case 'plane':
+          case "plane":
             scene.add(plane);
             selectedMesh = plane;
             break;
-          case 'gopher':
+          case "gopher":
             scene.add(gopher);
             selectedMesh = gopher;
             break;
@@ -167,7 +168,7 @@ function init_basic_mesh_material(elContainer) {
       });
   });
 
-  gui.add(controls, 'switchRenderer');
+  gui.add(controls, "switchRenderer");
 
   render();
 
@@ -244,18 +245,18 @@ function init_depth_material(elContainer) {
 
   var gui = initLessonCateGUI();
   addBasicMaterialSettings(gui, controls, scene.overrideMaterial);
-  var spGui = gui.addFolder('THREE.MeshDepthMaterial');
-  spGui.add(scene.overrideMaterial, 'wireframe');
-  spGui.add(scene.overrideMaterial, 'wireframeLinewidth', 0, 20);
+  var spGui = gui.addFolder("THREE.MeshDepthMaterial");
+  spGui.add(scene.overrideMaterial, "wireframe");
+  spGui.add(scene.overrideMaterial, "wireframeLinewidth", 0, 20);
 
-  gui.add(controls, 'rotationSpeed', 0, 0.5);
-  gui.add(controls, 'addCube');
-  gui.add(controls, 'removeCube');
-  gui.add(controls, 'cameraNear', 0, 100).onChange(function (e) {
+  gui.add(controls, "rotationSpeed", 0, 0.5);
+  gui.add(controls, "addCube");
+  gui.add(controls, "removeCube");
+  gui.add(controls, "cameraNear", 0, 100).onChange(function (e) {
     camera.near = e;
     camera.updateProjectionMatrix();
   });
-  gui.add(controls, 'cameraFar', 50, 200).onChange(function (e) {
+  gui.add(controls, "cameraFar", 50, 200).onChange(function (e) {
     camera.far = e;
     camera.updateProjectionMatrix();
   });
@@ -356,15 +357,15 @@ function init_combined_material(elContainer) {
   })();
 
   var gui = initLessonCateGUI();
-  gui.addColor(controls, 'color');
-  gui.add(controls, 'rotationSpeed', 0, 0.5);
-  gui.add(controls, 'addCube');
-  gui.add(controls, 'removeCube');
-  gui.add(controls, 'cameraNear', 0, 50).onChange(function (e) {
+  gui.addColor(controls, "color");
+  gui.add(controls, "rotationSpeed", 0, 0.5);
+  gui.add(controls, "addCube");
+  gui.add(controls, "removeCube");
+  gui.add(controls, "cameraNear", 0, 50).onChange(function (e) {
     camera.near = e;
     camera.updateProjectionMatrix();
   });
-  gui.add(controls, 'cameraFar', 50, 200).onChange(function (e) {
+  gui.add(controls, "cameraFar", 50, 200).onChange(function (e) {
     camera.far = e;
     camera.updateProjectionMatrix();
   });
@@ -420,7 +421,7 @@ function init_mesh_normal_material(elContainer) {
   webGLRenderer.setClearColor(new THREE.Color(0x000000));
   webGLRenderer.setSize(elContainer.clientWidth, elContainer.clientHeight);
 
-  var canvasRenderer = new THREE.CanvasRenderer1();
+  var canvasRenderer = new THREE.CanvasRenderer();
   canvasRenderer.setSize(elContainer.clientWidth, elContainer.clientHeight);
   renderer = webGLRenderer;
 
@@ -495,7 +496,7 @@ function init_mesh_normal_material(elContainer) {
   var controls = new (function () {
     this.rotationSpeed = 0.02;
     this.bouncingSpeed = 0.03;
-    this.selectedMesh = 'cube';
+    this.selectedMesh = "cube";
   })();
 
   var gui = initLessonCateGUI();
@@ -506,7 +507,7 @@ function init_mesh_normal_material(elContainer) {
     gopher.scale.y = 4;
     gopher.scale.z = 4;
     gui
-      .add(controls, 'selectedMesh', ['cube', 'sphere', 'plane', 'gopher'])
+      .add(controls, "selectedMesh", ["cube", "sphere", "plane", "gopher"])
       .onChange(function (e) {
         scene.remove(plane);
         scene.remove(cube);
@@ -514,19 +515,19 @@ function init_mesh_normal_material(elContainer) {
         scene.remove(gopher);
 
         switch (e) {
-          case 'cube':
+          case "cube":
             scene.add(cube);
             selectedMesh = cube;
             break;
-          case 'sphere':
+          case "sphere":
             scene.add(sphere);
             selectedMesh = sphere;
             break;
-          case 'plane':
+          case "plane":
             scene.add(plane);
             selectedMesh = plane;
             break;
-          case 'gopher':
+          case "gopher":
             scene.add(gopher);
             selectedMesh = gopher;
             break;
