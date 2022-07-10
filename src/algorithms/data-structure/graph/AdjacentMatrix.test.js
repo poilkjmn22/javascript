@@ -156,4 +156,57 @@ describe("test the AdjacentMatrix class", () => {
     const { MST, P, MST_weight } = g.generateMinimumSpanningTree();
     expect(MST_weight).toBe(5);
   });
+
+  test("method dijkstra", () => {
+    const g = new AdjacentMatrix(
+      [
+        [
+          0,
+          [
+            { id: 2, weight: 3 },
+            { id: 3, weight: 1 },
+            { id: 1, weight: 2 },
+          ],
+        ],
+        [
+          1,
+          [
+            { id: 0, weight: 2 },
+            { id: 3, weight: 4 },
+          ],
+        ],
+        [
+          2,
+          [
+            { id: 0, weight: 3 },
+            { id: 3, weight: 1 },
+            { id: 4, weight: 1 },
+          ],
+        ],
+        [
+          3,
+          [
+            { id: 0, weight: 1 },
+            { id: 1, weight: 4 },
+            { id: 2, weight: 1 },
+            { id: 4, weight: 3 },
+          ],
+        ],
+        [
+          4,
+          [
+            { id: 2, weight: 1 },
+            { id: 3, weight: 3 },
+          ],
+        ],
+      ],
+      "adjacentList",
+      { weighted: true }
+    );
+    const { d, p, getPath } = g.dijkstra(0);
+    expect(d).toEqual([0, 2, 2, 1, 3]);
+    expect(p).toEqual([-1, 0, 3, 0, 2]);
+    expect(getPath(4)).toEqual([0, 3, 2]);
+    expect(getPath(2)).toEqual([0, 3]);
+  });
 });

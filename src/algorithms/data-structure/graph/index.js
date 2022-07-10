@@ -1,4 +1,9 @@
-import { prob_ASDL_1_11_A, prob_ASDL_1_11_D, prob_ASDL_1_12_A } from "./prob";
+import {
+  prob_ASDL_1_11_A,
+  prob_ASDL_1_11_D,
+  prob_ASDL_1_12_A,
+  prob_ASDL_1_12_B,
+} from "./prob";
 import AdjacentMatrix from "./AdjacentMatrix";
 
 export function example_prob_ASDL_1_11_A() {
@@ -159,6 +164,54 @@ export function example_minimum_spanning_tree() {
         ],
       ],
       [6],
+    ],
+    "adjacentList",
+    { weighted: true }
+  );
+}
+
+export function example_dijkstra() {
+  prob_ASDL_1_12_B(
+    [
+      [
+        0,
+        [
+          { id: 2, weight: 3 },
+          { id: 3, weight: 1 },
+          { id: 1, weight: 2 },
+        ],
+      ],
+      [
+        1,
+        [
+          { id: 0, weight: 2 },
+          { id: 3, weight: 4 },
+        ],
+      ],
+      [
+        2,
+        [
+          { id: 0, weight: 3 },
+          { id: 3, weight: 1 },
+          { id: 4, weight: 1 },
+        ],
+      ],
+      [
+        3,
+        [
+          { id: 0, weight: 1 },
+          { id: 1, weight: 4 },
+          { id: 2, weight: 1 },
+          { id: 4, weight: 3 },
+        ],
+      ],
+      [
+        4,
+        [
+          { id: 2, weight: 1 },
+          { id: 3, weight: 3 },
+        ],
+      ],
     ],
     "adjacentList",
     { weighted: true }

@@ -34,3 +34,9 @@ export function prob_ASDL_1_12_A(data, dataSourceType, options) {
   const { MST, P, MST_weight } = g.generateMinimumSpanningTree();
   console.log(MST, P, MST_weight);
 }
+
+export function prob_ASDL_1_12_B(data, dataSourceType, options) {
+  const g = new AdjacentMatrix(data, dataSourceType, options);
+  const { d, p } = g.dijkstra(0);
+  console.log(d, p);
+}
