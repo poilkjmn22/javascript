@@ -246,23 +246,16 @@ export default class AdjacentMatrix {
     }
     const minDQ = new PriorityQueue([], (item) => item.d * -1);
     minDQ.enqueue({ vi: sv.verticeIndex, d: 0, parent: -1 });
-    while (1) {
-      if (minDQ.isEmpty()) {
-        break;
-      }
-      const { vi, parent } = minDQ.dequeue();
-      if (this.V[vi].used === true) {
+    while (!minDQ.isEmpty()) {
+      const { vi, parent, d: minD } = minDQ.dequeue();
+      // 这个顶点已经被确定过最小路径了
+      if (minD > d[vi]) {
         continue;
       }
       // console.log(vi, parent);
       p[vi] = parent;
-      this.V[vi].used = true;
       for (let i = 0; i < this.V.length; i++) {
-        if (
-          !this.V[i].used &&
-          this.M[vi][i] !== Infinity &&
-          d[vi] + this.M[vi][i] < d[i]
-        ) {
+        if (this.M[vi][i] !== Infinity && d[vi] + this.M[vi][i] < d[i]) {
           d[i] = d[vi] + this.M[vi][i];
           minDQ.enqueue({ vi: i, parent: vi, d: d[i] });
         }
@@ -278,6 +271,47 @@ export default class AdjacentMatrix {
         tmp = p[tmp];
       } while (tmp > -1);
       return path;
+    };
+    return { d, p, getPath };
+  }
+  bellman_ford(source) {
+    const sourceId = getKey(source, this.options.id);
+    const sv = this.V.find((v) => v.id === sourceId);
+    const d = initD(this.V, sv);
+    const p = [];
+    function initD(V, s) {
+      const d = new Array(V.length).fill(Infinity);
+      d[s.verticeIndex] = 0;
+      return d;
+    }
+    while (true) {
+      let updated = false;
+      for (let i = 0; i < this.V.length; i++) {
+        for (let j = 0; j < this.V.length; j++) {
+          if (this.M[i][j] !== Infinity && d[i] + this.M[i][j] < d[j]) {
+            d[j] = d[i] + this.M[i][j];
+            p[j] = i;
+            updated = true;
+          }
+        }
+      }
+      if (!updated) {
+        break;
+      }
+    }
+    const getPath = (target) => {
+      const targetId = getKey(target, this.options.id);
+      const tv = this.V.find((v) => v.id === targetId);
+      const path = [];
+      let tmp = p[tv.verticeIndex];
+      do {
+        path.unshift(tmp);
+        tmp = p[tmp];
+      } while (tmp > -1);
+      return `${path
+        .concat([tv.verticeIndex])
+        .map((idx) => this.V[idx].data)
+        .join("->")},共${d[tv.verticeIndex]}`;
     };
     return { d, p, getPath };
   }

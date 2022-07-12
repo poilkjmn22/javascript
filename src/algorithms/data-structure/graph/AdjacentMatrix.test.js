@@ -209,4 +209,72 @@ describe("test the AdjacentMatrix class", () => {
     expect(getPath(4)).toEqual([0, 3, 2]);
     expect(getPath(2)).toEqual([0, 3]);
   });
+
+  test("method bellman_ford", () => {
+    const g2 = new AdjacentMatrix(
+      [
+        [
+          "A",
+          [
+            { id: "B", weight: 2 },
+            { id: "C", weight: 5 },
+          ],
+        ],
+        [
+          "B",
+          [
+            { id: "A", weight: 2 },
+            { id: "C", weight: 4 },
+            { id: "D", weight: 6 },
+            { id: "E", weight: 10 },
+          ],
+        ],
+        [
+          "C",
+          [
+            { id: "A", weight: 5 },
+            { id: "B", weight: 4 },
+            { id: "D", weight: 2 },
+          ],
+        ],
+        [
+          "D",
+          [
+            { id: "C", weight: 2 },
+            { id: "B", weight: 6 },
+            { id: "F", weight: 1 },
+          ],
+        ],
+        [
+          "E",
+          [
+            { id: "B", weight: 10 },
+            { id: "F", weight: 3 },
+            { id: "G", weight: 5 },
+          ],
+        ],
+        [
+          "F",
+          [
+            { id: "D", weight: 1 },
+            { id: "E", weight: 3 },
+            { id: "G", weight: 9 },
+          ],
+        ],
+        [
+          "G",
+          [
+            { id: "E", weight: 5 },
+            { id: "F", weight: 9 },
+          ],
+        ],
+      ],
+      "adjacentList",
+      { weighted: true }
+    );
+    const { d: d2, p: p2, getPath: getPath2 } = g2.bellman_ford("A");
+    expect(d2).toEqual([0, 2, 5, 7, 11, 8, 16]);
+    expect(p2).toEqual([undefined, 0, 0, 2, 5, 3, 4]);
+    expect(getPath2("G")).toBe("A->C->D->F->E->G,共16");
+  });
 });
