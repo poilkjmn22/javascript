@@ -164,6 +164,10 @@ export default class NotecateLoader {
         );
         addLessonGUIControls(cateExports, elModules);
         break;
+      case "基本零件":
+        cateExports = await import("@/geometry/index.js");
+        addLessonGUIControls(cateExports, elModules);
+        break;
       default:
         break;
     }
