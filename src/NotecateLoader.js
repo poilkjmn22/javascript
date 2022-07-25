@@ -168,6 +168,10 @@ export default class NotecateLoader {
         cateExports = await import("@/geometry/index.js");
         addLessonGUIControls(cateExports, elModules);
         break;
+      case "碰撞检测":
+        cateExports = await import("@/geometry/collisionDetection/index.js");
+        addLessonGUIControls(cateExports, elModules);
+        break;
       default:
         break;
     }

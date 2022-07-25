@@ -89,11 +89,28 @@ class Circle {
       this.center.add(polarToCartesian(this.radius, t - theta)),
     ];
   }
+  getFarthestPointInDirection(d) {
+    const t = d.arg();
+    return this.center.add(polarToCartesian(this.radius, t));
+  }
 }
 
 class Polygon {
   constructor(points) {
     this.points = points;
+  }
+  getFarthestPointInDirection(d) {
+    let maxDot = -Infinity;
+    let res = null;
+    for (const p of this.points) {
+      const proj = p.project(d);
+      const dotProjd = proj.dot(d);
+      if (dotProjd > maxDot) {
+        maxDot = dotProjd;
+        res = p;
+      }
+    }
+    return res;
   }
 }
 
@@ -103,10 +120,16 @@ class Vector {
       const { p1, p2 } = x;
       this.x = p2.x - p1.x;
       this.y = p2.y - p1.y;
+    } else if (x instanceof Vector) {
+      this.x = x.x;
+      this.y = x.y;
     } else {
       this.x = x;
       this.y = y;
     }
+  }
+  static tripleProduct(a, b, c) {
+    return b.multiple(c.dot(a)).subtract(a.multiple(c.dot(b)));
   }
   isEqual(p2) {
     return equals(this.x, p2.x) && equals(this.y, p2.y);
@@ -131,15 +154,27 @@ class Vector {
   abs() {
     return Math.sqrt(this.norm());
   }
+  // 方向相反，大小相等的向量
+  negate() {
+    return this.multiple(-1);
+  }
+  set(v2) {
+    this.x = v2.x;
+    this.y = v2.y;
+  }
   // 两个向量的内积: abs(a) * abs(b) * cos(角ab)
   dot(v2) {
     return this.x * v2.x + this.y * v2.y;
   }
-  // 两个向量的外积: abs(a) * abs(b) * sin(角ab)
+  // 两个向量的外积: abs(a) * abs(b) * sin(角ab), 角ab为a到b逆时针旋转的角度
   cross(v2) {
     return this.x * v2.y - this.y * v2.x;
   }
-  project(seg) {
+  project(obj) {
+    let seg = obj;
+    if (obj instanceof Vector) {
+      seg = new Segment(0, 0, obj.x, obj.y);
+    }
     const vp1p2 = new Vector(seg);
     const vp1p = new Vector(new Segment(seg.p1.x, seg.p1.y, this.x, this.y));
     const r = vp1p2.dot(vp1p) / vp1p2.norm();
@@ -187,16 +222,16 @@ class Vector {
     }
     const vp1p2 = p2.subtract(p1);
     const vp1p = this.subtract(p1);
-    if (vp1p.cross(vp1p2) > EPS) {
+    if (vp1p2.cross(vp1p) > EPS) {
       return COUNTER_CLOCKWISE;
     }
-    if (vp1p.cross(vp1p2) < -EPS) {
+    if (vp1p2.cross(vp1p) < -EPS) {
       return CLOCKWISE;
     }
-    if (vp1p.dot(vp1p2) < -EPS) {
+    if (vp1p2.dot(vp1p) < -EPS) {
       return ON_LINE_BACK;
     }
-    if (vp1p.norm() > vp1p2.norm()) {
+    if (vp1p2.norm() < vp1p.norm()) {
       return ON_LINE_FRONT;
     }
     return ON_SEGMENT;

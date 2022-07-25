@@ -5,3 +5,9 @@ export const CLOCKWISE = -1; // 顺时针
 export const ON_LINE_BACK = 2; // p->p1->p2
 export const ON_LINE_FRONT = -2; // p1->p2->p
 export const ON_SEGMENT = 0; // 在线段上
+
+export const CONTAINS = {
+  IN: 2,
+  ON: 1,
+  OUT: 0,
+};

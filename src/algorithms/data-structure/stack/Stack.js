@@ -29,6 +29,9 @@ export default class Stack {
   top() {
     return this.S[this._top];
   }
+  get(index) {
+    return this.S[index + 1];
+  }
   size() {
     return this._top;
   }

@@ -43,4 +43,8 @@ describe("test the Stack class", () => {
     s.push("c");
     expect(s.isFull()).toBe(true);
   });
+
+  test("class method get", () => {
+    expect(s.get(s.size() - 1)).toBe("c");
+  });
 });
