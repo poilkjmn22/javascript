@@ -1,7 +1,6 @@
 // ref: [https://dyn4j.org/2010/04/gjk-gilbert-johnson-keerthi/]
 import { Vector, Polygon } from "@/geometry/base";
 import { convexHullByAndrew, polygonContainsPoint } from "@/geometry/utils";
-import { EPS } from "@/geometry/constant";
 class Simplex {
   constructor() {
     this.points = [];
@@ -44,14 +43,14 @@ class Simplex {
       const abPerp = Vector.tripleProduct(ac, ab, ab);
       const acPerp = Vector.tripleProduct(ab, ac, ac);
       // is the origin in R4
-      if (abPerp.dot(ao) > EPS) {
+      if (abPerp.dot(ao) > 0) {
         // remove point c
         this.remove(c);
         // set the new direction to abPerp
         d.set(abPerp);
       } else {
         // is the origin in R3
-        if (acPerp.dot(ao) > EPS) {
+        if (acPerp.dot(ao) > 0) {
           // remove point b
           this.remove(b);
           // set the new direction to acPerp
@@ -95,7 +94,7 @@ function isCollided(A, B, cb = console.log) {
     simp.add(support(A, B, d));
     cb(simp, d);
     // make sure that the last point we added actually passed the origin
-    if (simp.getLast().dot(d) < EPS) {
+    if (simp.getLast().dot(d) < 0) {
       // if the point added last was not past the origin in the direction of d
       // then the Minkowski Sum cannot possibly contain the origin since
       // the last point added is on the edge of the Minkowski Difference

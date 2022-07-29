@@ -172,6 +172,10 @@ export default class NotecateLoader {
         cateExports = await import("@/geometry/collisionDetection/index.js");
         addLessonGUIControls(cateExports, elModules);
         break;
+      case "其他几何问题":
+        cateExports = await import("@/geometry/otherProblems/index.js");
+        addLessonGUIControls(cateExports, elModules);
+        break;
       default:
         break;
     }

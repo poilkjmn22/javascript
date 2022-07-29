@@ -52,6 +52,10 @@ function clearCache(ctx, cache) {
   cache.clear();
 }
 
+function clearCanvas(ctx) {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+}
+
 function drawGeo(ctx, geo, options) {
   if (geo instanceof Segment) {
     drawSegment(ctx, geo, options);
@@ -82,7 +86,7 @@ function drawPoint(ctx, p, options = {}) {
   }
   ctx.beginPath();
   ctx.moveTo(p.x, p.y);
-  ctx.arc(p.x, p.y, 3, 0, 2 * Math.PI);
+  ctx.arc(p.x, p.y, options.size || 3, 0, 2 * Math.PI);
   ctx.fillStyle = options.fillStyle || "black";
   ctx.fill();
   ctx.closePath();
@@ -210,6 +214,7 @@ export {
   equals,
   name,
   polarToCartesian,
+  clearCanvas,
   getGeoInstance,
   drawCache,
   clearCache,
