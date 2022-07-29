@@ -18,6 +18,8 @@ function getClosestPairByExhaustion(points) {
 // 记min(X)为区域X内的Closest Pair的距离
 // A区域和B区域合并起来以后，只需要查找[-min(A, B), min(A, B)]矩形范围内的点集（记为C）,合并后的结果就是min(A, B, C)
 // 初始时，按x（或y）轴排序输入points
+// 最好性能：n * log2(n), 最坏性能：n^2;取决于数据的特点（与点在排序轴方向上的分布情况有关）
+// 在最近点x轴方向之间集中分布大量点，存在这种不均匀分布时，算法退化到n^2; 反之，最近点也是x轴最相邻时，算法性能最好
 function getClosestPairByDivideAndConquer(rawpoints) {
   function partition(points, left, right) {
     const mid = Math.floor((left + right) / 2);
