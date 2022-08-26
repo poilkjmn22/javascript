@@ -104,3 +104,17 @@ export function insertStrAt(source, idx, str) {
 export function replaceStrAt(source, idx, str) {
   return source.substring(0, idx) + str + source.substring(idx + str.length);
 }
+
+export function range(from, to) {
+  let start = from;
+  let end = to;
+  if (!to) {
+    start = 0;
+    end = from;
+  }
+  const res = [];
+  for (let i = start; i < end; i++) {
+    res.push(i);
+  }
+  return res;
+}

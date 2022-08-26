@@ -176,6 +176,10 @@ export default class NotecateLoader {
         cateExports = await import("@/geometry/otherProblems/index.js");
         addLessonGUIControls(cateExports, elModules);
         break;
+      case "搜索算法":
+        cateExports = await import("@/algorithms/search/index.js");
+        addLessonGUIControls(cateExports, elModules);
+        break;
       default:
         break;
     }

@@ -151,14 +151,14 @@ export default class BinarySearchTree {
     }
   }
   findMin(node) {
-    let min = node;
+    let min = node || this.T;
     while (min.left) {
       min = min.left;
     }
     return min;
   }
   findMax(node) {
-    let max = node;
+    let max = node || this.T;
     while (max.right) {
       max = max.right;
     }

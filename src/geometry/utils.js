@@ -12,6 +12,10 @@ function swapVector(a, b) {
   b.set(tmp);
 }
 
+function angleToRad(angle) {
+  return (angle * Math.PI) / 180;
+}
+
 let nameCount = 0;
 function name(prefix = "") {
   return `${prefix}${nameCount++}`;
@@ -213,6 +217,7 @@ function convexHullByAndrew(poly) {
 export {
   equals,
   name,
+  angleToRad,
   polarToCartesian,
   clearCanvas,
   getGeoInstance,
