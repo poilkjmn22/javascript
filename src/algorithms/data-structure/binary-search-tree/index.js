@@ -26,6 +26,19 @@ export function example_AVLTree() {
   // console.log(elContainer);
   const avl = new AVLTree(range(6));
   console.log(avl);
+  const t3 = new AVLTree(
+    [
+      { name: "a", weight: 30 },
+      { name: "b", weight: 88 },
+      { name: "c", weight: 12 },
+      { name: "d", weight: 1 },
+      { name: "e", weight: 20 },
+      { name: "f", weight: 17 },
+      { name: "g", weight: 25 },
+    ],
+    "weight"
+  );
+  console.log(t3);
 }
 
 export function drawBSTByD3(elContainer) {
@@ -75,6 +88,7 @@ export function drawBSTByD3(elContainer) {
     const gn = g
       .append("g")
       .attr("class", "node-container")
+      .datum(n)
       .attr("transform", `translate(${n.x}, ${n.y})`);
     gn.append("circle")
       .attr("fill", n.left || n.right ? mainColor : "#999")
@@ -125,19 +139,13 @@ export function drawBSTByD3(elContainer) {
 export function drawAVLTreeByD3(elContainer) {
   const { offsetWidth, offsetHeight } = elContainer;
   const avl = new AVLTree(shuffle(range(0, 20)));
-  console.log(avl);
   const svg = d3
     .create("svg")
     .attr("id", "svg-avl-tree")
     .attr("viewBox", [0, 0, offsetWidth, offsetHeight]);
   elContainer.appendChild(svg.node());
 
-  const g = svg
-    .append("g")
-    .attr("class", "tree-container")
-    .attr("font-family", "sans-serif")
-    .attr("font-size", 20);
-
+  let treeContainer;
   const r = 20;
   const x0 = r;
   const y0 = r;
@@ -167,7 +175,7 @@ export function drawAVLTreeByD3(elContainer) {
     } else {
       n.level = n.parent.level + 1;
     }
-    const gn = g
+    const gn = treeContainer
       .append("g")
       .attr("class", "node-container")
       .attr("transform", `translate(${n.x}, ${n.y})`);
@@ -185,18 +193,37 @@ export function drawAVLTreeByD3(elContainer) {
     if (n.left) {
       n.left.x = n.x - levelHeight * Math.tan(angleToRad(angle - n.level * 5));
       n.left.y = n.y + levelHeight;
-      drawLine(n, n.left, g);
+      drawLine(n, n.left, treeContainer);
       drawNode(n.left);
     }
     if (n.right) {
       n.right.x = n.x + levelHeight * Math.tan(angleToRad(angle - n.level * 5));
       n.right.y = n.y + levelHeight;
-      drawLine(n, n.right, g);
+      drawLine(n, n.right, treeContainer);
       drawNode(n.right);
     }
   };
 
-  drawNode(avl.root);
+  function drawTree(avl) {
+    if (treeContainer) {
+      treeContainer.remove();
+    }
+    treeContainer = svg
+      .append("g")
+      .attr("class", "tree-container")
+      .attr("font-family", "sans-serif")
+      .attr("font-size", 20);
+    drawNode(avl.root);
+    treeContainer
+      .selectAll(".node-container")
+      .data(avl.toArray("preorder"))
+      .on("click", (e, d) => {
+        avl.delete(d);
+        drawTree(avl);
+      });
+  }
+
+  drawTree(avl);
 
   fitView();
   function fitView() {

@@ -54,15 +54,15 @@ describe("test class BinarySearchTree", () => {
   });
 
   it("method findMin", () => {
-    expect(t.findMin(t.find(17)).data).toBe(17);
-    expect(t.findMin(t.find(30)).data).toBe(1);
-    expect(t.findMin(t.find(20)).data).toBe(17);
+    expect(t.find(17)._findMin().data).toBe(17);
+    expect(t.find(30)._findMin().data).toBe(1);
+    expect(t.find(20)._findMin().data).toBe(17);
   });
 
   it("method findMax", () => {
-    expect(t.findMax(t.find(88)).data).toBe(88);
-    expect(t.findMax(t.find(30)).data).toBe(88);
-    expect(t.findMax(t.find(20)).data).toBe(25);
+    expect(t.find(88)._findMax().data).toBe(88);
+    expect(t.find(30)._findMax().data).toBe(88);
+    expect(t.find(20)._findMax().data).toBe(25);
   });
 
   it("method delete", () => {

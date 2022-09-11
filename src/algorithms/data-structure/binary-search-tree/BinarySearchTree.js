@@ -36,74 +36,31 @@ export default class BinarySearchTree {
   }
   toArray(order = "inorder") {
     const res = [];
+    if (!this.T) {
+      return res;
+    }
     const getData = (n) => res.push(n.data);
-    const fnOrder = this[order];
+    const fnOrder = this.T[`_${order}`];
     if (!isFunction(fnOrder)) {
       throw new TypeError(`不支持类型${order}的遍历方式`);
     }
-    fnOrder.call(this, getData);
+    fnOrder.call(this.T, getData);
     return res;
   }
   // 中序遍历
   inorder(iteratee) {
-    if (!isFunction(iteratee)) {
-      throw new TypeError("参数类型错误：iteratee应为函数");
-    }
-    innerWalk(this.T, iteratee);
-    function innerWalk(node, iteratee) {
-      if (!node) {
-        return;
-      }
-      innerWalk(node.left, iteratee);
-      iteratee(node, iteratee);
-      innerWalk(node.right, iteratee);
-    }
+    this.T._inorder(iteratee);
   }
   // 前序遍历
   preorder(iteratee) {
-    if (!isFunction(iteratee)) {
-      throw new TypeError("参数类型错误：iteratee应为函数");
-    }
-    innerWalk(this.T, iteratee);
-    function innerWalk(node, iteratee) {
-      if (!node) {
-        return;
-      }
-      iteratee(node, iteratee);
-      innerWalk(node.left, iteratee);
-      innerWalk(node.right, iteratee);
-    }
+    this.T._preorder(iteratee);
   }
   // 后序遍历
   postorder(iteratee) {
-    if (!isFunction(iteratee)) {
-      throw new TypeError("参数类型错误：iteratee应为函数");
-    }
-    innerWalk(this.T, iteratee);
-    function innerWalk(node, iteratee) {
-      if (!node) {
-        return;
-      }
-      innerWalk(node.left, iteratee);
-      innerWalk(node.right, iteratee);
-      iteratee(node, iteratee);
-    }
+    this.T._postorder(iteratee);
   }
   find(data) {
-    const key = getKey(data, this.key);
-    let found = null;
-    let t = this.T;
-    while (t) {
-      if (key === t.key) {
-        found = t;
-        break;
-      } else if (key < t.key) {
-        t = t.left;
-      } else if (key > t.key) {
-        t = t.right;
-      }
-    }
-    return found;
+    return this.T._find(data);
   }
   delete(data) {
     const t = this.find(data);
@@ -144,24 +101,10 @@ export default class BinarySearchTree {
       }
       t.left.parent = t.parent;
     } else if (t.left && t.right) {
-      const min = this.findMin(t.right);
+      const min = t.right._findMin();
       this.delete(min.data);
       t.data = min.data;
       t.key = min.key;
     }
-  }
-  findMin(node) {
-    let min = node || this.T;
-    while (min.left) {
-      min = min.left;
-    }
-    return min;
-  }
-  findMax(node) {
-    let max = node || this.T;
-    while (max.right) {
-      max = max.right;
-    }
-    return max;
   }
 }

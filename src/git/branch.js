@@ -11,6 +11,7 @@ function noteBranch(elContainer) {
   elContainer.innerHTML = `<pre>
     git remote add origin ...<br />
     git branch --set-upstream-to=origin/branchName branchName
+    git checkout -b xxx origin/xxx <br />
     </pre>
   `;
 }

@@ -7,7 +7,8 @@ export default class AVLNode extends Node {
   }
   add(data) {
     let newRoot = this;
-    const node = data instanceof AVLNode ? data : new AVLNode(data, this.key);
+    const node =
+      data instanceof AVLNode ? data : new AVLNode(data, this.optKey);
     if (node.key <= this.key) {
       this.left = this.addToSubTree(this.left, node);
       this.left.parent = this;
@@ -136,6 +137,53 @@ export default class AVLNode extends Node {
 
     this.computeHeight();
     child.computeHeight();
+    return newRoot;
+  }
+  removeFromParent(parent, data) {
+    if (parent) {
+      return parent.remove(data);
+    }
+    return null;
+  }
+  remove(data) {
+    let newRoot = this;
+    const node =
+      data instanceof AVLNode ? data : new AVLNode(data, this.optKey);
+    if (node.key === this.key) {
+      if (this.left) {
+        const maxLeftNode = this.left._findMax();
+        this.key = maxLeftNode.key;
+        this.data = maxLeftNode.data;
+        this.left = this.removeFromParent(this.left, maxLeftNode);
+        if (this.heightDifference() === -2) {
+          if (this.right.heightDifference() <= 0) {
+            newRoot = this.rotateLeft();
+          } else {
+            newRoot = this.rotateRightLeft();
+          }
+        }
+      } else {
+        return this.right;
+      }
+    } else if (node.key < this.key) {
+      this.left = this.removeFromParent(this.left, node);
+      if (this.heightDifference() === -2) {
+        if (this.right.heightDifference() <= 0) {
+          newRoot = this.rotateLeft();
+        } else {
+          newRoot = this.rotateRightLeft();
+        }
+      }
+    } else {
+      this.right = this.removeFromParent(this.right, node);
+      if (this.heightDifference() === 2) {
+        if (this.left.heightDifference() <= 0) {
+          newRoot = this.rotateRight();
+        } else {
+          newRoot = this.rotateLeftRight();
+        }
+      }
+    }
     return newRoot;
   }
 }
