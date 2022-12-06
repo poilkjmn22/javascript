@@ -1,8 +1,8 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import axios from 'axios';
-import BugRecordCardList from './bug-record-card-list.jsx';
-import FormNote from './form-note.jsx';
+import React from "react";
+import { withRouter } from "react-router-dom";
+import axios from "axios";
+import BugRecordCardList from "./bug-record-card-list.jsx";
+import FormNote from "./form-note.jsx";
 
 class BugRecord extends React.Component {
   constructor(props) {
@@ -30,17 +30,17 @@ class BugRecord extends React.Component {
         />
         <button
           onClick={this.handleAddBugRecord}
-          style={{ fontSize: '20px' }}
+          style={{ fontSize: "20px" }}
           className="button-base button-primary"
         >
-          {this.state.isEditing ? '-' : '+'}
+          {this.state.isEditing ? "-" : "+"}
         </button>
       </div>
     );
   }
   onSubmitCallback(compFormNote) {
     axios
-      .post('/api/bug-record', {
+      .post("/api/bug-record", {
         text: compFormNote.state.text,
         notecate: compFormNote.state.notecate,
       })
@@ -52,21 +52,21 @@ class BugRecord extends React.Component {
           });
           //
           compFormNote.setState({
-            text: '',
-            notecate: '',
+            text: "",
+            notecate: "",
           });
         } else {
-          window.alert('获取bug-record-list数据失败！');
+          window.alert("获取bug-record-list数据失败！");
         }
       })
       .catch(console.error);
   }
   handleClickCard() {
-    this.props.history.push('/record/detail');
+    this.props.history.push("/record/detail");
   }
   handleDelete(event) {
     axios
-      .post('/api/bug-record/delete', {
+      .post("/api/bug-record/delete", {
         bugRecord: event.target.dataset.bugRecord,
       })
       .then((res) => {
@@ -84,7 +84,7 @@ class BugRecord extends React.Component {
     });
   }
   getApiBugRecordList() {
-    axios.get('/api/bug-record-list').then((res) => {
+    axios.get("/api/bug-record-list").then((res) => {
       this.setState({
         bugRecordList: res.data,
       });
@@ -96,7 +96,7 @@ class BugRecord extends React.Component {
 }
 
 BugRecord.defaultProps = {
-  name: 'bug-record',
+  name: "bug-record",
 };
 
 export default withRouter(BugRecord);

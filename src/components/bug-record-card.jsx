@@ -1,6 +1,6 @@
-import React from 'react';
-import Tag from './tag.jsx';
-import { omit } from 'lodash-es';
+import React from "react";
+import Tag from "./tag.jsx";
+import { omit } from "lodash-es";
 
 const BugRecordCard = (props) => {
   const { bugRecord } = props;
@@ -8,7 +8,7 @@ const BugRecordCard = (props) => {
     <div className="bug-record-card" onClick={props.handleClickCard}>
       <div className="opra-area">
         <button
-          data-bug-record={JSON.stringify(omit(bugRecord, 'cateTitle'))}
+          data-bug-record={JSON.stringify(omit(bugRecord, "cateTitle"))}
           onClick={props.handleDelete}
           className="button-delete button-base"
         >

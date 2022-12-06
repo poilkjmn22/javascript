@@ -6,8 +6,8 @@
 export default {
   data: function () {
     return {
-      greeting: 'Hello',
-      message: 'sushi',
+      greeting: "Hello",
+      message: "sushi",
     };
   },
 };

@@ -1,10 +1,10 @@
-import axios from 'axios';
-const baseUrl = '/api/';
+import axios from "axios";
+const baseUrl = "/api/";
 const errorCb = console.error;
 const successCb = console.log;
 const index = (
-  method = 'get',
-  url = '',
+  method = "get",
+  url = "",
   data = null,
   success = successCb,
   failure = errorCb

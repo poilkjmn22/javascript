@@ -6,17 +6,17 @@
  * @Description:
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
-const React = require('react');
-import './dialog-notecate.css';
-import axios from 'axios';
+const React = require("react");
+import "./dialog-notecate.css";
+import axios from "axios";
 
 class DialogNotecate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      handleType: '',
-      addNotecateTitle: '',
-      updateNotecate: '',
+      handleType: "",
+      addNotecateTitle: "",
+      updateNotecate: "",
     };
     this.handleClickAddNotecate = this.handleClickAddNotecate.bind(this);
     this.handleChangeAddNotecate = this.handleChangeAddNotecate.bind(this);
@@ -32,9 +32,9 @@ class DialogNotecate extends React.Component {
   render() {
     const { notecate, isShow } = this.props;
     return (
-      <div className={`dialog-box notecate ${isShow ? '' : 'display-none'}`}>
+      <div className={`dialog-box notecate ${isShow ? "" : "display-none"}`}>
         <h2 className="dialog-header">
-          {notecate.name}{' '}
+          {notecate.name}{" "}
           <span className="btn-close with-icon" onClick={this.handleClose}>
             <i className="iconfont icon-close"></i>
           </span>
@@ -48,7 +48,7 @@ class DialogNotecate extends React.Component {
               新增子分类
             </button>
             <input
-              className={this.state.handleType === 'ADD' ? '' : 'display-none'}
+              className={this.state.handleType === "ADD" ? "" : "display-none"}
               ref="inputNotecate"
               value={this.state.addNotecateTitle}
               onChange={this.handleChangeAddNotecate}
@@ -65,7 +65,7 @@ class DialogNotecate extends React.Component {
             </button>
             <input
               className={
-                this.state.handleType === 'UPDATE' ? '' : 'display-none'
+                this.state.handleType === "UPDATE" ? "" : "display-none"
               }
               ref="updateNotecate"
               value={this.state.updateNotecate}
@@ -95,9 +95,9 @@ class DialogNotecate extends React.Component {
   }
   resetFields() {
     this.setState({
-      addNotecateTitle: '',
-      handleType: '',
-      updateNotecate: '',
+      addNotecateTitle: "",
+      handleType: "",
+      updateNotecate: "",
     });
   }
   handleClose() {
@@ -106,7 +106,7 @@ class DialogNotecate extends React.Component {
   }
   handleClickAddNotecate() {
     this.setState({
-      handleType: 'ADD',
+      handleType: "ADD",
     });
   }
   handleChangeAddNotecate(event) {
@@ -119,37 +119,37 @@ class DialogNotecate extends React.Component {
       if (!event.target.value) return;
       const { name: parentNotecate } = this.props.notecate;
       const res = await axios
-        .post('/api/note-cate/add', {
+        .post("/api/note-cate/add", {
           name: event.target.value,
-          _parent: parentNotecate === 'root' ? '' : parentNotecate,
+          _parent: parentNotecate === "root" ? "" : parentNotecate,
         })
         .catch(console.error);
       if (res.data.code === 0) {
         this.setState({
-          addNotecateTitle: '',
-          handleType: '',
+          addNotecateTitle: "",
+          handleType: "",
         });
-        this.emitRefreshNotecateList('新增成功');
+        this.emitRefreshNotecateList("新增成功");
       }
     }
   }
   async handleDeleteNotecate() {
     this.setState({
-      handleType: 'DELETE',
+      handleType: "DELETE",
     });
     const confirm = window.confirm();
     if (confirm) {
       const res = await axios
-        .post('api/note-cate/delete', this.props.notecate)
+        .post("api/note-cate/delete", this.props.notecate)
         .catch(console.error);
       if (res.data.code === 0) {
-        this.emitRefreshNotecateList('删除成功');
+        this.emitRefreshNotecateList("删除成功");
       }
     }
   }
   handleClickUpdateNotecate() {
     this.setState({
-      handleType: 'UPDATE',
+      handleType: "UPDATE",
       updateNotecate: this.props.notecate.name,
     });
   }
@@ -162,7 +162,7 @@ class DialogNotecate extends React.Component {
     if (event.keyCode === 13) {
       if (!event.target.value) return;
       const res = await axios
-        .post('api/note-cate/update', {
+        .post("api/note-cate/update", {
           lastValue: this.props.notecate,
           newValue: {
             name: this.state.updateNotecate,
@@ -171,7 +171,7 @@ class DialogNotecate extends React.Component {
         })
         .catch(console.error);
       if (res.data.code === 0) {
-        this.emitRefreshNotecateList('更新成功');
+        this.emitRefreshNotecateList("更新成功");
       }
     }
   }

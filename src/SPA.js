@@ -1,23 +1,20 @@
-import 'style/index.css';
-const React = require('react');
-import ReactDOM from 'react-dom'
-import {BrowserRouter, HashRouter} from 'react-router-dom'
-import Content from './components/page/content.jsx'
-import api from './api.js'
-import global from './global.js'
-function renderApp(items){
-  const Router = process.env.NODE_ENV !== 'dev' ? BrowserRouter : HashRouter
-  ReactDOM.render((
-    <Router>
-      <Content refreshNavItemsCallback={refreshNavItemsCallback} items={items} />
-    </Router>
-    ), document.getElementById('app'));
-}
-function refreshNavItemsCallback(){
-  api('get', 'subjects', null, renderApp)
-}
-if(process.env.NODE_ENV !== 'dev') {
-  renderApp(JSON.parse(_SSR_DATA_subjects))
-}else{
-  api('get', 'subjects', null, renderApp)
-}
+import "style/index.css";
+const React = require("react");
+import ReactDOM from "react-dom";
+import { BrowserRouter, HashRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { fetchNavList } from "./reducer";
+import Content from "./components/page/content.jsx";
+import store from "./store.js";
+
+const Router = process.env.NODE_ENV !== "dev" ? BrowserRouter : HashRouter;
+ReactDOM.render(
+  <Router>
+    <Provider store={store}>
+      <Content />
+    </Provider>
+  </Router>,
+  document.getElementById("app")
+);
+
+store.dispatch(fetchNavList);

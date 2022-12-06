@@ -1,0 +1,23 @@
+.table-default {
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+  th,
+  td {
+    border: 1px solid var(--color-gray);
+    padding: var(--gap-mini) var(--gap-small);
+  }
+  .opra-row {
+    visibility: hidden;
+    text-align: right;
+    td {
+      border: none;
+    }
+    transition: visibility 0.3 ease;
+  }
+  &:hover {
+    .opra-row {
+      visibility: visible;
+    }
+  }
+}

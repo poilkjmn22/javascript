@@ -1,14 +1,14 @@
-import React from 'react';
-import axios from 'axios';
-import Validator from './validator.jsx';
+import React from "react";
+import axios from "axios";
+import Validator from "./validator.jsx";
 
 class FormNote extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: '',
-      errorMsgText: '',
-      notecate: '',
+      text: "",
+      errorMsgText: "",
+      notecate: "",
       noteCates: [],
     };
     this.handleChangeText = this.handleChangeText.bind(this);
@@ -31,7 +31,7 @@ class FormNote extends React.Component {
     }
     return (
       <form
-        style={{ display: this.props.isShow ? 'block' : 'none' }}
+        style={{ display: this.props.isShow ? "block" : "none" }}
         className={this.props.name}
         action="/api/bug-record"
         method="post"
@@ -83,11 +83,11 @@ class FormNote extends React.Component {
   validateText() {
     if (!this.state.text) {
       this.setState({
-        errorMsgText: '文本内容不可为空！',
+        errorMsgText: "文本内容不可为空！",
       });
     } else {
       this.setState({
-        errorMsgText: '',
+        errorMsgText: "",
       });
     }
   }
@@ -103,7 +103,7 @@ class FormNote extends React.Component {
   }
   componentDidMount() {
     axios
-      .get('/api/note-cate/list')
+      .get("/api/note-cate/list")
       .then((res) => {
         console.log(res.data);
         this.setState({
@@ -115,7 +115,7 @@ class FormNote extends React.Component {
 }
 
 FormNote.defaultProps = {
-  name: 'form-note',
+  name: "form-note",
   isShow: true,
 };
 export default FormNote;

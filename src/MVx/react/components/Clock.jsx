@@ -1,20 +1,20 @@
-import React from 'react'
-export default class Clock extends React.Component{
-  constructor(props){
-    super(props)
-    this.launchClock()
+import React from "react";
+export default class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.launchClock();
     this.state = {
-      currentTime: (new Date()).toLocaleString()
-    }
+      currentTime: new Date().toLocaleString(),
+    };
   }
-  launchClock(){
+  launchClock() {
     setInterval(() => {
       this.setState({
-        currentTime: (new Date()).toLocaleString()
-      })
-    }, 1000)
+        currentTime: new Date().toLocaleString(),
+      });
+    }, 1000);
   }
-  render(){
-    return <div>{this.state.currentTime}</div>
+  render() {
+    return <div>{this.state.currentTime}</div>;
   }
 }

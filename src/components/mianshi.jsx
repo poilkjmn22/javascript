@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 class Mianshi extends React.Component {
   constructor(props) {
@@ -8,7 +8,7 @@ class Mianshi extends React.Component {
     return <div>面试</div>;
   }
   componentDidMount() {
-    import('root/src/mianshi/xiaomi.js').then((module) => {
+    import("root/src/mianshi/xiaomi.js").then((module) => {
       const { traverseNode, genParen, genParenNoRepeat } = module;
       let children = traverseNode(document.body);
       console.dir(children);
