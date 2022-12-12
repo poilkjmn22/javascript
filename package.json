@@ -101,6 +101,7 @@
     "stylelint": "^14.5.3",
     "stylelint-config-prettier": "^9.0.3",
     "three": "^0.95.0",
+    "uuid": "^3.4.0",
     "vue": "^2.6.12",
     "wangeditor": "^4.7.5"
   }

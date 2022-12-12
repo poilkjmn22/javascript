@@ -11,11 +11,11 @@ exports.list = (req, res, next) => {
 };
 
 exports.add = (req, res, next) => {
-  const { name, title, parent } = req.body;
+  const { name, title, parentId } = req.body;
   const item = new NavList({
     name,
     title,
-    parent,
+    parentId,
   });
   item.save((err) => {
     if (err) return next(err);
@@ -31,7 +31,8 @@ exports.add = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  NavList.delete(JSON.stringify(req.body.navItem), (err) => {
+  console.log(req.body);
+  NavList.delete(req.body, (err) => {
     if (err) return next(err);
     res.format({
       "application/json": () => {

@@ -18,6 +18,10 @@ class DialogAddNavItem extends React.Component {
     return (
       <div className="dialog">
         <div className="form">
+{this.props.parent &&  <div className="form-item">
+            <label className="label">parentId</label>
+            <span className="content">{this.props.parent.id}</span>
+          </div> }
           <div className="form-item">
             <label className="label">名称</label>
             <input
@@ -65,7 +69,7 @@ class DialogAddNavItem extends React.Component {
     });
   }
   handleConfirm() {
-    this.props.handleConfirmAddNavItem({ ...this.state });
+    this.props.handleConfirmAddNavItem(Object.assign( { ...this.state }, this.props.parent ? {parentId: this.props.parent.id} : null ));
     this.setState({
     name: '',
     title: '',

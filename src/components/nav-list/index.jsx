@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import NavListItem from "./NavListItem.jsx";
 import DialogAddNavItem from "./dialog-add-nav-item.jsx";
-import "./index.css";
 import request from "@/request";
 import store from "@/store.js";
 import { fetchNavList } from "@/reducer";
@@ -15,6 +14,7 @@ class NavList extends React.Component {
     this.handleConfirmAddNavItem = this.handleConfirmAddNavItem.bind(this);
     this.state = {
       visibleDialogAddNavItem: false,
+      parent: null,
     };
   }
   render() {
@@ -25,28 +25,37 @@ class NavList extends React.Component {
         </button>
         <div className="nav-list">
           {this.props.navList.map((item) => {
-            return <NavListItem item={item} key={item.title} />;
+            return (
+              <NavListItem
+                item={item}
+                key={item.id}
+                addNavItem={this.addNavItem}
+              />
+            );
           })}
         </div>
 
         <DialogAddNavItem
           visible={this.state.visibleDialogAddNavItem}
+          parent={this.state.parent}
           handleCloseDialog={this.handleCloseDialog}
           handleConfirmAddNavItem={this.handleConfirmAddNavItem}
         />
       </div>
     );
   }
-  addNavItem() {
-    this.setState({
-      visibleDialogAddNavItem: true,
-    });
+  addNavItem(parent) {
+    this.setState(
+      {
+          visibleDialogAddNavItem: true,
+          parent,
+        }
+
+
+    );
   }
   async handleConfirmAddNavItem(navItem) {
-    const res = await request.post(
-      "nav-list/add",
-          { ...navItem }
-    );
+    const res = await request.post("nav-list/add", { ...navItem });
     store.dispatch(fetchNavList);
     this.handleCloseDialog();
   }

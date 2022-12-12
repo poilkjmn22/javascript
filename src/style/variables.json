@@ -15,5 +15,7 @@
 
   "--btn-bg-primary": "purple",
   "--btn-bg-hover": "gold",
-  "--btn-bg-active": "gold"
+  "--btn-bg-active": "gold",
+
+  "--border-color-base": "#dedede"
 }

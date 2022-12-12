@@ -1,0 +1,21 @@
+.nav-list-item {
+  padding: var(--gap);
+  + .nav-list-item {
+    border-top: 1px solid #dedede;
+  }
+
+  position: relative;
+
+  .btn-group {
+    position: absolute;
+    right: var(--gap);
+    top: var(--gap-small);
+    .iconfont {
+      + .iconfont {
+        margin-left: var(--gap-small);
+      }
+
+      cursor: pointer;
+    }
+  }
+}

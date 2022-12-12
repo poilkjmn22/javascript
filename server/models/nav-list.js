@@ -1,17 +1,17 @@
 const redis = require("redis");
 const dbConf = require("../db.conf.json");
 const db = redis.createClient(dbConf.PORT, dbConf.HOST);
+const uuidv1 = require("uuid/v1");
 
 const TableName = "nav-list";
 
 class NavList {
   constructor(obj) {
+    this.id = uuidv1();
     for (let key in obj) {
       this[key] = obj[key];
     }
-    this.id = NavList.uid++;
   }
-  static uid = 0;
   static getRange(from, to, cb) {
     db.lrange(TableName, from, to, (err, items) => {
       if (err) return cb(err);
@@ -20,6 +20,7 @@ class NavList {
     });
   }
   save(cb) {
+    console.log(this);
     db.lpush(TableName, JSON.stringify(this), (err) => {
       if (err) return cb(err);
       cb(null);
