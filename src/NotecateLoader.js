@@ -158,6 +158,12 @@ export default class NotecateLoader {
         );
         addLessonGUIControls(cateExports, elModules);
         break;
+      case "整数Trie":
+        cateExports = await import(
+          "@/algorithms/data-structure/trie/drawTrie.js"
+        );
+        addLessonGUIControls(cateExports, elModules);
+        break;
       case "邻接矩阵":
         cateExports = await import(
           "@/algorithms/data-structure/graph/index.js"
