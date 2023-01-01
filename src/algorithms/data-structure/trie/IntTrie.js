@@ -1,14 +1,6 @@
-class KeyValuePair {
-  constructor(key, value) {
-    this.key = key;
-    this.value = value;
-  }
-  toString() {
-    return `${this.key}:${this.value}`;
-  }
-}
+import KeyValuePair from "./KeyValuePair";
 /*
- * 这里key是小端来表示的：其二进制的高位在左边，低位在右边(反之则为大端)
+ * 这里key是小端来表示的：其二进制的高位在右边，低位在左边(反之则为大端)
  * 这里实现的是小端树
  */
 export default class IntTrie {
@@ -43,7 +35,7 @@ export default class IntTrie {
   static build(keyValuePairs) {
     let t = new IntTrie();
     for (const key in keyValuePairs) {
-      t = IntTrie.insert(t, key, keyValuePairs[key]);
+      t = IntTrie.insert(t, parseInt(key), keyValuePairs[key]);
     }
     return t;
   }
