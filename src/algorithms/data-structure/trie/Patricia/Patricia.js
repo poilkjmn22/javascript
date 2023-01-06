@@ -1,4 +1,4 @@
-import Trie from "../Trie.js";
+import Trie from "../Trie/Trie.js";
 import { lcp, branch } from "./utils.js";
 export default class Patricia extends Trie {
   constructor(value) {
