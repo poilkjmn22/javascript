@@ -1,7 +1,6 @@
 import { getKey, isFunction } from "../../../utils/util";
 export default class Node {
   constructor(data, key) {
-    this.parent = null;
     this.left = null;
     this.right = null;
     this.data = data;
@@ -14,13 +13,13 @@ export default class Node {
       throw new TypeError("参数类型错误：iteratee应为函数");
     }
     innerWalk(this, iteratee);
-    function innerWalk(node, iteratee) {
+    function innerWalk(node, iteratee, parent, branch) {
       if (!node) {
         return;
       }
-      innerWalk(node.left, iteratee);
-      iteratee(node, iteratee);
-      innerWalk(node.right, iteratee);
+      innerWalk(node.left, iteratee, node, "left");
+      iteratee(node, parent, branch);
+      innerWalk(node.right, iteratee, node, "right");
     }
   }
   // 前序遍历
@@ -29,13 +28,13 @@ export default class Node {
       throw new TypeError("参数类型错误：iteratee应为函数");
     }
     innerWalk(this, iteratee);
-    function innerWalk(node, iteratee) {
+    function innerWalk(node, iteratee, parent, branch) {
       if (!node) {
         return;
       }
-      iteratee(node, iteratee);
-      innerWalk(node.left, iteratee);
-      innerWalk(node.right, iteratee);
+      iteratee(node, parent, branch);
+      innerWalk(node.left, iteratee, node, "left");
+      innerWalk(node.right, iteratee, node, "right");
     }
   }
   // 后序遍历
@@ -44,28 +43,34 @@ export default class Node {
       throw new TypeError("参数类型错误：iteratee应为函数");
     }
     innerWalk(this, iteratee);
-    function innerWalk(node, iteratee) {
+    function innerWalk(node, iteratee, parent, branch) {
       if (!node) {
         return;
       }
-      innerWalk(node.left, iteratee);
-      innerWalk(node.right, iteratee);
-      iteratee(node, iteratee);
+      innerWalk(node.left, iteratee, node, "left");
+      innerWalk(node.right, iteratee, node, "right");
+      iteratee(node, parent, branch);
     }
   }
-  _find(data) {
+  _find(data, withPath) {
     const key = getKey(data, this.optKey);
     let found = null;
     let t = this;
+    const path = [];
     while (t) {
       if (key === t.key) {
         found = t;
         break;
       } else if (key < t.key) {
+        path.unshift(t);
         t = t.left;
       } else if (key > t.key) {
+        path.unshift(t);
         t = t.right;
       }
+    }
+    if (withPath) {
+      return [found].concat(path);
     }
     return found;
   }

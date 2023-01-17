@@ -25,23 +25,23 @@ export default class AVLTree {
   }
   // 中序遍历
   inorder(iteratee) {
-    this.root._inorder(iteratee);
+    this.root && this.root._inorder(iteratee);
   }
   // 前序遍历
   preorder(iteratee) {
-    this.root._preorder(iteratee);
+    this.root && this.root._preorder(iteratee);
   }
   // 后序遍历
   postorder(iteratee) {
-    this.root._postorder(iteratee);
+    this.root && this.root._postorder(iteratee);
   }
   insert(data, key) {
     this.root = !this.root ? new AVLNode(data, key) : this.root.add(data);
   }
   find(data) {
-    return this.root._find(data);
+    return this.root && this.root._find(data);
   }
   delete(data) {
-    this.root = this.root.remove(data);
+    this.root = this.root && this.root.remove(data);
   }
 }

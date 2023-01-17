@@ -16,4 +16,13 @@ function noteBranch(elContainer) {
   `;
 }
 
-export { noteBranch };
+function noteRoolback(elContainer) {
+  elContainer.innerHTML = `<ul>
+    <li>1、自己的分支回滚直接用reset。</li>
+    <li>2、公共分支回滚用revert</li>
+    <li>3、错的太远了直接将代码全部删掉，用正确代码替代</li>
+    </ul>
+  `;
+}
+
+export { noteBranch, noteRoolback };

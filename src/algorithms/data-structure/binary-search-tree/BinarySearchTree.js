@@ -1,9 +1,10 @@
 import Node from "./Node";
-import { isFunction, getKey } from "../../../utils/util";
+import { isFunction } from "../../../utils/util";
 export default class BinarySearchTree {
-  constructor(arr = [], key) {
+  constructor(arr = [], key, withParent) {
     this.T = null;
     this.key = key;
+    this.withParent = !!withParent;
     this.createTree(arr);
   }
   createTree(arr) {
@@ -31,8 +32,8 @@ export default class BinarySearchTree {
       } else {
         last.right = node;
       }
-      node.parent = last;
     }
+    this.withParent && (node.parent = last);
   }
   toArray(order = "inorder") {
     const res = [];
@@ -49,57 +50,57 @@ export default class BinarySearchTree {
   }
   // 中序遍历
   inorder(iteratee) {
-    this.T._inorder(iteratee);
+    this.T && this.T._inorder(iteratee);
   }
   // 前序遍历
   preorder(iteratee) {
-    this.T._preorder(iteratee);
+    this.T && this.T._preorder(iteratee);
   }
   // 后序遍历
   postorder(iteratee) {
-    this.T._postorder(iteratee);
+    this.T && this.T._postorder(iteratee);
   }
-  find(data) {
-    return this.T._find(data);
+  find(data, withPath) {
+    return this.T && this.T._find(data, withPath);
   }
   delete(data) {
-    const t = this.find(data);
+    const [t, p] = this.find(data, true);
     if (!t) {
       throw new Error("要删除的数据不存在");
     }
     if (!t.left && !t.right) {
       // 叶子结点
-      if (t.parent) {
-        if (t.key <= t.parent.key) {
-          t.parent.left = null;
+      if (p) {
+        if (t.key <= p.key) {
+          p.left = null;
         } else {
-          t.parent.right = null;
+          p.right = null;
         }
       } else {
         this.T = null;
       }
     } else if (!t.left && t.right) {
-      if (t.parent) {
-        if (t.key <= t.parent.key) {
-          t.parent.left = t.right;
+      if (p) {
+        if (t.key <= p.key) {
+          p.left = t.right;
         } else {
-          t.parent.right = t.right;
+          p.right = t.right;
         }
       } else {
         this.T = t.right;
       }
-      t.right.parent = t.parent;
+      this.withParent && (t.right.parent = t.parent);
     } else if (t.left && !t.right) {
-      if (t.parent) {
-        if (t.key <= t.parent.key) {
-          t.parent.left = t.left;
+      if (p) {
+        if (t.key <= p.key) {
+          p.left = t.left;
         } else {
-          t.parent.right = t.left;
+          p.right = t.left;
         }
       } else {
         this.T = t.left;
       }
-      t.left.parent = t.parent;
+      this.withParent && (t.left.parent = t.parent);
     } else if (t.left && t.right) {
       const min = t.right._findMin();
       this.delete(min.data);
