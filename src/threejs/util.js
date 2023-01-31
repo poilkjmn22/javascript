@@ -295,6 +295,65 @@ function addGroundPlane(scene) {
 }
 
 /**
+ * Add a large ground plance to the provided scene
+ *
+ * @param {THREE.Scene} scene
+ */
+function addLargeGroundPlane(scene, useTexture) {
+  var withTexture = useTexture !== undefined ? useTexture : false;
+
+  // create the ground plane
+  var planeGeometry = new THREE.PlaneGeometry(10000, 10000);
+  var planeMaterial = new THREE.MeshPhongMaterial({
+    color: 0xffffff,
+  });
+  if (withTexture) {
+    var textureLoader = new THREE.TextureLoader();
+    planeMaterial.map = textureLoader.load(
+      "../../assets/textures/general/floor-wood.jpg"
+    );
+    planeMaterial.map.wrapS = THREE.RepeatWrapping;
+    planeMaterial.map.wrapT = THREE.RepeatWrapping;
+    planeMaterial.map.repeat.set(80, 80);
+  }
+  var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+  plane.receiveShadow = true;
+
+  // rotate and position the plane
+  plane.rotation.x = -0.5 * Math.PI;
+  plane.position.x = 0;
+  plane.position.y = 0;
+  plane.position.z = 0;
+
+  scene.add(plane);
+
+  return plane;
+}
+
+function initDefaultLighting(scene, initialPosition) {
+  var position =
+    initialPosition !== undefined
+      ? initialPosition
+      : new THREE.Vector3(-10, 30, 40);
+
+  var spotLight = new THREE.SpotLight(0xffffff);
+  spotLight.position.copy(position);
+  spotLight.shadow.mapSize.width = 2048;
+  spotLight.shadow.mapSize.height = 2048;
+  spotLight.shadow.camera.fov = 15;
+  spotLight.castShadow = true;
+  spotLight.decay = 2;
+  spotLight.penumbra = 0.05;
+  spotLight.name = "spotLight";
+
+  scene.add(spotLight);
+
+  var ambientLight = new THREE.AmbientLight(0x343434);
+  ambientLight.name = "ambientLight";
+  scene.add(ambientLight);
+}
+
+/**
  * Add a folder to the gui containing the basic material properties.
  *
  * @param gui the gui to add to
@@ -346,6 +405,41 @@ function addBasicMaterialSettings(gui, controls, material, name) {
   folder.add(controls.material, "fog");
 
   return folder;
+}
+
+function addSpecificMaterialSettings(gui, controls, material, name) {
+  controls.material = material;
+
+  var folderName = name !== undefined ? name : "THREE." + material.type;
+  var folder = gui.addFolder(folderName);
+  switch (material.type) {
+    case "MeshNormalMaterial":
+      folder.add(controls.material, "wireframe");
+      return folder;
+
+    case "MeshPhongMaterial":
+      controls.specular = material.specular.getStyle();
+      folder.addColor(controls, "specular").onChange(function (e) {
+        material.specular.setStyle(e);
+      });
+      folder.add(material, "shininess", 0, 100, 0.01);
+      return folder;
+
+    case "MeshStandardMaterial":
+      controls.color = material.color.getStyle();
+      folder.addColor(controls, "color").onChange(function (e) {
+        material.color.setStyle(e);
+      });
+      controls.emissive = material.emissive.getStyle();
+      folder.addColor(controls, "emissive").onChange(function (e) {
+        material.emissive.setStyle(e);
+      });
+      folder.add(material, "metalness", 0, 1, 0.01);
+      folder.add(material, "roughness", 0, 1, 0.01);
+      folder.add(material, "wireframe");
+
+      return folder;
+  }
 }
 
 /**
@@ -402,6 +496,81 @@ function computeNormalsGroup(group) {
   }
 }
 
+/**
+ * Apply a simple standard material to the passed in geometry and return the mesh
+ *
+ * @param {*} geometry
+ * @param {*} material if provided use this meshnormal material instead of creating a new material
+ *                     this material will only be used if it is a meshnormal material.
+ */
+const applyMeshStandardMaterial = function (geometry, material) {
+  if (!material || material.type !== "MeshStandardMaterial") {
+    material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+    material.side = THREE.DoubleSide;
+  }
+
+  return new THREE.Mesh(geometry, material);
+};
+
+/**
+ * Apply meshnormal material to the geometry, optionally specifying whether
+ * we want to see a wireframe as well.
+ *
+ * @param {*} geometry
+ * @param {*} material if provided use this meshnormal material instead of creating a new material
+ *                     this material will only be used if it is a meshnormal material.
+ */
+const applyMeshNormalMaterial = function (geometry, material) {
+  if (!material || material.type !== "MeshNormalMaterial") {
+    material = new THREE.MeshNormalMaterial();
+    material.side = THREE.DoubleSide;
+  }
+
+  return new THREE.Mesh(geometry, material);
+};
+
+function redrawGeometryAndUpdateUI(gui, scene, controls, geomFunction) {
+  guiRemoveFolder(gui, controls.specificMaterialFolder);
+  guiRemoveFolder(gui, controls.currentMaterialFolder);
+  if (controls.mesh) scene.remove(controls.mesh);
+  var changeMat = eval("(" + controls.appliedMaterial + ")");
+  if (controls.mesh) {
+    controls.mesh = changeMat(geomFunction(), controls.mesh.material);
+  } else {
+    controls.mesh = changeMat(geomFunction());
+  }
+
+  controls.mesh.castShadow = controls.castShadow;
+  scene.add(controls.mesh);
+  controls.currentMaterialFolder = addBasicMaterialSettings(
+    gui,
+    controls,
+    controls.mesh.material
+  );
+  controls.specificMaterialFolder = addSpecificMaterialSettings(
+    gui,
+    controls,
+    controls.mesh.material
+  );
+}
+
+/**
+ * Remove a folder from the dat.gui
+ *
+ * @param {*} gui
+ * @param {*} folder
+ */
+function guiRemoveFolder(gui, folder) {
+  if (folder && folder.name && gui.__folders[folder.name]) {
+    gui.__folders[folder.name].close();
+    gui.__folders[folder.name].domElement.parentNode.parentNode.removeChild(
+      gui.__folders[folder.name].domElement.parentNode
+    );
+    delete gui.__folders[folder.name];
+    gui.onResize();
+  }
+}
+
 export {
   initTrackballControls,
   addLessonGUIControls,
@@ -413,6 +582,11 @@ export {
   addHouseAndTree,
   addDefaultCubeAndSphere,
   addGroundPlane,
+  addLargeGroundPlane,
+  initDefaultLighting,
   addBasicMaterialSettings,
   loadGopher,
+  applyMeshStandardMaterial,
+  applyMeshNormalMaterial,
+  redrawGeometryAndUpdateUI,
 };

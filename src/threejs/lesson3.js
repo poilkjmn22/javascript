@@ -7,7 +7,7 @@
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
 import * as THREE from "three";
-import Lensflare from "three/examples/js/objects/Lensflare.js"; // 需要做一些特殊处理(ES6模块化导出)
+import "three/examples/js/objects/Lensflare.js"; // 需要做一些特殊处理(ES6模块化导出)
 import {
   initStats,
   initRenderer,
@@ -1002,7 +1002,7 @@ function init_lensflares(elContainer) {
 
   var flareColor = new THREE.Color(0xffaacc);
 
-  var lensFlare = new Lensflare();
+  var lensFlare = new THREE.Lensflare();
 
   lensFlare.addElement(
     new THREE.LensflareElement(textureFlare0, 350, 0.0, flareColor)
