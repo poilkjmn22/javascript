@@ -601,10 +601,279 @@ function init_extrude_svg(elContainer) {
   }
 }
 
+function init_parametric_geometry(elContainer) {
+  var stats = initStats(elContainer);
+  var renderer = initRenderer(elContainer);
+  var camera = initCamera();
+  // position and point the camera to the center of the scene
+  // camera.position.set(-80, 80, 80);
+  // camera.lookAt(new THREE.Vector3(60, -60, 0));
+
+  var scene = new THREE.Scene();
+  initDefaultLighting(scene);
+  var groundPlane = addLargeGroundPlane(scene);
+  groundPlane.position.y = -30;
+
+  // call the render function
+  var step = 0;
+
+  const klein = function (u, v, optionalTarget) {
+    var result = optionalTarget || new THREE.Vector3();
+
+    u *= Math.PI;
+    v *= 2 * Math.PI;
+
+    u = u * 2;
+    var x, y, z;
+    if (u < Math.PI) {
+      x =
+        3 * Math.cos(u) * (1 + Math.sin(u)) +
+        2 * (1 - Math.cos(u) / 2) * Math.cos(u) * Math.cos(v);
+      z =
+        -8 * Math.sin(u) -
+        2 * (1 - Math.cos(u) / 2) * Math.sin(u) * Math.cos(v);
+    } else {
+      x =
+        3 * Math.cos(u) * (1 + Math.sin(u)) +
+        2 * (1 - Math.cos(u) / 2) * Math.cos(v + Math.PI);
+      z = -8 * Math.sin(u);
+    }
+
+    y = -2 * (1 - Math.cos(u) / 2) * Math.sin(v);
+
+    return result.set(x, y, z);
+  };
+
+  const radialWave = function (u, v, optionalTarget) {
+    var result = optionalTarget || new THREE.Vector3();
+    var r = 50;
+
+    var x = Math.sin(u) * r;
+    var z = Math.sin(v / 2) * 2 * r;
+    var y = (Math.sin(u * 4 * Math.PI) + Math.cos(v * 2 * Math.PI)) * 2.8;
+
+    return result.set(x, y, z);
+  };
+
+  // setup the control gui
+  var controls = new (function () {
+    this.appliedMaterial = applyMeshNormalMaterial;
+    this.castShadow = true;
+    this.groundPlaneVisible = true;
+    this.slices = 50;
+    this.stacks = 50;
+
+    this.renderFunction = "radialWave";
+
+    this.redraw = function () {
+      redrawGeometryAndUpdateUI(gui, scene, controls, function () {
+        let geom = null;
+        switch (controls.renderFunction) {
+          case "radialWave":
+            geom = new THREE.ParametricGeometry(
+              radialWave,
+              controls.slices,
+              controls.stacks
+            );
+            geom.center();
+            return geom;
+
+          case "klein":
+            geom = new THREE.ParametricGeometry(
+              klein,
+              controls.slices,
+              controls.stacks
+            );
+            geom.center();
+            return geom;
+        }
+      });
+    };
+  })();
+  var gui = initLessonCateGUI();
+  gui
+    .add(controls, "renderFunction", ["radialWave", "klein"])
+    .onChange(controls.redraw);
+  gui
+    .add(controls, "appliedMaterial", {
+      meshNormal: applyMeshNormalMaterial,
+      meshStandard: applyMeshStandardMaterial,
+    })
+    .onChange(controls.redraw);
+
+  gui.add(controls, "slices", 10, 120, 1).onChange(controls.redraw);
+  gui.add(controls, "stacks", 10, 120, 1).onChange(controls.redraw);
+  gui.add(controls, "castShadow").onChange(function (e) {
+    controls.mesh.castShadow = e;
+  });
+  gui.add(controls, "groundPlaneVisible").onChange(function (e) {
+    groundPlane.material.visible = e;
+  });
+
+  controls.redraw();
+  render();
+
+  function render() {
+    stats.begin();
+    controls.mesh.rotation.y = step += 0.005;
+    controls.mesh.rotation.x = step;
+    controls.mesh.rotation.z = step;
+
+    // render using requestAnimationFrame
+    requestAnimationFrame(render);
+    renderer.render(scene, camera);
+    stats.end();
+  }
+}
+
+function init_text_geometry(elContainer) {
+  // use the defaults
+  var stats = initStats(elContainer);
+  var renderer = initRenderer(elContainer);
+  var camera = initCamera();
+  var scene = new THREE.Scene();
+  initDefaultLighting(scene);
+  var groundPlane = addLargeGroundPlane(scene);
+  groundPlane.position.y = -30;
+
+  var font_bitstream;
+  var font_helvetiker_bold;
+  var font_helvetiker_regular;
+
+  var step = 0;
+
+  var fontload1 = new THREE.FontLoader();
+  fontload1.load(
+    "threejs/assets/fonts/bitstream_vera_sans_mono_roman.typeface.json",
+    function (response) {
+      controls.font = response;
+      font_bitstream = response;
+      controls.redraw();
+      render();
+    }
+  );
+
+  var fontload2 = new THREE.FontLoader();
+  fontload2.load(
+    "threejs/assets/fonts/helvetiker_bold.typeface.json",
+    function (response) {
+      font_helvetiker_bold = response;
+    }
+  );
+
+  var fontload3 = new THREE.FontLoader();
+  fontload3.load(
+    "threejs/assets/fonts/helvetiker_regular.typeface.json",
+    function (response) {
+      font_helvetiker_regular = response;
+    }
+  );
+
+  var controls = new (function () {
+    this.appliedMaterial = applyMeshNormalMaterial;
+    this.castShadow = true;
+    this.groundPlaneVisible = true;
+
+    this.size = 90;
+    this.height = 90;
+    this.bevelThickness = 2;
+    this.bevelSize = 0.5;
+    this.bevelEnabled = true;
+    this.bevelSegments = 3;
+    this.bevelEnabled = true;
+    this.curveSegments = 12;
+    this.steps = 1;
+    this.fontName = "bitstream vera sans mono";
+
+    // redraw function, updates the control UI and recreates the geometry.
+    this.redraw = function () {
+      switch (controls.fontName) {
+        case "bitstream vera sans mono":
+          controls.font = font_bitstream;
+          break;
+        case "helvetiker":
+          controls.font = font_helvetiker_regular;
+          break;
+        case "helvetiker bold":
+          controls.font = font_helvetiker_bold;
+          break;
+      }
+
+      redrawGeometryAndUpdateUI(gui, scene, controls, function () {
+        var options = {
+          size: controls.size,
+          height: controls.height,
+          weight: controls.weight,
+          font: controls.font,
+          bevelThickness: controls.bevelThickness,
+          bevelSize: controls.bevelSize,
+          bevelSegments: controls.bevelSegments,
+          bevelEnabled: controls.bevelEnabled,
+          curveSegments: controls.curveSegments,
+          steps: controls.steps,
+        };
+
+        var geom = new THREE.TextGeometry("Learning Three.js", options);
+        geom.applyMatrix(new THREE.Matrix4().makeScale(0.05, 0.05, 0.05));
+        geom.center();
+
+        return geom;
+      });
+    };
+  })();
+
+  var gui = initLessonCateGUI();
+  gui.add(controls, "size", 0, 200).onChange(controls.redraw);
+  gui.add(controls, "height", 0, 200).onChange(controls.redraw);
+  gui
+    .add(controls, "fontName", [
+      "bitstream vera sans mono",
+      "helvetiker",
+      "helvetiker bold",
+    ])
+    .onChange(controls.redraw);
+  gui.add(controls, "bevelThickness", 0, 10).onChange(controls.redraw);
+  gui.add(controls, "bevelSize", 0, 10).onChange(controls.redraw);
+  gui.add(controls, "bevelSegments", 0, 30).step(1).onChange(controls.redraw);
+  gui.add(controls, "bevelEnabled").onChange(controls.redraw);
+  gui.add(controls, "curveSegments", 1, 30).step(1).onChange(controls.redraw);
+  gui.add(controls, "steps", 1, 5).step(1).onChange(controls.redraw);
+
+  // add a material section, so we can switch between materials
+  gui
+    .add(controls, "appliedMaterial", {
+      meshNormal: applyMeshNormalMaterial,
+      meshStandard: applyMeshStandardMaterial,
+    })
+    .onChange(controls.redraw);
+
+  gui.add(controls, "castShadow").onChange(function (e) {
+    controls.mesh.castShadow = e;
+  });
+  gui.add(controls, "groundPlaneVisible").onChange(function (e) {
+    groundPlane.material.visible = e;
+  });
+
+  function render() {
+    stats.begin();
+
+    controls.mesh.rotation.y = step += 0.005;
+    controls.mesh.rotation.x = step;
+    controls.mesh.rotation.z = step;
+
+    // render using requestAnimationFrame
+    requestAnimationFrame(render);
+    renderer.render(scene, camera);
+    stats.end();
+  }
+}
+
 export {
   init_advanced_3d_geometry_convex,
   init_advanced_3d_geometry_lathe,
   init_extrude_geometry,
   init_extrude_tube,
   init_extrude_svg,
+  init_parametric_geometry,
+  init_text_geometry,
 };
