@@ -140,6 +140,10 @@ export default class NotecateLoader {
         const lesson7 = await import("@/threejs/lesson7.js");
         addLessonGUIControls(lesson7, elModules);
         break;
+      case "lesson8":
+        const lesson8 = await import("@/threejs/lesson8.js");
+        addLessonGUIControls(lesson8, elModules);
+        break;
       case "分支":
         const branch = await import("@/git/branch.js");
         addLessonGUIControls(branch, elModules);

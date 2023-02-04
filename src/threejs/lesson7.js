@@ -14,11 +14,6 @@ import {
   initCamera,
   initTrackballControls,
   initLessonCateGUI,
-  addLargeGroundPlane,
-  initDefaultLighting,
-  applyMeshStandardMaterial,
-  applyMeshNormalMaterial,
-  redrawGeometryAndUpdateUI,
   createGhostTexture,
 } from "./util.js";
 
