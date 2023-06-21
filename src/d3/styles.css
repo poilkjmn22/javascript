@@ -1,0 +1,61 @@
+rect {
+  cursor: pointer;
+  &:hover {
+    fill: orange;
+    transition: fill 0.5s ease;
+  }
+}
+
+#tooltip {
+  position: absolute;
+  width: 200px;
+  height: auto;
+  padding: 10px;
+  background-color: white;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+}
+
+#tooltip.hidden {
+  display: none;
+}
+
+#tooltip p {
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.line {
+  fill: none;
+  stroke: teal;
+  stroke-width: 0.5;
+  &.danger {
+    stroke: red;
+  }
+}
+
+.area {
+  fill: teal;
+  stroke: none;
+  &.danger {
+    fill: red;
+  }
+}
+
+.safeLevel {
+  stroke: red;
+  stroke-dasharray: 2, 3;
+}
+
+.dangerLabel {
+  font-family: Helvetica, sans-serif;
+  font-size: 12px;
+  fill: red;
+}

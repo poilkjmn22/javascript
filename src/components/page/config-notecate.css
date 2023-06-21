@@ -1,33 +1,33 @@
-.config-notecate{
-  .tag{
+.config-notecate {
+  .tag {
     margin: 6px;
     cursor: pointer;
   }
-  .notecate-list{
+  .notecate-list {
     display: inline-block;
   }
   > * {
     padding: 10px;
   }
 
-  .notecate-tree svg{
+  .notecate-tree svg {
     height: 80vh;
     width: 100%;
   }
 
-  .opra-area{
-    > *{
+  .opra-area {
+    > * {
       margin-right: 10px;
     }
   }
 }
 
-svg{
-  &.shapes{
+svg {
+  &.shapes {
     width: 600px;
     height: 120px;
   }
-  &.lines{
+  &.lines {
     width: 300px;
     height: 200px;
   }
@@ -38,6 +38,6 @@ svg{
 
 .modules {
   position: relative;
-  min-height: 800px;
   padding: 0 !important;
+  margin-top: 10px;
 }

@@ -70,6 +70,34 @@ export default class NotecateLoader {
         );
         makePie(svgPie);
         break;
+      case "d3-data":
+        const data = await import("@/d3/data.js");
+        addLessonGUIControls(data, elModules);
+        break;
+      case "d3-scales":
+        const scales = await import("@/d3/scales.js");
+        addLessonGUIControls(scales, elModules);
+        break;
+      case "d3-axes":
+        const axes = await import("@/d3/axes.js");
+        addLessonGUIControls(axes, elModules);
+        break;
+      case "d3-animation":
+        const animation = await import("@/d3/animation.js");
+        addLessonGUIControls(animation, elModules);
+        break;
+      case "d3-interaction":
+        const interaction = await import("@/d3/interaction.js");
+        addLessonGUIControls(interaction, elModules);
+        break;
+      case "d3-path":
+        const path = await import("@/d3/path.js");
+        addLessonGUIControls(path, elModules);
+        break;
+      case "d3-layout":
+        const layout = await import("@/d3/layout.js");
+        addLessonGUIControls(layout, elModules);
+        break;
       case "DOM":
         const { getDimensions } = await import("@/base/dom/helper.js");
         const img = document.createElement("img");
@@ -144,6 +172,10 @@ export default class NotecateLoader {
         const lesson8 = await import("@/threejs/lesson8.js");
         addLessonGUIControls(lesson8, elModules);
         break;
+      case "lesson9":
+        const lesson9 = await import("@/threejs/lesson9.js");
+        addLessonGUIControls(lesson9, elModules);
+        break;
       case "分支":
         const branch = await import("@/git/branch.js");
         addLessonGUIControls(branch, elModules);
@@ -200,6 +232,17 @@ export default class NotecateLoader {
         break;
       case "搜索算法":
         cateExports = await import("@/algorithms/search/index.js");
+        addLessonGUIControls(cateExports, elModules);
+        break;
+      case "KMP算法":
+        cateExports = await import("@/algorithms/string/index.js");
+        addLessonGUIControls(cateExports, elModules);
+        break;
+      case "后缀数组":
+        cateExports = await import(
+          "@/algorithms/string/suffixArray/example.js"
+        );
+        console.log(cateExports);
         addLessonGUIControls(cateExports, elModules);
         break;
       default:

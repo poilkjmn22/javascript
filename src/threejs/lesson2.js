@@ -791,7 +791,7 @@ function init_mesh_properties(elContainer) {
   scene.add(plane);
 
   // position and point the camera to the center of the scene
-  camera.position.x = -30;
+  camera.position.x = 0;
   camera.position.y = 40;
   camera.position.z = 30;
   camera.lookAt(scene.position);

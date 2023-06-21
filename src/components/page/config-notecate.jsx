@@ -47,8 +47,13 @@ class ConfigNotecate extends React.Component {
       })
       .catch(console.error);
   }
+  adjustElModulesAspect() {
+    const aspectRatio = window.innerWidth / window.innerHeight;
+    this.refs.elModules.style.setProperty("aspect-ratio", aspectRatio);
+  }
   componentDidMount() {
     this.getApiNotecateList();
+    this.adjustElModulesAspect();
   }
   clearDrawn() {
     d3.select("#svg-notecate-tree").remove();

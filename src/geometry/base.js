@@ -170,6 +170,13 @@ class Vector {
   cross(v2) {
     return this.x * v2.y - this.y * v2.x;
   }
+  // 求向量的法向量
+  normal() {
+    let n = new Vector(2, y)
+    // 利用法向量和已知向量的dot为0: 2 * this.x + y * this.y = 0
+    n.y = -2 * this.x / this.y
+    return n
+  }
   project(obj) {
     let seg = obj;
     if (obj instanceof Vector) {

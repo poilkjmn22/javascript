@@ -37,6 +37,7 @@ function addLessonGUIControls(objLesson, elModules) {
       empty(elModules);
       deleteGUI("lessonCateGUI");
       objLesson[cate](elModules);
+      elModules.scrollIntoView();
     };
     gui.add(controls, cate);
   }
