@@ -1,0 +1,12 @@
+.step-rect {
+  fill: none;
+  stroke: #dedede;
+  stroke-width: 2;
+}
+
+.step-text {
+  font-size: 14px;
+}
+.step-title {
+  text-anchor: middle;
+}

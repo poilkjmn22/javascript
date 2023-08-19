@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import { drawStepsChart } from "./HandleSteps/index";
 
 function pieChart(elModules) {
   //Width and height
@@ -226,4 +227,44 @@ function forceChart(elModules) {
     d.fy = null;
   }
 }
-export { pieChart, stackChart, forceChart };
+
+function stepsChart(elModules) {
+  drawStepsChart(elModules, [
+    { text: "开始" },
+    {
+      substeps: [
+        { text: "步骤1的子步骤1-1" },
+        { text: "步骤1的子步骤1-2" },
+        { text: "步骤1的子步骤1-3" },
+      ],
+    },
+    {
+      substeps: [
+        { text: "步骤2的子步骤2-1" },
+        {
+          substeps: [
+            { text: "步骤2的孙子步骤2-2-1" },
+            { text: "步骤2的孙子步骤2-2-2" },
+            {
+              text: "步骤2的孙子步骤2-2-3",
+              substeps: [
+                { text: "步骤2的子步骤2-1" },
+                {
+                  substeps: [
+                    { text: "步骤2的孙子步骤2-2-1" },
+                    { text: "步骤2的孙子步骤2-2-2" },
+                    { text: "步骤2的孙子步骤2-2-3" },
+                  ],
+                },
+                { text: "步骤2的子步骤2-3" },
+              ],
+            },
+          ],
+        },
+        { text: "步骤2的子步骤2-3" },
+      ],
+    },
+    { text: "结束" },
+  ]);
+}
+export { pieChart, stackChart, forceChart, stepsChart };

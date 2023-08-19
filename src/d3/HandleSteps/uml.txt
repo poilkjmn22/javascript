@@ -1,0 +1,37 @@
+@startuml
+abstract class BaseStep {
+  {abstract} String text
+  {abstract} Object layout
+  {abstract} Step parent
+  {abstract} Number index
+  {abstract} Number level
+  {abstract} void calcPos()
+  {abstract} void calcSize()
+  {abstract} void render()
+  {static} Any canvas
+  {static} StrategyLayout sl
+}
+
+class Step {
+  BaseStep[] substeps
+}
+
+class LeafStep {
+}
+
+interface StrategyLayout {
+  void calcPos()
+  void calcSize()
+  void render()
+}
+
+class HorizontalLayout {
+}
+
+BaseStep <|-- Step
+BaseStep <|-- LeafStep
+
+BaseStep --> "1" StrategyLayout
+
+StrategyLayout <|-- HorizontalLayout
+@enduml
