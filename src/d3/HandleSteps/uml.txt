@@ -1,15 +1,12 @@
 @startuml
 abstract class BaseStep {
   {abstract} String text
+  {abstract} String[] textRows
   {abstract} Object layout
   {abstract} Step parent
   {abstract} Number index
   {abstract} Number level
-  {abstract} void calcPos()
-  {abstract} void calcSize()
-  {abstract} void render()
   {static} Any canvas
-  {static} StrategyLayout sl
 }
 
 class Step {
@@ -20,18 +17,40 @@ class LeafStep {
 }
 
 interface StrategyLayout {
-  void calcPos()
   void calcSize()
+  void calcSizeLeaf()
+  void calcPos()
   void render()
 }
 
 class HorizontalLayout {
 }
 
+interface Element {
+  void accept(IVisitor)
+}
+
+interface IVisitor {
+  void visitStep(Step)
+  void visitLeafStep(LeafStep)
+  StrategyLayout sl
+}
+
+class SizeVisitor {}
+class PosVisitor {}
+class RenderVisitor {}
+
 BaseStep <|-- Step
 BaseStep <|-- LeafStep
 
-BaseStep --> "1" StrategyLayout
+Element <|-- BaseStep
+
+IVisitor --> "1" StrategyLayout
+IVisitor --> "visit" BaseStep
+IVisitor <-- "accept" BaseStep
+IVisitor <|-- SizeVisitor
+IVisitor <|-- PosVisitor
+IVisitor <|-- RenderVisitor
 
 StrategyLayout <|-- HorizontalLayout
 @enduml

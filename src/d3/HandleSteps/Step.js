@@ -7,7 +7,9 @@ export default class Step extends BaseStep {
     }
     super(data, index, parent);
     this.substeps = [];
-    this.calcPos();
+    if (!data.substeps) {
+      return;
+    }
     for (let i = 0; i < data.substeps.length; i++) {
       const ss = data.substeps[i];
       const s = BaseStep.isLeafStep(ss)
@@ -15,7 +17,5 @@ export default class Step extends BaseStep {
         : new Step(ss, i, this);
       this.substeps.push(s);
     }
-    this.calcSize();
-    this.render();
   }
 }

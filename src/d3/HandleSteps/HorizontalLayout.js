@@ -8,38 +8,13 @@ String.prototype.realLength = function () {
   return res;
 };
 
-function splitText(text, col) {
-  const res = [];
-  if (!text) {
-    return res;
-  }
-  let currLength = 0;
-  let temp = "";
-  for (const c of text) {
-    temp += c;
-    currLength += c.realLength();
-    if (currLength >= col) {
-      res.push(temp);
-      currLength = 0;
-      temp = "";
-    }
-  }
-  if (temp) {
-    res.push(temp);
-  }
-  return res;
-}
 const HorizontalLayout = {
   calcPos(step) {
-    if (!step.parent) {
+    const p = step.parent;
+    if (!p) {
       return;
     }
-    if (step.level === 1 && !step.text) {
-      step.text = `步骤${step.index}`;
-    }
-    step.textRows = splitText(step.text, this.textCol);
 
-    const p = step.parent;
     if (step.index === 0) {
       step.layout.x = p.layout.x + this.stepPadding[0];
       step.layout.y =
@@ -60,47 +35,51 @@ const HorizontalLayout = {
         step.layout.y = prevStep.layout.y + prevStep.layout.height + joinWidth;
       }
     }
+    if (this.alignCenter) {
+      if (step.isHorizontal()) {
+        step.layout.y =
+          p.layout.y + p.layout.height / 2 - step.layout.height / 2;
+      } else {
+        step.layout.x = p.layout.x + p.layout.width / 2 - step.layout.width / 2;
+      }
+    }
+  },
+  calcSizeLeaf(step) {
+    step.layout.width =
+      Math.min(step.text.realLength(), this.textCol) * this.textCharWidth +
+      2 * this.leafStepPadding[0];
+    step.layout.height =
+      step.textRows.length * this.textHeight + 2 * this.leafStepPadding[1];
   },
   calcSize(step) {
-    if (step.isLeaf()) {
+    const joinWidth =
+      step.level === 0 ? this.arrowLength : this.miniArrowLength;
+    if (step.isHorizontal()) {
       step.layout.width =
-        Math.min(step.text.realLength(), this.textCol) * this.textCharWidth +
-        2 * this.leafStepPadding[0];
+        step.substeps.reduce((res, ss) => Math.max(res, ss.layout.width), 0) +
+        2 * this.stepPadding[0];
       step.layout.height =
-        step.textRows.length * this.textHeight + 2 * this.leafStepPadding[1];
+        step.substeps.reduce(
+          (res, ss, i) => res + ss.layout.height + (i > 0 ? joinWidth : 0),
+          0
+        ) +
+        2 * this.stepPadding[1] +
+        (!step.hasTitle()
+          ? 0
+          : step.textRows.length * this.textHeight + this.stepTitleMargin);
     } else {
-      const joinWidth =
-        step.level === 0 ? this.arrowLength : this.miniArrowLength;
-      if (step.isHorizontal()) {
-        step.layout.width =
-          step.substeps.reduce((res, ss) => Math.max(res, ss.layout.width), 0) +
-          2 * this.stepPadding[0];
-        step.layout.height =
-          step.substeps.reduce(
-            (res, ss, i) => res + ss.layout.height + (i > 0 ? joinWidth : 0),
-            0
-          ) +
-          2 * this.stepPadding[1] +
-          (!step.hasTitle()
-            ? 0
-            : step.textRows.length * this.textHeight + this.stepTitleMargin);
-      } else {
-        step.layout.width =
-          step.substeps.reduce(
-            (res, ss, i) => res + ss.layout.width + (i > 0 ? joinWidth : 0),
-            0
-          ) +
-          2 * this.stepPadding[0];
-        step.layout.height =
-          step.substeps.reduce(
-            (res, ss) => Math.max(res, ss.layout.height),
-            0
-          ) +
-          2 * this.stepPadding[1] +
-          (!step.hasTitle()
-            ? 0
-            : step.textRows.length * this.textHeight + this.stepTitleMargin);
-      }
+      step.layout.width =
+        step.substeps.reduce(
+          (res, ss, i) => res + ss.layout.width + (i > 0 ? joinWidth : 0),
+          0
+        ) +
+        2 * this.stepPadding[0];
+      step.layout.height =
+        step.substeps.reduce((res, ss) => Math.max(res, ss.layout.height), 0) +
+        2 * this.stepPadding[1] +
+        (!step.hasTitle()
+          ? 0
+          : step.textRows.length * this.textHeight + this.stepTitleMargin);
     }
   },
   render(step) {
@@ -135,9 +114,7 @@ const HorizontalLayout = {
         .text((d) => d)
         .attr(
           "x",
-          x +
-            this.leafStepPadding[0] +
-            (step.isLeaf() || !step.text ? 0 : width / 2)
+          x + this.leafStepPadding[0] + (!step.hasTitle() ? 0 : width / 2)
         )
         .attr(
           "y",
@@ -153,6 +130,7 @@ const HorizontalLayout = {
   textCharWidth: 10,
   textHeight: 20,
   stepTitleMargin: 20,
+  alignCenter: true,
 };
 
 export default HorizontalLayout;
