@@ -180,6 +180,10 @@ export default class NotecateLoader {
         const branch = await import("@/git/branch.js");
         addLessonGUIControls(branch, elModules);
         break;
+      case "远程连接":
+        const ssh = await import("@/linux/ssh.js");
+        addLessonGUIControls(ssh, elModules);
+        break;
       case "栈":
         cateExports = await import(
           "@/algorithms/data-structure/stack/index.js"
