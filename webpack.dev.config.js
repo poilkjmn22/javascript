@@ -16,7 +16,6 @@ module.exports = smp.wrap(
     },
     plugins: [
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'dev'),
       }),
       new CopyWebpackPlugin({
         patterns: [
@@ -39,8 +38,8 @@ module.exports = smp.wrap(
       },
       host: '0.0.0.0',
       hot: true,
-      contentBase: path.resolve(__dirname, 'dist'),
-      before(app) {
+      static: path.join(__dirname, 'dist'),
+      setupMiddlewares(middlewares, { app }) {
         app.get('/get-sample', (req, res) => {
           const params = req.query;
           res.json(params.name);
@@ -58,6 +57,7 @@ module.exports = smp.wrap(
             status: 200,
           });
         });
+      return middlewares;
       },
     },
   })

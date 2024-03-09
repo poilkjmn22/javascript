@@ -13,7 +13,7 @@ export default function appReducer(state = initialState, action) {
   }
 }
 // Thunk 函数
-export async function fetchNavList(dispatch, getState) {
+export async function fetchNavList(dispatch) {
   const res = await request.get("nav-list/list");
   dispatch({ type: "navList/loaded", payload: res.data });
 }

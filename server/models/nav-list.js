@@ -1,7 +1,7 @@
 const redis = require("redis");
 const dbConf = require("../db.conf.json");
 const db = redis.createClient(dbConf.PORT, dbConf.HOST);
-const uuidv1 = require("uuid/v1");
+const { v1 : uuidv1 } = require("uuid");
 
 const TableName = "nav-list";
 

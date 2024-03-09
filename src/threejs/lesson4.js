@@ -7,9 +7,6 @@
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
 import * as THREE from "three";
-import "three/examples/js/renderers/CanvasRenderer.js"; // 需要做一些特殊处理(ES6模块化导出)
-import "three/examples/js/renderers/Projector.js"; // 需要做一些特殊处理(ES6模块化导出)
-import "three/examples/js/utils/SceneUtils.js";
 import {
   initStats,
   initRenderer,

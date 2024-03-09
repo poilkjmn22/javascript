@@ -9,8 +9,7 @@
 import * as THREE from "three";
 import TrackballControls from "three-trackballcontrols";
 import * as dat from "dat.gui";
-import "three/examples/js/loaders/OBJLoader.js"; // 需要做一些特殊处理(ES6模块化导出)
-import "three/examples/js/renderers/CanvasRenderer.js";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader.js"; // 需要做一些特殊处理(ES6模块化导出)
 import { empty } from "@/utils/dom.js";
 import Stats from "stats.js";
 
@@ -463,7 +462,7 @@ function addSpecificMaterialSettings(gui, controls, material, name) {
  * @returns promise which is fullfilled once the goher is loaded
  */
 function loadGopher(material) {
-  var loader = new THREE.OBJLoader();
+  var loader = new OBJLoader();
   var mesh = null;
   var p = new Promise(function (resolve) {
     loader.load("models/gopher/gopher.obj", function (loadedMesh) {

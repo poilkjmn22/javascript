@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
 import axios from "axios";
 import BugRecordCardList from "./bug-record-card-list.jsx";
 import FormNote from "./form-note.jsx";
@@ -99,4 +98,4 @@ BugRecord.defaultProps = {
   name: "bug-record",
 };
 
-export default withRouter(BugRecord);
+export default BugRecord;

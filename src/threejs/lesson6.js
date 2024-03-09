@@ -7,8 +7,7 @@
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
 import * as THREE from "three";
-import "three/examples/js/QuickHull.js";
-import "three/examples/js/geometries/ConvexGeometry.js";
+import {ConvexGeometry} from "three/examples/jsm/geometries/ConvexGeometry.js";
 import transformSVGPath from "./transformSVGPath.js";
 import {
   initStats,
@@ -96,7 +95,7 @@ function init_advanced_3d_geometry_convex(elContainer) {
     scene.add(spGroup);
 
     // use the same points to create a convexgeometry
-    var convexGeometry = new THREE.ConvexGeometry(points);
+    var convexGeometry = new ConvexGeometry(points);
     convexGeometry.computeVertexNormals();
     convexGeometry.computeFaceNormals();
     convexGeometry.normalsNeedUpdate = true;

@@ -7,7 +7,7 @@ const EslintPlugin = require("eslint-webpack-plugin");
 
 const babelConfig = require("./babel.config.json");
 
-const VueLoaderPlugin = require("vue-loader/lib/plugin");
+const { VueLoaderPlugin } = require("vue-loader");
 
 module.exports = {
   entry: {
@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         test: /\.jsx?$/,
-        exclude: (file) => /node_modules/.test(file) && !/\.vue\.js/.test(file),
+        exclude: path.resolve(__dirname, 'node_modules' ),
         use: {
           loader: "babel-loader",
           options: Object.assign(

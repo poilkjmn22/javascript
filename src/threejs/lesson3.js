@@ -7,7 +7,7 @@
  * @Copyright(c) 2021 CMIM Network Co.,Ltd. All Rights Reserve
  */
 import * as THREE from "three";
-import "three/examples/js/objects/Lensflare.js"; // 需要做一些特殊处理(ES6模块化导出)
+import {Lensflare} from "three/examples/jsm/objects/Lensflare.js"; // 需要做一些特殊处理(ES6模块化导出)
 import {
   initStats,
   initRenderer,
@@ -1002,22 +1002,22 @@ function init_lensflares(elContainer) {
 
   var flareColor = new THREE.Color(0xffaacc);
 
-  var lensFlare = new THREE.Lensflare();
+  var lensFlare = new Lensflare();
 
   lensFlare.addElement(
-    new THREE.LensflareElement(textureFlare0, 350, 0.0, flareColor)
+    new LensflareElement(textureFlare0, 350, 0.0, flareColor)
   );
   lensFlare.addElement(
-    new THREE.LensflareElement(textureFlare3, 60, 0.6, flareColor)
+    new LensflareElement(textureFlare3, 60, 0.6, flareColor)
   );
   lensFlare.addElement(
-    new THREE.LensflareElement(textureFlare3, 70, 0.7, flareColor)
+    new LensflareElement(textureFlare3, 70, 0.7, flareColor)
   );
   lensFlare.addElement(
-    new THREE.LensflareElement(textureFlare3, 120, 0.9, flareColor)
+    new LensflareElement(textureFlare3, 120, 0.9, flareColor)
   );
   lensFlare.addElement(
-    new THREE.LensflareElement(textureFlare3, 70, 1.0, flareColor)
+    new LensflareElement(textureFlare3, 70, 1.0, flareColor)
   );
   spotLight.add(lensFlare);
 

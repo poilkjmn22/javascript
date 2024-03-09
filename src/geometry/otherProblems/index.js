@@ -9,7 +9,7 @@ import {
 import { drawBarChart } from "@/utils/d3Helper";
 import { CSvg } from "@/utils/svg";
 
-const Benchmark = require("benchmark");
+// const Benchmark = require("benchmark");
 export function ClosestPair(elContainer) {
   elContainer.scrollIntoView({ block: "center" });
 
@@ -72,38 +72,38 @@ export function ClosestPair(elContainer) {
         drawGeo(ctx, point, { fillStyle: "#7ed321", size: 2 });
       }
 
-      const suite = new Benchmark.Suite();
-      const statistics = [];
-      suite
-        .add("exhaustion", () => {
-          getClosestPairByExhaustion(points);
-        })
-        .add("dynamic programming", () => {
-          getClosestPairByDP(points);
-        })
-        .add("divide and conquer", () => {
-          getClosestPairByDivideAndConquer(points);
-        })
-        .on("cycle", (e) => {
-          const { times, name } = e.target;
-          statistics.push({ name, value: times.period * 1000 });
-        })
-        .on("complete", function () {
-          console.log("Fastest is " + this.filter("fastest").map("name"));
-          let chartBox = elContainer.querySelector(".chart-box");
-          if (chartBox) {
-            chartBox.innerHTML = "";
-          } else {
-            chartBox = document.createElement("div");
-            chartBox.classList.add("chart-box");
-            chartBox.setAttribute("style", "height: 400px");
-            elContainer.appendChild(chartBox);
-          }
-
-          chartBox.appendChild(CSvg());
-          drawBarChart(statistics, chartBox, { sort: "descending" });
-        })
-        .run({ async: true });
+      // const suite = new Benchmark.Suite();
+      // const statistics = [];
+      // suite
+        // .add("exhaustion", () => {
+          // getClosestPairByExhaustion(points);
+        // })
+        // .add("dynamic programming", () => {
+          // getClosestPairByDP(points);
+        // })
+        // .add("divide and conquer", () => {
+          // getClosestPairByDivideAndConquer(points);
+        // })
+        // .on("cycle", (e) => {
+          // const { times, name } = e.target;
+          // statistics.push({ name, value: times.period * 1000 });
+        // })
+        // .on("complete", function () {
+          // console.log("Fastest is " + this.filter("fastest").map("name"));
+          // let chartBox = elContainer.querySelector(".chart-box");
+          // if (chartBox) {
+            // chartBox.innerHTML = "";
+          // } else {
+            // chartBox = document.createElement("div");
+            // chartBox.classList.add("chart-box");
+            // chartBox.setAttribute("style", "height: 400px");
+            // elContainer.appendChild(chartBox);
+          // }
+// 
+          // chartBox.appendChild(CSvg());
+          // drawBarChart(statistics, chartBox, { sort: "descending" });
+        // })
+        // .run({ async: true });
 
       // const [, , d1] = getClosestPairByExhaustion(points);
       // const d2 = getClosestPairByDivideAndConquer(points);

@@ -16,17 +16,17 @@ import {
   initDefaultLighting,
 } from "./util.js";
 import BaseLoaderScene from "./BaseLoaderScene.js";
-import "three/examples/js/loaders/MTLLoader.js";
-import "three/examples/js/loaders/ColladaLoader.js";
-import "three/examples/js/loaders/STLLoader.js";
-import "three/examples/js/loaders/VTKLoader.js";
-import "three/examples/js/loaders/PDBLoader.js";
-import "three/examples/js/loaders/PLYLoader.js";
-import "three/examples/js/loaders/AWDLoader.js";
-import "three/examples/js/loaders/AssimpJSONLoader.js";
-import "three/examples/js/loaders/VRMLLoader.js";
-import "three/examples/js/loaders/BabylonLoader.js";
-import "three/examples/js/loaders/SVGLoader.js";
+import { MTLLoader } from "three/examples/jsm/loaders/MTLLoader.js";
+import { ColladaLoader } from "three/examples/jsm/loaders/ColladaLoader.js";
+import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
+import { VTKLoader } from "three/examples/jsm/loaders/VTKLoader.js";
+import { PDBLoader } from "three/examples/jsm/loaders/PDBLoader.js";
+import { PLYLoader } from "three/examples/jsm/loaders/PLYLoader.js";
+// import "three/examples/jsm/loaders/AWDLoader.js";
+// import "three/examples/jsm/loaders/AssimpJSONLoader.js";
+import { VRMLLoader } from "three/examples/jsm/loaders/VRMLLoader.js";
+// import "three/examples/jsm/loaders/BabylonLoader.js";
+import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
 
 function init_group(elContainer) {
   // use the defaults
@@ -422,7 +422,7 @@ function load_obj_mtl(elContainer) {
   var loaderScene = new BaseLoaderScene(elContainer, camera);
   camera.lookAt(new THREE.Vector3(0, 15, 0));
 
-  var mtlLoader = new THREE.MTLLoader();
+  var mtlLoader = new MTLLoader();
   mtlLoader.setPath("threejs/assets/models/butterfly/");
   mtlLoader.load("butterfly.mtl", function (materials) {
     materials.preload();
@@ -473,7 +473,7 @@ function load_collada(elContainer) {
   camera.lookAt(new THREE.Vector3(0, 45, 0));
 
   // load the model
-  var loader = new THREE.ColladaLoader();
+  var loader = new ColladaLoader();
   loader.load(
     "threejs/assets/models/medieval/Medieval_building.DAE",
     function (result) {
@@ -504,7 +504,7 @@ function load_stl(elContainer) {
   camera.lookAt(new THREE.Vector3(0, 15, 0));
 
   // load the model: model from http://www.thingiverse.com/thing:69709
-  var loader = new THREE.STLLoader();
+  var loader = new STLLoader();
   loader.load(
     "threejs/assets/models/head/SolidHead_2_lowPoly_42k.stl",
     function (geometry) {
@@ -528,7 +528,7 @@ function load_vtk(elContainer) {
   var loaderScene = new BaseLoaderScene(elContainer, camera);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-  var loader = new THREE.VTKLoader();
+  var loader = new VTKLoader();
   loader.load("threejs/assets/models/moai/moai_fixed.vtk", function (geometry) {
     var mat = new THREE.MeshNormalMaterial();
 
@@ -547,7 +547,7 @@ function load_pdb(elContainer) {
   var loaderScene = new BaseLoaderScene(elContainer, camera);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-  var loader = new THREE.PDBLoader();
+  var loader = new PDBLoader();
 
   // also possible to use diamond.pdb
   // loader.load("../../assets/models/molecules/aspirin.pdb", function (geometries) {
@@ -615,7 +615,7 @@ function load_PLY(elContainer) {
   var loaderScene = new BaseLoaderScene(elContainer, camera);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-  var loader = new THREE.PLYLoader();
+  var loader = new PLYLoader();
 
   loader.load(
     "threejs/assets/models/carcloud/carcloud.ply",
@@ -710,7 +710,7 @@ function load_vrml(elContainer) {
   var loaderScene = new BaseLoaderScene(elContainer, camera);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
-  var loader = new THREE.VRMLLoader();
+  var loader = new VRMLLoader();
   loader.load("threejs/assets/models/tree/tree.wrl", function (model) {
     model.scale.set(10, 10, 10);
     loaderScene.render(model, camera);
@@ -741,7 +741,7 @@ function load_svg(elContainer) {
   camera.lookAt(new THREE.Vector3(0, 0, 0));
   var loaderScene = new BaseLoaderScene(elContainer, camera);
 
-  var loader = new THREE.SVGLoader();
+  var loader = new SVGLoader();
 
   // you can use slicer to convert the model
   loader.load("threejs/assets/models/tiger/tiger.svg", function (paths) {
