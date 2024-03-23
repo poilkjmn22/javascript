@@ -2,9 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import NavListItem from "./NavListItem.jsx";
 import DialogAddNavItem from "./dialog-add-nav-item.jsx";
-import request from "@/request";
+import req from "@/req";
 import store from "@/store.js";
-import { fetchNavList } from "@/reducer";
 
 class NavList extends React.Component {
   constructor(props) {
@@ -55,8 +54,8 @@ class NavList extends React.Component {
     );
   }
   async handleConfirmAddNavItem(navItem) {
-    const res = await request.post("nav-list/add", { ...navItem });
-    store.dispatch(fetchNavList);
+    await req.post("nav-list/add", { ...navItem });
+    store.dispatch('navList');
     this.handleCloseDialog();
   }
   handleCloseDialog() {

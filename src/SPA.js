@@ -16,5 +16,3 @@ root.render(
     </Provider>
   </Router>
 );
-
-store.dispatch({ type: "navList/loaded", payload: undefined });

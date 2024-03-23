@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./nav-list-item.css";
-import request from "@/request";
+import req from "@/req";
 import store from "@/store";
-import { fetchNavList } from "@/reducer";
 
 class NavListItem extends React.Component {
   constructor(props) {
@@ -52,8 +51,8 @@ class NavListItem extends React.Component {
   async deleteNavItem() {
      const params = {...this.props.item}
      delete params.level
-     await request.post('nav-list/delete', params)
-    store.dispatch(fetchNavList);
+     await req.post('nav-list/delete', params)
+     store.dispatch('navList');
   }
   handleAddNavItem() {
     this.props.addNavItem(this.props.item)
