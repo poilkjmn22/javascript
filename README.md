@@ -1,2 +1,0 @@
-## github.com personal_access_token
-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
