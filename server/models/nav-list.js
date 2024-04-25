@@ -1,9 +1,14 @@
 const redis = require("redis");
 const dbConf = require("../db.conf.json");
-const db = redis.createClient(dbConf.PORT, dbConf.HOST);
-const { v1 : uuidv1 } = require("uuid");
+const { v1: uuidv1 } = require("uuid");
 
 const TableName = "nav-list";
+
+async function initDb(cb) {
+  const db = await redis.createClient(dbConf.PORT, dbConf.HOST);
+  await cb(db);
+  db.disconnect();
+}
 
 class NavList {
   constructor(obj) {
@@ -13,11 +18,21 @@ class NavList {
     }
   }
   static getRange(from, to, cb) {
-    db.lrange(TableName, from, to, (err, items) => {
-      if (err) return cb(err);
-      const data = items.map((item) => JSON.parse(item));
-      cb(null, data);
-    });
+    const p = (db) =>
+      new Promise((res, rej) => {
+        console.log(db.get);
+        db.lrange(TableName, from, to, (err, items) => {
+          if (err) {
+            cb(err);
+            rej();
+            return;
+          }
+          const data = items.map((item) => JSON.parse(item));
+          cb(null, data);
+          res();
+        });
+      });
+    initDb(p);
   }
   save(cb) {
     console.log(this);

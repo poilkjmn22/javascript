@@ -1,9 +1,8 @@
 import { createStore, applyMiddleware } from "redux";
-import { fetchNavList } from "./reducer";
-import rootReducer from "./reducer";
+import reqMiddleware from "./reducer/reqMiddleware.js";
+import rootReducer from "./reducer/index.js";
 
-const middlewareEnhancer = applyMiddleware(fetchNavList);
+const middlewareEnhancer = applyMiddleware(reqMiddleware);
 
-// store 现在就可以在 `dispatch` 中接收 thunk 函数了
 const store = createStore(rootReducer, middlewareEnhancer);
 export default store;

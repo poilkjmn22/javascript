@@ -9,42 +9,14 @@ import BugRecord from "../bug-record.jsx";
 import Mianshi from "../mianshi.jsx";
 import StatisticAnalysis from "./statistic-analysis.jsx";
 
-class Content extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
+  function Content() {
     return (
       <div>
         <h1 className="header">JavaScript Palyground.</h1>
         <div className="main-content">
           <NavBar />
-          <div className="content">
-            <Switch>
-              <Route path="/mianshi">
-                <Mianshi />
-              </Route>
-              <Route path="/config-notecate">
-                <ConfigNotecate />
-              </Route>
-              <Route path="/config-nav">
-                <ConfigNav />
-              </Route>
-              <Route path="/record/detail">
-                <RecordDetail />
-              </Route>
-              <Route path="/statistic-analysis">
-                <StatisticAnalysis />
-              </Route>
-              <Route path="/">
-                <BugRecord />
-              </Route>
-            </Switch>
-          </div>
         </div>
       </div>
     );
   }
-}
 export default Content;
